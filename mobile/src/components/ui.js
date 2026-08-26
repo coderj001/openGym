@@ -12,9 +12,9 @@ export function Screen({ children, scroll = true, contentStyle, testID }) {
   return <SafeAreaView testID={testID} edges={['top']} style={{ flex: 1, backgroundColor: colors.bg }}>{body}</SafeAreaView>;
 }
 export function Loading() { const colors = useColors(); return <View style={[styles.center, { backgroundColor: colors.bg }]}><ActivityIndicator color={colors.accent} size="large" /></View>; }
-export function Header({ title, subtitle, left, right }) {
+export function Header({ title, subtitle, left, right, titleStyle }) {
   const colors = useColors();
-  return <View style={styles.header}>{left}<View style={{ flex: 1 }}><Text style={[styles.title, { color: colors.text }]}>{title}</Text>{subtitle ? <Text style={[styles.subtitle, { color: colors.muted }]}>{subtitle}</Text> : null}</View>{right}</View>;
+  return <View style={styles.header}>{left}<View style={{ flex: 1 }}><Text style={[styles.title, { color: colors.text }, titleStyle]}>{title}</Text>{subtitle ? <Text style={[styles.subtitle, { color: colors.muted }]}>{subtitle}</Text> : null}</View>{right}</View>;
 }
 export function Card({ children, style }) { const c = useColors(); return <View style={[styles.card, { backgroundColor: c.surface, borderColor: c.border }, style]}>{children}</View>; }
 export function SectionTitle({ children, style }) { const c = useColors(); return <Text style={[styles.section, { color: c.muted }, style]}>{children}</Text>; }

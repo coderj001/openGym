@@ -8,10 +8,10 @@ import { instrFor, t } from '../lib/i18n';
 import { useStore } from '../store';
 import { AppText, Button, Card, Chip, Header, IconButton, Input, Screen, SectionTitle, useColors } from './ui';
 
-export function ExerciseMedia({ exercise, compact = false }) {
-  const source = mediaFor(exercise); const colors = useColors();
-  if (!source) return <View style={[styles.mediaFallback, { height: compact ? 150 : 230, backgroundColor: colors.surface2 }]}><MaterialCommunityIcons name="dumbbell" size={44} color={colors.dim} /></View>;
-  return <Image source={source} style={[styles.media, { height: compact ? 180 : 280, backgroundColor: '#fff' }]} contentFit="contain" autoplay />;
+export function ExerciseMedia({ exercise, compact = false, mini = false }) {
+  const source = mediaFor(exercise); const colors = useColors(); const height = mini ? 112 : compact ? 180 : 280;
+  if (!source) return <View style={[styles.mediaFallback, { height, backgroundColor: colors.surface2 }]}><MaterialCommunityIcons name="dumbbell" size={44} color={colors.dim} /></View>;
+  return <Image source={source} style={[styles.media, { height, backgroundColor: '#fff' }]} contentFit="contain" autoplay />;
 }
 export function ExerciseRow({ exercise, onPress, accessory, fullName = false }) {
   const colors = useColors();
@@ -34,7 +34,8 @@ export function ExercisePicker({ visible, onClose, onPick }) {
 export function ExerciseDetail({ exercise, visible, onClose, footer }) {
   const ex = exercise ? exOr(exercise.id) : null;
   return <Modal visible={visible && !!ex} animationType="slide" onRequestClose={onClose}><Screen>
-    <Header title={ex?.n || ''} left={<IconButton name="close" onPress={onClose} />} />
+    {/* ponytail: titleStyle capitalize keeps raw dataset lowercase while presenting proper title case */}
+    <Header title={ex?.n || ''} titleStyle={{ textTransform: 'capitalize' }} left={<IconButton name="close" onPress={onClose} />} />
     {ex ? <><ExerciseMedia exercise={ex} /><View style={styles.tags}><Chip title={t(ex.tg || ex.bp)} active /><Chip title={t(ex.eq)} /></View>{ex.mg ? <AppText muted>{t('Also works:')} {t(ex.mg)}</AppText> : null}<SectionTitle>{t('Instructions')}</SectionTitle><Card>{instrFor(ex).map((step, index) => <View key={index} style={styles.step}><AppText style={{ fontWeight: '800', width: 24 }}>{index + 1}</AppText><AppText style={{ flex: 1, lineHeight: 22 }}>{step}</AppText></View>)}</Card>{footer}</> : null}
   </Screen></Modal>;
 }
@@ -45,7 +46,8 @@ export function ExerciseConfig({ exercise, initial, visible, onClose, onSave, on
   const mode = modeOf({ ...config, id: exercise.id });
   const field = (key, label, fallback) => <View style={{ flex: 1 }}><AppText muted style={styles.fieldLabel}>{label}</AppText><Input keyboardType="decimal-pad" value={String(config[key] ?? fallback)} onChangeText={value => setConfig(current => ({ ...current, [key]: Number(value.replace(',', '.')) || 0 }))} /></View>;
   return <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}><View style={styles.overlay}><ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[styles.dialog, { backgroundColor: colors.surface }]}>
-    <Header title={exercise.n} right={<IconButton name="close" onPress={onClose} />} />
+    <Header title={exercise.n} titleStyle={{ textTransform: 'capitalize' }} right={<IconButton name="close" onPress={onClose} />} />
+    <ExerciseMedia exercise={exercise} mini />
     <SectionTitle>{t('Logging mode')}</SectionTitle><View style={styles.tags}>{['reps', 'time', 'cardio'].map(value => <Chip key={value} title={t(value === 'reps' ? 'Reps' : value === 'time' ? 'Timed hold' : 'Cardio')} active={mode === value} onPress={() => setConfig({ ...defaultConfig(exercise.id, value), mode: value })} />)}</View>
     <View style={styles.fields}>{field('sets', t('Sets'), 3)}{mode === 'reps' && field('reps', t('Reps'), 10)}{mode === 'time' && field('sec', t('Seconds'), 45)}{mode === 'cardio' && field('min', t('Duration (min)'), 20)}{mode === 'cardio' && field('speed', t('Speed (km/h)'), 8)}{mode !== 'cardio' && field('weight', config.bodyweight ? t('Added weight') : t('Weight'), 0)}</View>
     {mode !== 'cardio' ? <><Pressable style={styles.option} onPress={() => setConfig(value => ({ ...value, bodyweight: !value.bodyweight }))}><MaterialCommunityIcons name={config.bodyweight ? 'checkbox-marked' : 'checkbox-blank-outline'} color={colors.accent} size={24} /><AppText>{t('Bodyweight exercise')}</AppText></Pressable>{mode === 'reps' ? <Pressable style={styles.option} onPress={() => setConfig(value => ({ ...value, side: !value.side }))}><MaterialCommunityIcons name={config.side ? 'checkbox-marked' : 'checkbox-blank-outline'} color={colors.accent} size={24} /><AppText>{t('Log total reps across both sides')}</AppText></Pressable> : null}</> : null}

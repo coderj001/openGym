@@ -40,7 +40,7 @@ services:
     image: ghcr.io/duartesantos8/opengym-web:latest
     build:
       context: .
-      dockerfile: web/Dockerfile
+      dockerfile: Dockerfile
     restart: unless-stopped
     depends_on:
       media:
