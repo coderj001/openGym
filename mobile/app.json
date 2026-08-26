@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "openGym",
+    "slug": "opengym",
+    "scheme": "opengym",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "app.opengym.mobile"
+    },
+    "android": {
+      "package": "app.opengym.mobile",
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-image",
+      "expo-sharing",
+      "expo-notifications",
+      "expo-asset",
+      "expo-font",
+      "expo-audio",
+      "expo-camera"
+    ]
+  }
+}
