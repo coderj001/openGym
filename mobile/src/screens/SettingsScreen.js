@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, Modal, ScrollView, Share, StyleSheet, View } from 'react-native';
 import { useStore, DEF } from '../store';
 import { ACCENTS } from '../lib/format';
 import { addStarterPlan } from '../lib/plans';
@@ -9,6 +9,7 @@ import { mergeImport } from '../lib/import-csv';
 import { syncReminders } from '../lib/reminders';
 import { effortOf } from '../lib/history';
 import { LANGS, t } from '../lib/i18n';
+import { buildAiPrompt, parseAiPlan } from '../lib/aiPlan';
 import { AppText, Button, Card, Chip, Header, IconButton, Input, Row, Screen, SectionTitle, Toggle, useColors } from '../components/ui';
 
 export default function SettingsScreen({ navigation }) {
@@ -25,7 +26,93 @@ export default function SettingsScreen({ navigation }) {
     <SectionTitle>{t('During a workout')}</SectionTitle><Card><AppText muted style={styles.label}>{t('Rest timer')}</AppText><View style={styles.chips}>{[60, 90, 120, 150, 180].map(value => <Chip key={value} title={`${value}s`} active={S.restSec === value} onPress={() => update(state => { state.restSec = value; })} />)}</View><Row icon="weather-sunny" title={t('Keep screen awake')}><Toggle value={S.keepAwake !== false} onValueChange={value => update(state => { state.keepAwake = value; })} /></Row><Row icon="bell" title={t('Sounds')}><Toggle value={!!S.sound} onValueChange={value => update(state => { state.sound = value; })} /></Row><AppText muted style={styles.label}>{t('Effort per set')}</AppText><View style={styles.chips}>{['none', 'rir', 'rpe'].map(value => <Chip key={value} title={value === 'none' ? t('Off') : value.toUpperCase()} active={effortOf(S) === value} onPress={() => update(state => { state.effort = value; delete state.showRir; })} />)}</View></Card>
     <SectionTitle>{t('Notifications')}</SectionTitle><Card><Row icon="calendar-clock" title={t('Workout day reminder')} subtitle={t('Uses only local notifications on planned days.')}><Toggle value={!!S.reminder?.on} onValueChange={toggleReminder} /></Row>{S.reminder?.on ? <><AppText muted style={styles.label}>{t('Reminder time (24-hour)')}</AppText><Input value={S.reminder.time || '08:00'} onChangeText={value => update(state => { state.reminder.time = value; })} placeholder="08:00" /></> : null}</Card>
     <SectionTitle>{t('Appearance')}</SectionTitle><Card><AppText muted style={styles.label}>{t('Theme')}</AppText><View style={styles.chips}>{['dark', 'light'].map(value => <Chip key={value} title={t(value === 'dark' ? 'Dark' : 'Light')} active={S.theme === value} onPress={() => update(state => { state.theme = value; })} />)}</View><AppText muted style={styles.label}>{t('Body diagram')}</AppText><View style={styles.chips}>{['male', 'female'].map(value => <Chip key={value} title={t(value === 'male' ? 'Male' : 'Female')} active={S.body === value} onPress={() => update(state => { state.body = value; })} />)}</View><AppText muted style={styles.label}>{t('Accent color')}</AppText><View style={styles.swatches}>{Object.entries(ACCENTS).map(([name, color]) => <View key={name} style={[styles.swatchRing, S.accent === name && { borderColor: colors.text }]}><View onTouchEnd={() => update(state => { state.accent = name; })} style={[styles.swatch, { backgroundColor: color }]} /></View>)}</View></Card>
-    <SectionTitle>{t('Data')}</SectionTitle><Card style={{ paddingVertical: 0 }}><Row icon="creation" title={t('Load starter plan (PPL)')} onPress={() => { update(addStarterPlan); notify(t('Starter plan loaded — Mon Push · Wed Pull · Fri Legs')); }} /><Row icon="database" title={t('Load demo data')} subtitle={t('Populates 12 weeks of workouts & body weight')} onPress={loadDemo} /><Row icon="swap-horizontal" title={t('Import from another app')} subtitle={t('FitNotes, Strong, Hevy, or Apple Health')} onPress={importApp} /><Row icon="upload" title={t('Import backup')} onPress={importData} /><Row icon="download" title={t('Export backup (JSON)')} onPress={() => exportBackup(S).then(() => notify(t('Backup exported'))).catch(error => notify(error.message))} /><Row icon="trash-can" danger title={t('Reset everything')} onPress={reset} /></Card><AppText dim style={{ textAlign: 'center', marginTop: 12, lineHeight: 20 }}>openGym · {t('free & open source (AGPL v3)')}\n{t('Offline-first · no account · no server')}</AppText>
+    <SectionTitle>{t('Data')}</SectionTitle><Card style={{ paddingVertical: 0 }}><Row icon="creation" title={t('Load starter plan (PPL)')} onPress={() => { update(addStarterPlan); notify(t('Starter plan loaded — Mon Push · Wed Pull · Fri Legs')); }} /><Row icon="database" title={t('Load demo data')} subtitle={t('Populates 12 weeks of workouts & body weight')} onPress={loadDemo} /><Row icon="swap-horizontal" title={t('Import from another app')} subtitle={t('FitNotes, Strong, Hevy, or Apple Health')} onPress={importApp} /><Row icon="upload" title={t('Import backup')} onPress={importData} /><Row icon="download" title={t('Export backup (JSON)')} onPress={() => exportBackup(S).then(() => notify(t('Backup exported'))).catch(error => notify(error.message))} /><Row icon="trash-can" danger title={t('Reset everything')} onPress={reset} /></Card><SectionTitle>{t('AI Plan')}</SectionTitle>
+    <AiPlanSection onLoad={plan => { update(state => { state.routines.push(...plan.routines); Object.assign(state.week, plan.week); }); notify(t('AI plan loaded!')); }} />
+    <AppText dim style={{ textAlign: 'center', marginTop: 12, lineHeight: 20 }}>openGym · {t('free & open source (AGPL v3)')}\n{t('Offline-first · no account · no server')}</AppText>
   </Screen>;
 }
 const styles = StyleSheet.create({ label: { fontSize: 13, fontWeight: '700', marginTop: 5 }, chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, paddingVertical: 4 }, swatches: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 }, swatchRing: { width: 36, height: 36, borderRadius: 18, borderWidth: 2, borderColor: 'transparent', padding: 3 }, swatch: { flex: 1, borderRadius: 14 } });
+
+
+const GOALS = ['Lose fat', 'Build muscle', 'Get stronger', 'Improve endurance', 'Stay active'];
+const LEVELS = ['Beginner', 'Intermediate', 'Advanced'];
+const DAYS_OPTIONS = ['2', '3', '4', '5', '6'];
+
+function AiPlanSection({ onLoad }) {
+  const colors = useColors();
+  const [goal, setGoal] = useState('Build muscle');
+  const [level, setLevel] = useState('Beginner');
+  const [days, setDays] = useState('3');
+  const [notes, setNotes] = useState('');
+  const [step, setStep] = useState('prompt'); // 'prompt' | 'paste'
+  const [json, setJson] = useState('');
+
+  const sharePrompt = async () => {
+    const prompt = buildAiPrompt({ goal, level, days: Number(days), notes: notes.trim() });
+    try {
+      await Share.share({ message: prompt });
+      setStep('paste');
+    } catch { /* user cancelled */ }
+  };
+
+  const loadPlan = () => {
+    try {
+      const plan = parseAiPlan(json);
+      onLoad(plan);
+      setJson('');
+      setStep('prompt');
+    } catch (err) {
+      Alert.alert(t('Could not load plan'), err.message);
+    }
+  };
+
+  return (
+    <Card>
+      <AppText style={{ fontWeight: '800', fontSize: 16, marginBottom: 4 }}>✨ {t('Generate with AI')}</AppText>
+      <AppText muted style={{ lineHeight: 19, marginBottom: 12 }}>
+        {t('Answer a few questions, copy the prompt, paste it into ChatGPT or Gemini, then paste the result back here.')}
+      </AppText>
+
+      {step === 'prompt' ? <>
+        <AppText muted style={aiStyles.label}>{t('Goal')}</AppText>
+        <View style={aiStyles.chips}>{GOALS.map(g => <Chip key={g} title={t(g)} active={goal === g} onPress={() => setGoal(g)} />)}</View>
+
+        <AppText muted style={aiStyles.label}>{t('Experience')}</AppText>
+        <View style={aiStyles.chips}>{LEVELS.map(l => <Chip key={l} title={t(l)} active={level === l} onPress={() => setLevel(l)} />)}</View>
+
+        <AppText muted style={aiStyles.label}>{t('Days per week')}</AppText>
+        <View style={aiStyles.chips}>{DAYS_OPTIONS.map(d => <Chip key={d} title={d} active={days === d} onPress={() => setDays(d)} />)}</View>
+
+        <AppText muted style={[aiStyles.label, { marginTop: 12 }]}>{t('Anything else? (optional)')}</AppText>
+        <Input
+          value={notes}
+          onChangeText={setNotes}
+          placeholder={t('e.g. no equipment, focus on upper body…')}
+          style={{ marginTop: 4 }}
+        />
+
+        <Button title={t('Copy prompt & open AI')} icon="creation" primary onPress={sharePrompt} style={{ marginTop: 14 }} />
+      </> : <>
+        <AppText muted style={{ lineHeight: 19, marginBottom: 8 }}>
+          {t('Paste the JSON your AI returned below, then tap Load.')}
+        </AppText>
+        <Input
+          value={json}
+          onChangeText={setJson}
+          placeholder={'{\n  "routines": […]\n}'}
+          multiline
+          numberOfLines={6}
+          style={{ fontFamily: 'monospace', fontSize: 13, minHeight: 120, textAlignVertical: 'top' }}
+        />
+        <View style={{ flexDirection: 'row', gap: 8, marginTop: 10 }}>
+          <Button title={t('Back')} onPress={() => { setStep('prompt'); setJson(''); }} style={{ flex: 1 }} />
+          <Button title={t('Load plan')} icon="check" primary disabled={!json.trim()} onPress={loadPlan} style={{ flex: 1 }} />
+        </View>
+      </>}
+    </Card>
+  );
+}
+const aiStyles = StyleSheet.create({
+  label: { fontSize: 13, fontWeight: '700', marginTop: 10, marginBottom: 4 },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+});

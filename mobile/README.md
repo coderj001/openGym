@@ -48,6 +48,19 @@ npm run web       # optional browser preview
 
 A physical device must be reachable by the development machine while using Expo's development server. This connection is needed only for development; an installed native build works offline.
 
+## Release builds
+
+Production binaries are built with Expo Application Services (EAS). The Android output is an App Bundle (`.aab`) for Google Play; the iOS output is an archive for App Store Connect. The first two commands require an Expo account and create/link the account-specific EAS project ID; do not commit an ID owned by another account.
+
+```bash
+cd mobile
+npx eas-cli@latest login
+npx eas-cli@latest init
+npx eas-cli@latest build --platform all --profile production
+```
+
+The resulting build links are printed by EAS. Builds bundle the app and its exercise media, so no backend is required after installation. `eas.json` enables EAS-managed build-number increments for both platforms.
+
 ## Native development builds
 
 Generate and run the native project for the selected platform:
