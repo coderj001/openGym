@@ -2,10 +2,12 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { FlatList, Modal, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Image } from 'expo-image';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { allExercises, BODYPARTS, exOr, mediaFor } from '../lib/exercises';
+import { allExercises, BODYPARTS, equipmentOf, exOr, mediaFor } from '../lib/exercises';
+import { MUSCLE_NAME, musclesOf } from '../lib/muscles';
 import { defaultConfig, modeOf } from '../lib/history';
 import { instrFor, t } from '../lib/i18n';
 import { useStore } from '../store';
+import BodyMap from './BodyMap';
 import { AppText, Button, Card, Chip, Header, IconButton, Input, Screen, SectionTitle, useColors } from './ui';
 
 export function ExerciseMedia({ exercise, compact = false, mini = false }) {
@@ -21,14 +23,15 @@ export function ExerciseRow({ exercise, onPress, accessory, fullName = false }) 
   </Pressable>;
 }
 export function ExercisePicker({ visible, onClose, onPick }) {
-  const { S } = useStore(); const [query, setQuery] = useState(''); const [part, setPart] = useState('');
-  useEffect(() => { if (visible) { setQuery(''); setPart(''); } }, [visible]);
-  const list = useMemo(() => { const q = query.trim().toLowerCase(); return allExercises(S).filter(exercise => (!part || exercise.bp === part) && (!q || `${exercise.n} ${exercise.tg} ${exercise.eq}`.toLowerCase().includes(q))); }, [S, query, part]);
+  const { S } = useStore(); const colors = useColors(); const [query, setQuery] = useState(''); const [muscles, setMuscles] = useState(new Set()); const [showMap, setShowMap] = useState(false); const [equipment, setEquipment] = useState('');
+  useEffect(() => { if (visible) { setQuery(''); setMuscles(new Set()); setEquipment(''); setShowMap(false); } }, [visible]);
+  const base = useMemo(() => { const q = query.trim().toLowerCase(); return allExercises(S).filter(exercise => (muscles.size === 0 || [...muscles].some(m => musclesOf(exercise)[m])) && (!q || `${exercise.n} ${exercise.tg} ${exercise.eq} ${exercise.desc || ''}`.toLowerCase().includes(q))); }, [S, query, muscles]);
+  const equipmentOptions = equipmentOf(base); const activeEquipment = equipmentOptions.includes(equipment) ? equipment : ''; const list = activeEquipment ? base.filter(exercise => exercise.eq === activeEquipment) : base;
+  const toggleMuscle = value => { setMuscles(prev => { const next = new Set(prev); next.has(value) ? next.delete(value) : next.add(value); return next; }); setEquipment(''); };
   return <Modal visible={visible} animationType="slide" onRequestClose={onClose}><Screen scroll={false} contentStyle={{ paddingBottom: 0 }}>
     <Header title={t('Exercises')} subtitle={t('{0} exercises', list.length)} left={<IconButton name="close" onPress={onClose} />} />
-    <Input value={query} onChangeText={setQuery} placeholder={t('Search…')} autoCorrect={false} />
-    <ScrollView horizontal style={styles.pickerFilters} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.pickerFilterContent}><Chip title={t('All')} active={!part} onPress={() => setPart('')} />{BODYPARTS.map(value => <Chip key={value} title={t(value)} active={part === value} onPress={() => setPart(value)} />)}</ScrollView>
-    <FlatList data={list} keyExtractor={item => item.id} initialNumToRender={20} keyboardShouldPersistTaps="handled" renderItem={({ item }) => <ExerciseRow exercise={item} onPress={() => onPick(item)} />} />
+    <View style={{ flexDirection: 'row', gap: 8, marginBottom: 8 }}><Input style={{ flex: 1 }} value={query} onChangeText={setQuery} placeholder={t('Search…')} autoCorrect={false} /><IconButton name={showMap ? 'filter-remove' : 'filter'} onPress={() => setShowMap(v => !v)} color={(muscles.size > 0 || activeEquipment) ? colors.accent : undefined} /></View>
+    <FlatList data={list} keyExtractor={item => item.id} initialNumToRender={20} keyboardShouldPersistTaps="handled" ListHeaderComponent={<>{muscles.size > 0 ? <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.pickerFilterContent} style={{ flexGrow: 0, marginBottom: 8 }}>{[...muscles].map(m => <Chip key={m} title={`× ${t(MUSCLE_NAME[m])}`} active onPress={() => toggleMuscle(m)} />)}</ScrollView> : null}{showMap ? <Card style={styles.muscleCard}><AppText muted style={{ fontSize: 12 }}>{t('Tap muscles to filter — multiple selections show exercises matching any')}</AppText><BodyMap body={S.body} selected={muscles} onMuscle={toggleMuscle} />{equipmentOptions.length > 1 ? <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={[styles.pickerFilterContent, { marginTop: 8 }]}><Chip title={t('Any equipment')} active={!activeEquipment} onPress={() => setEquipment('')} />{equipmentOptions.map(value => <Chip key={value} title={t(value)} active={activeEquipment === value} onPress={() => setEquipment(value)} />)}</ScrollView> : null}</Card> : null}</>} renderItem={({ item }) => <ExerciseRow exercise={item} onPress={() => onPick(item)} />} />
   </Screen></Modal>;
 }
 export function ExerciseDetail({ exercise, visible, onClose, footer }) {
@@ -54,4 +57,4 @@ export function ExerciseConfig({ exercise, initial, visible, onClose, onSave, on
     <Button title={t('Save')} primary onPress={() => onSave(config)} />{onDelete ? <Button title={t('Remove exercise')} danger onPress={onDelete} /> : null}
   </ScrollView></View></Modal>;
 }
-const styles = StyleSheet.create({ media: { width: '100%', borderRadius: 16 }, mediaFallback: { width: '100%', borderRadius: 16, alignItems: 'center', justifyContent: 'center' }, exerciseRow: { minHeight: 66, flexDirection: 'row', alignItems: 'center', gap: 10, borderBottomWidth: StyleSheet.hairlineWidth }, exerciseRowFullName: { paddingVertical: 12, alignItems: 'flex-start' }, exerciseIcon: { width: 42, height: 42, borderRadius: 11, alignItems: 'center', justifyContent: 'center' }, exerciseIconFullName: { marginTop: 1 }, exerciseText: { flex: 1, minWidth: 0 }, exerciseName: { fontWeight: '700', textTransform: 'capitalize', lineHeight: 21 }, exerciseMeta: { fontSize: 12, textTransform: 'capitalize', marginTop: 3 }, pickerFilters: { flexGrow: 0, height: 48 }, pickerFilterContent: { gap: 8, paddingVertical: 6, alignItems: 'center' }, tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 }, step: { flexDirection: 'row', gap: 8, marginBottom: 12 }, overlay: { flex: 1, backgroundColor: '#000a', justifyContent: 'center', padding: 16 }, dialog: { borderRadius: 20, padding: 16, gap: 12, maxHeight: '90%' }, fields: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 }, fieldLabel: { fontSize: 12, marginBottom: 5 }, option: { flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 42 } });
+const styles = StyleSheet.create({ media: { width: '100%', borderRadius: 16 }, mediaFallback: { width: '100%', borderRadius: 16, alignItems: 'center', justifyContent: 'center' }, exerciseRow: { minHeight: 66, flexDirection: 'row', alignItems: 'center', gap: 10, borderBottomWidth: StyleSheet.hairlineWidth }, exerciseRowFullName: { paddingVertical: 12, alignItems: 'flex-start' }, exerciseIcon: { width: 42, height: 42, borderRadius: 11, alignItems: 'center', justifyContent: 'center' }, exerciseIconFullName: { marginTop: 1 }, exerciseText: { flex: 1, minWidth: 0 }, exerciseName: { fontWeight: '700', textTransform: 'capitalize', lineHeight: 21 }, exerciseMeta: { fontSize: 12, textTransform: 'capitalize', marginTop: 3 }, pickerFilters: { flexGrow: 0, height: 48 }, pickerFilterContent: { gap: 8, paddingVertical: 6, alignItems: 'center' }, muscleCard: { gap: 6, marginBottom: 8 }, tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 }, step: { flexDirection: 'row', gap: 8, marginBottom: 12 }, overlay: { flex: 1, backgroundColor: '#000a', justifyContent: 'center', padding: 16 }, dialog: { borderRadius: 20, padding: 16, gap: 12, maxHeight: '90%' }, fields: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 }, fieldLabel: { fontSize: 12, marginBottom: 5 }, option: { flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 42 } });
