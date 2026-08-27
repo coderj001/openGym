@@ -11,15 +11,19 @@ const PATHS = {"male":{"front":{"calves":["M502.8,1183.5c-.68,1.05-1.86,1.29-2.7
 function Figure({ paths, label, selected, onMuscle, colors }) {
   return <View style={styles.figure}>
     <Svg width="100%" height={250} viewBox="0 0 660.46 1206.46" accessibilityLabel={label}>
-      {Object.entries(paths).map(([muscle, segments]) => <G key={muscle} onPress={() => onMuscle(muscle)} accessibilityRole="button" accessibilityLabel={t(MUSCLE_NAME[muscle])}>
-        {segments.map((d, index) => <Path key={index} d={d} fill={selected === muscle ? colors.accent : colors.dark ? colors.muted : colors.surface2} stroke={colors.border} strokeWidth={2} />)}
-      </G>)}
+      {Object.entries(paths).map(([muscle, segments]) => {
+        const active = selected.has(muscle);
+        return <G key={muscle} onPress={() => onMuscle(muscle)} accessibilityRole="button" accessibilityLabel={t(MUSCLE_NAME[muscle])}>
+          {segments.map((d, index) => <Path key={index} d={d} fill={active ? colors.accent : colors.dark ? colors.muted : colors.surface2} stroke={active ? colors.accent : colors.border} strokeWidth={active ? 0 : 1.5} opacity={active ? 1 : 0.85} />)}
+        </G>;
+      })}
     </Svg>
     <AppText muted style={styles.label}>{label}</AppText>
   </View>;
 }
 
-export default function BodyMap({ body = 'male', selected, onMuscle }) {
+// selected: Set<string> of canonical muscle slugs
+export default function BodyMap({ body = 'male', selected = new Set(), onMuscle }) {
   const colors = useColors(); const views = PATHS[body] || PATHS.male;
   return <View style={styles.map}>
     <Figure paths={views.front} label={t('Front')} selected={selected} onMuscle={onMuscle} colors={colors} />
