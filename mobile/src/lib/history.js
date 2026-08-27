@@ -94,18 +94,19 @@ const effortTail = s => {
 export function setLabel(id, s, cfg) {
   const c = cfg || { id }
   const mode = modeOf(c)
-  if (mode === 'cardio') return `${s.min || 0} min @ ${fmtNum(s.speed || 0)} km/h`
-  if (mode === 'time') return fmtSec(s.sec) + (s.w > 0 ? ` · ${fmtNum(s.w)}` : '')
-  // Bodyweight reads as what you did — "12", or "+10 × 12" once there is a belt involved —
-  // rather than "0×12", which says a set was performed with no weight and means nothing.
-  // A per-side set needs no mark here: the number logged is the total, the same as every
-  // other set in the app.
-  const reps = s.r || 0
-  if (isBw({ ...c, id: c.id ?? id })) {
+  let prefix = ''
+  if (s.kind === 'w') prefix = 'W: '
+  else if (s.kind === 'd') prefix = 'Drop: '
+  else if (s.kind === 'a') prefix = 'AMRAP: '
+  const suffix = s.fail ? ' (Fail)' : ''
+  let base = ''
+  if (mode === 'cardio') base = `${s.min || 0} min @ ${fmtNum(s.speed || 0)} km/h`
+  else if (mode === 'time') base = fmtSec(s.sec) + (s.w > 0 ? ` · ${fmtNum(s.w)}` : '')
+  else if (isBw({ ...c, id: c.id ?? id })) {
     const load = s.w > 0 ? `+${fmtNum(s.w)} × ` : ''
-    return `${load}${reps}` + effortTail(s)
-  }
-  return `${fmtNum(s.w || 0)}×${reps}` + effortTail(s)
+    base = `${load}${s.r || 0}` + effortTail(s)
+  } else base = `${fmtNum(s.w || 0)}×${s.r || 0}` + effortTail(s)
+  return prefix + base + suffix
 }
 // Default config for a freshly added exercise.
 export function defaultConfig(id, mode) {
@@ -214,6 +215,20 @@ export function setsDone(w) {
   let n = 0
   w.entries.forEach(e => e.sets.forEach(s => { if (s.done) n++ }))
   return n
+}
+export function advancedSetsSummary(w) {
+  const all = w.entries.flatMap(e => e.sets.filter(s => s.done))
+  const total = all.length
+  const warmups = all.filter(s => s.kind === 'w').length
+  const drops = all.filter(s => s.kind === 'd').length
+  const amraps = all.filter(s => s.kind === 'a').length
+  const fails = all.filter(s => s.fail).length
+  const parts = []
+  if (warmups) parts.push(`${warmups} W`)
+  if (drops) parts.push(`${drops} D`)
+  if (amraps) parts.push(`${amraps} A`)
+  if (fails) parts.push(`${fails} F`)
+  return { total, text: parts.join(' · ') }
 }
 export function setsDoneActive(A) {
   let n = 0

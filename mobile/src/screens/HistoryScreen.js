@@ -3,7 +3,7 @@ import { Alert, Modal, Pressable, StyleSheet, View } from 'react-native';
 import { useStore } from '../store';
 import { exOr } from '../lib/exercises';
 import { fmtDate, fmtDur, fmtNum } from '../lib/format';
-import { setLabel, setsDone, workoutVolume } from '../lib/history';
+import { advancedSetsSummary, setLabel, setsDone, workoutVolume } from '../lib/history';
 import { t } from '../lib/i18n';
 import { AppText, Button, Card, Header, IconButton, Screen, useColors } from '../components/ui';
 
@@ -11,7 +11,7 @@ export default function HistoryScreen({ navigation, route }) {
   const { S, update } = useStore(); const colors = useColors(); const [selected, setSelected] = useState(null);
   useEffect(() => { if (route.params?.workoutId) setSelected(S.workouts.find(item => item.id === route.params.workoutId) || null); }, [route.params?.workoutId]);
   const remove = workout => Alert.alert(t('Delete workout?'), t('This workout will be removed from your history.'), [{ text: t('Cancel') }, { text: t('Delete'), style: 'destructive', onPress: () => { update(state => { state.workouts = state.workouts.filter(item => item.id !== workout.id); }); setSelected(null); } }]);
-  return <Screen><Header title={t('History')} subtitle={t('{0} workouts', S.workouts.length)} left={<IconButton name="chevron-left" onPress={() => navigation.goBack()} />} />{S.workouts.length ? [...S.workouts].reverse().map(workout => <Pressable key={workout.id} onPress={() => setSelected(workout)}><Card><View style={styles.between}><View style={{ flex: 1 }}><AppText style={{ fontWeight: '800', fontSize: 17 }}>{workout.name}</AppText><AppText muted style={{ marginTop: 3 }}>{fmtDate(workout.d, true)} · {fmtDur(workout.duration || workout.end - workout.start)} · {setsDone(workout)} {t('sets')}</AppText></View><AppText style={{ color: colors.accent, fontWeight: '800' }}>{fmtNum(workoutVolume(workout))} {S.unit}</AppText></View></Card></Pressable>) : <Card><AppText muted style={{ textAlign: 'center' }}>{t('No workouts yet.')}</AppText></Card>}
+  return <Screen><Header title={t('History')} subtitle={t('{0} workouts', S.workouts.length)} left={<IconButton name="chevron-left" onPress={() => navigation.goBack()} />} />{S.workouts.length ? [...S.workouts].reverse().map(workout => { const summary = advancedSetsSummary(workout); return <Pressable key={workout.id} onPress={() => setSelected(workout)}><Card><View style={styles.between}><View style={{ flex: 1 }}><AppText style={{ fontWeight: '800', fontSize: 17 }}>{workout.name}</AppText><AppText muted style={{ marginTop: 3 }}>{fmtDate(workout.d, true)} · {fmtDur(workout.duration || workout.end - workout.start)} · {summary.total} {t('sets')}{summary.text ? ` (${summary.text})` : ''}</AppText></View><AppText style={{ color: colors.accent, fontWeight: '800' }}>{fmtNum(workoutVolume(workout))} {S.unit}</AppText></View></Card></Pressable>; }) : <Card><AppText muted style={{ textAlign: 'center' }}>{t('No workouts yet.')}</AppText></Card>}
     <WorkoutDetail workout={selected} close={() => setSelected(null)} remove={() => remove(selected)} unit={S.unit} />
   </Screen>;
 }
