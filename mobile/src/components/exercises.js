@@ -22,10 +22,107 @@ export function ExerciseRow({ exercise, onPress, accessory, fullName = false }) 
     <View style={styles.exerciseText}><AppText numberOfLines={fullName ? undefined : 1} style={styles.exerciseName}>{exercise.n}</AppText><AppText muted numberOfLines={1} style={styles.exerciseMeta}>{exercise.tg || exercise.bp} · {exercise.eq}</AppText></View>{accessory}
   </Pressable>;
 }
+export function useExerciseSearch(S, query, muscles) {
+  return useMemo(() => {
+    const q = query.trim().toLowerCase();
+    const qWords = q.split(/\s+/).filter(Boolean);
+    const usage = new Map();
+    S.workouts.forEach(w => {
+      const time = new Date(w.d).getTime() || 0;
+      w.entries.forEach(e => {
+        const u = usage.get(e.id) || { count: 0, last: 0, routine: 0 };
+        u.count++;
+        if (time > u.last) u.last = time;
+        usage.set(e.id, u);
+      });
+    });
+    S.routines.forEach(r => {
+      r.ex.forEach(e => {
+        const u = usage.get(e.id) || { count: 0, last: 0, routine: 0 };
+        u.routine++;
+        usage.set(e.id, u);
+      });
+    });
+
+    const results = [];
+    for (const ex of allExercises(S)) {
+      if (muscles.size > 0 && ![...muscles].some(m => musclesOf(ex)[m])) continue;
+      
+      const tStr = `${ex.n} ${ex.tg} ${ex.eq} ${ex.desc || ''}`.toLowerCase();
+      let score = 100;
+      if (qWords.length > 0) {
+        score = 0;
+        let allMatched = true;
+        for (const qw of qWords) {
+          if (tStr.includes(qw)) {
+            score += 10;
+            continue;
+          }
+          // subsequence match (e.g. "rdl" matches "romanian deadlift")
+          let i = 0;
+          for (const c of tStr) {
+            if (c === qw[i]) i++;
+            if (i === qw.length) break;
+          }
+          if (i === qw.length) {
+            score += 5;
+            continue;
+          }
+          // 1 typo tolerance for longer words
+          if (qw.length >= 3) {
+            const tWords = tStr.split(/\s+/).filter(Boolean);
+            let typoMatch = false;
+            for (const tw of tWords) {
+              if (Math.abs(tw.length - qw.length) <= 1) {
+                let diff = 0;
+                let qIdx = 0, tIdx = 0;
+                while (qIdx < qw.length && tIdx < tw.length) {
+                  if (qw[qIdx] !== tw[tIdx]) {
+                    diff++;
+                    if (diff > 1) break;
+                    if (qw.length > tw.length) qIdx++;
+                    else if (tw.length > qw.length) tIdx++;
+                    else { qIdx++; tIdx++; }
+                  } else { qIdx++; tIdx++; }
+                }
+                diff += (qw.length - qIdx) + (tw.length - tIdx);
+                if (diff <= 1) { score += 3; typoMatch = true; break; }
+                // transposition
+                if (qw.length === tw.length && diff === 2) {
+                  let bad = [];
+                  for (let k = 0; k < tw.length; k++) if (tw[k] !== qw[k]) bad.push(k);
+                  if (bad.length === 2 && tw[bad[0]] === qw[bad[1]] && tw[bad[1]] === qw[bad[0]]) {
+                    score += 3; typoMatch = true; break;
+                  }
+                }
+              }
+            }
+            if (typoMatch) continue;
+          }
+          allMatched = false;
+          break;
+        }
+        if (!allMatched) continue;
+      }
+
+      const u = usage.get(ex.id) || { count: 0, last: 0, routine: 0 };
+      results.push({ ex, score, u });
+    }
+
+    return results.sort((a, b) => {
+      if (a.score !== b.score) return b.score - a.score;
+      if (a.u.count !== b.u.count) return b.u.count - a.u.count;
+      if (a.u.routine !== b.u.routine) return b.u.routine - a.u.routine;
+      if (a.u.last !== b.u.last) return b.u.last - a.u.last;
+      return a.ex.n.localeCompare(b.ex.n);
+    }).map(r => r.ex);
+  }, [S, query, muscles]);
+}
+
 export function ExercisePicker({ visible, onClose, onPick }) {
   const { S } = useStore(); const colors = useColors(); const [query, setQuery] = useState(''); const [muscles, setMuscles] = useState(new Set()); const [showMap, setShowMap] = useState(false); const [equipment, setEquipment] = useState('');
   useEffect(() => { if (visible) { setQuery(''); setMuscles(new Set()); setEquipment(''); setShowMap(false); } }, [visible]);
-  const base = useMemo(() => { const q = query.trim().toLowerCase(); return allExercises(S).filter(exercise => (muscles.size === 0 || [...muscles].some(m => musclesOf(exercise)[m])) && (!q || `${exercise.n} ${exercise.tg} ${exercise.eq} ${exercise.desc || ''}`.toLowerCase().includes(q))); }, [S, query, muscles]);
+  const base = useExerciseSearch(S, query, muscles);
   const equipmentOptions = equipmentOf(base); const activeEquipment = equipmentOptions.includes(equipment) ? equipment : ''; const list = activeEquipment ? base.filter(exercise => exercise.eq === activeEquipment) : base;
   const toggleMuscle = value => { setMuscles(prev => { const next = new Set(prev); next.has(value) ? next.delete(value) : next.add(value); return next; }); setEquipment(''); };
   return <Modal visible={visible} animationType="slide" onRequestClose={onClose}><Screen scroll={false} contentStyle={{ paddingBottom: 0 }}>

@@ -7,13 +7,13 @@ import { defaultConfig } from '../lib/history';
 import { bestWeightFor } from '../lib/history';
 import { fmtNum, uid } from '../lib/format';
 import { t } from '../lib/i18n';
-import { ExerciseConfig, ExerciseDetail, ExerciseRow } from '../components/exercises';
+import { ExerciseConfig, ExerciseDetail, ExerciseRow, useExerciseSearch } from '../components/exercises';
 import BodyMap from '../components/BodyMap';
 import { AppText, Button, Card, Chip, Header, IconButton, Input, Screen, useColors } from '../components/ui';
 
 export default function LibraryScreen() {
   const { S, update } = useStore(); const colors = useColors(); const [query, setQuery] = useState(''); const [muscles, setMuscles] = useState(new Set()); const [showMap, setShowMap] = useState(false); const [equipment, setEquipment] = useState(''); const [shown, setShown] = useState(40); const [detail, setDetail] = useState(null); const [addExercise, setAddExercise] = useState(null); const [addRoutine, setAddRoutine] = useState(null); const [custom, setCustom] = useState(false); const [customEdit, setCustomEdit] = useState(null); const [customName, setCustomName] = useState(''); const [customPart, setCustomPart] = useState('other');
-  const base = useMemo(() => { const q = query.trim().toLowerCase(); return allExercises(S).filter(exercise => (muscles.size === 0 || [...muscles].some(m => musclesOf(exercise)[m])) && (!q || `${exercise.n} ${exercise.tg} ${exercise.eq} ${exercise.desc || ''}`.toLowerCase().includes(q))); }, [S, query, muscles]); const equipmentOptions = equipmentOf(base); const activeEquipment = equipmentOptions.includes(equipment) ? equipment : ''; const list = activeEquipment ? base.filter(exercise => exercise.eq === activeEquipment) : base;
+  const base = useExerciseSearch(S, query, muscles); const equipmentOptions = equipmentOf(base); const activeEquipment = equipmentOptions.includes(equipment) ? equipment : ''; const list = activeEquipment ? base.filter(exercise => exercise.eq === activeEquipment) : base;
   const toggleMuscle = value => { setMuscles(prev => { const next = new Set(prev); next.has(value) ? next.delete(value) : next.add(value); return next; }); setEquipment(''); setShown(40); };
   const createCustom = () => { const name = customName.trim(); if (!name) return; const exercise = customEdit ? { ...customEdit, n: name, bp: customPart, tg: customPart } : { id: `custom-${uid()}`, n: name, bp: customPart, tg: customPart, eq: 'other', sm: [], st: [] }; update(state => { if (customEdit) state.customEx = state.customEx.map(item => item.id === customEdit.id ? exercise : item); else state.customEx.unshift(exercise); }); setCustom(false); setCustomEdit(null); setCustomName(''); setDetail(exercise); };
   const editCustom = exercise => { setDetail(null); setCustomEdit(exercise); setCustomName(exercise.n); setCustomPart(exercise.bp); setCustom(true); };

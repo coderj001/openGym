@@ -1,5 +1,6 @@
 import React from 'react';
 import Svg, { Path, Circle, Rect } from 'react-native-svg';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function Icon({ name, size = 24, color = '#000', style }) {
   const P = {
@@ -119,8 +120,7 @@ export default function Icon({ name, size = 24, color = '#000', style }) {
   const d = P[actualName];
 
   if (!d) {
-    // Return empty SVG to prevent crashing if icon mapping is missed
-    return <Svg width={size} height={size} viewBox="0 0 24 24" style={style} />;
+    return <MaterialCommunityIcons name={actualName} size={size} color={color} style={style} />;
   }
 
   return (
