@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import { buildDemoState } from './demoSeed';
 import { effortSummary, effortWeeks, effortHistogram, hasEffort, displayScale, avgRir, rirOf, isHardSet, MIN_RATED, HARD_RIR } from './effort';
 import { effortOf, modeOf } from './history';
@@ -9,11 +7,6 @@ const eachSet = fn => S.workouts.forEach(w => w.entries.forEach(e => e.sets.forE
 const sum = effortSummary(S, 0);
 
 describe('mobile demo seed', () => {
-  it('writes demo-backup.json for testing and manual import', () => {
-    const filePath = path.resolve(__dirname, '../../demo-backup.json');
-    fs.writeFileSync(filePath, JSON.stringify(S, null, 2));
-    expect(fs.existsSync(filePath)).toBe(true);
-  });
   it('rates enough of the history to clear every guard in the effort stats', () => {
     expect(hasEffort(S)).toBe(true);
     expect(sum.done).toBeGreaterThan(400);
