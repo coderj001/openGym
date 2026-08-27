@@ -91,30 +91,87 @@ function ActiveWorkout({ onFinished }) {
     {A.entries.length ? unit.map(entryIndex => <EntryBlock key={entryIndex} entryIndex={entryIndex} onToggle={setIndex => toggle(entryIndex, setIndex)} mutate={fn => mutateEntry(entryIndex, fn)} onDetail={() => setDetail(exOr(A.entries[entryIndex].id))} onWork={(setIndex, seconds) => setWork({ entryIndex, setIndex, seconds, started: Date.now() })} onSetMenu={(setIndex, set) => setSetMenu({ entryIndex, setIndex, set })} />) : <Card><AppText muted style={{ textAlign: 'center' }}>{t('Freestyle workout — add your first exercise.')}</AppText></Card>}
     <View style={styles.nav}><Button title={t('Prev')} icon="chevron-left" disabled={unitIndex <= 0} onPress={() => update(state => { state.active.cur = units[unitIndex - 1][0]; })} style={{ flex: 1 }} /><Button title={t('Next')} disabled={unitIndex < 0 || unitIndex >= units.length - 1} onPress={() => update(state => { state.active.cur = units[unitIndex + 1][0]; })} style={{ flex: 1 }} /></View><Button title={t('Add exercise')} icon="plus" onPress={() => setPicker(true)} /><Button title={done === total && total ? t('Finish workout') : t('Finish workout early')} primary={done === total && total > 0} onPress={finish} />
     <ExercisePicker visible={picker} onClose={() => setPicker(false)} onPick={exercise => { setPicker(false); setConfigEx(exercise); }} /><ExerciseConfig exercise={configEx} visible={!!configEx} onClose={() => setConfigEx(null)} onSave={config => { update(state => addExerciseToActive(state, configEx, config)); setConfigEx(null); }} /><ExerciseDetail exercise={detail} visible={!!detail} onClose={() => setDetail(null)} /><WorkTimer work={work} close={() => setWork(null)} complete={elapsed => { if (!work) return; mutateEntry(work.entryIndex, entry => { entry.sets[work.setIndex].sec = elapsed; }); if (!A.entries[work.entryIndex].sets[work.setIndex].done) toggle(work.entryIndex, work.setIndex); setWork(null); }} />
-    <SetMenu target={setMenu} close={() => setSetMenu(null)} mutate={(entryIndex, setIndex, fn) => { mutateEntry(entryIndex, entry => fn(entry.sets[setIndex])); setSetMenu(null); }} />
+    <SetMenu target={setMenu} close={() => setSetMenu(null)} updateEntry={(entryIndex, fn) => { mutateEntry(entryIndex, fn); setSetMenu(null); }} S={S} />
   </Screen>;
 }
 
-function SetMenu({ target, close, mutate }) {
+function SetMenu({ target, close, updateEntry, S }) {
   const colors = useColors();
+  const [warmupMode, setWarmupMode] = useState(false);
+  const [warmupWeight, setWarmupWeight] = useState('');
+  useEffect(() => { if (target && target.set.w) setWarmupWeight(String(target.set.w)); else setWarmupWeight(''); setWarmupMode(false); }, [target]);
+
   if (!target) return null;
   const { entryIndex, setIndex, set } = target;
-  const toggle = (field, value) => mutate(entryIndex, setIndex, s => { s[field] = s[field] === value ? undefined : value; });
+
+  const saveWarmup = (weightNum) => {
+    updateEntry(entryIndex, entry => {
+      entry.sets[setIndex].kind = 'w';
+      if (weightNum !== undefined) entry.sets[setIndex].w = weightNum;
+    });
+  };
+
+  const addDropSet = () => {
+    updateEntry(entryIndex, entry => {
+      const current = entry.sets[setIndex];
+      const drop = { ...current, w: Math.round((current.w || 0) * 0.8), r: undefined, kind: 'd', done: false, fail: false };
+      entry.sets.splice(setIndex + 1, 0, drop);
+    });
+  };
+
+  const markAmrap = () => {
+    updateEntry(entryIndex, entry => {
+      entry.sets[setIndex].kind = entry.sets[setIndex].kind === 'a' ? undefined : 'a';
+      if (entry.sets[setIndex].kind === 'a') entry.sets[setIndex].r = undefined;
+    });
+  };
+
+  const toggleFail = () => {
+    updateEntry(entryIndex, entry => {
+      const s = entry.sets[setIndex];
+      s.fail = !s.fail;
+      if (s.fail && effortOf(S) === 'rir') s.rir = 0;
+      if (s.fail && effortOf(S) === 'rpe') s.rpe = 10;
+    });
+  };
+
+  if (warmupMode) {
+    const plannedWeight = set.w || 0;
+    return <Modal transparent visible animationType="fade" onRequestClose={close}><Pressable style={styles.overlay} onPress={close}><View style={[styles.dialog, { backgroundColor: colors.surface }]} onStartShouldSetResponder={() => true}>
+      <AppText style={{ fontWeight: '800', fontSize: 18, marginBottom: 8 }}>{t('Warm-up weight')}</AppText>
+      <View style={{ flexDirection: 'row', gap: 8 }}>
+        <Button style={{ flex: 1 }} title={t('Bar (20)')} onPress={() => saveWarmup(20)} />
+        {plannedWeight > 20 ? <Button style={{ flex: 1 }} title={t('50% ({0})', Math.round(plannedWeight * 0.5))} onPress={() => saveWarmup(Math.round(plannedWeight * 0.5))} /> : null}
+      </View>
+      <View style={{ flexDirection: 'row', gap: 8, marginTop: 8 }}>
+        <Input autoFocus keyboardType="decimal-pad" value={warmupWeight} onChangeText={setWarmupWeight} style={{ flex: 1 }} placeholder={t('Custom')} />
+        <Button primary title={t('Save')} onPress={() => saveWarmup(Number(warmupWeight.replace(',', '.')) || 0)} />
+      </View>
+    </View></Pressable></Modal>;
+  }
+
   return <Modal transparent visible animationType="fade" onRequestClose={close}><Pressable style={styles.overlay} onPress={close}><View style={[styles.dialog, { backgroundColor: colors.surface }]} onStartShouldSetResponder={() => true}>
-    <AppText style={{ fontWeight: '800', fontSize: 18, marginBottom: 8 }}>{t('Set {0} options', setIndex + 1)}</AppText>
-    <Button title={t('Warm-up set')} icon="fire" primary={set.kind === 'w'} onPress={() => toggle('kind', 'w')} />
-    <Button title={t('Drop-set')} icon="arrow-down-right" primary={set.kind === 'd'} onPress={() => toggle('kind', 'd')} />
-    <Button title={t('AMRAP (As many reps as possible)')} icon="infinity" primary={set.kind === 'a'} onPress={() => toggle('kind', 'a')} />
-    <Button title={t('Reached failure')} icon="skull-crossbones" primary={!!set.fail} onPress={() => toggle('fail', true)} danger={!!set.fail} />
+    <AppText style={{ fontWeight: '800', fontSize: 18, marginBottom: 8 }}>{t('Set {0}', setIndex + 1)}</AppText>
+    
+    <AppText muted style={{ fontSize: 12, marginBottom: 4, textTransform: 'uppercase', letterSpacing: 0.5 }}>{t('Before lifting')}</AppText>
+    <Button title={t('Mark as warm-up')} icon="fire" primary={set.kind === 'w'} onPress={() => {
+      if (set.kind === 'w') { updateEntry(entryIndex, e => e.sets[setIndex].kind = undefined); }
+      else setWarmupMode(true);
+    }} />
+    <Button title={t('Make AMRAP')} icon="infinity" primary={set.kind === 'a'} onPress={markAmrap} />
+
+    <AppText muted style={{ fontSize: 12, marginTop: 12, marginBottom: 4, textTransform: 'uppercase', letterSpacing: 0.5 }}>{t('After lifting')}</AppText>
+    <Button title={t('Add drop set')} icon="arrow-down-right" onPress={addDropSet} />
+    <Button title={t('Reached failure')} icon="skull-crossbones" primary={!!set.fail} onPress={toggleFail} danger={!!set.fail} />
   </View></Pressable></Modal>;
 }
 
 function EntryBlock({ entryIndex, onToggle, mutate, onDetail, onWork, onSetMenu }) {
   const { S } = useStore(); const colors = useColors(); const entry = S.active.entries[entryIndex]; const exercise = exOr(entry.id); const mode = modeOf({ ...entry.target, id: entry.id }); const effort = EFFORT[effortOf(S)]; const bodyweight = isBw({ ...entry.target, id: entry.id });
-  const change = (setIndex, key, value) => mutate(item => { item.sets[setIndex][key] = Math.max(0, Math.round(value * 10) / 10); });
+  const change = (setIndex, key, value) => mutate(item => { item.sets[setIndex][key] = value === undefined ? undefined : Math.max(0, Math.round(value * 10) / 10); });
   const addSet = () => mutate(item => { const last = item.sets[item.sets.length - 1] || {}; item.sets.push({ ...last, done: false }); }); const remove = () => mutate(item => { if (item.sets.length > 1) item.sets.pop(); });
-  return <View style={{ gap: 10 }}><ExerciseMedia exercise={exercise} compact /><View style={styles.between}><Pressable onPress={onDetail} style={{ flex: 1 }}><AppText style={{ fontSize: 21, fontWeight: '800', textTransform: 'capitalize' }}>{exercise.n}</AppText><AppText muted style={{ textTransform: 'capitalize' }}>{exercise.tg || exercise.bp} · {exercise.eq}</AppText></Pressable><IconButton name="information-outline" onPress={onDetail} /></View>{entry.plan?.why && entry.plan.kind !== 'off' ? <Card style={{ backgroundColor: `${colors.accent}18` }}><AppText style={{ color: colors.accent, fontSize: 13 }}>{t(...entry.plan.why)}</AppText></Card> : null}<Card style={{ paddingVertical: 8 }}>{entry.sets.map((set, setIndex) => <View key={setIndex} style={[styles.setRow, { borderBottomColor: colors.border, opacity: set.done ? .55 : 1 }]}><Pressable onPress={() => onSetMenu(setIndex, set)} style={[styles.setNumberBtn, { backgroundColor: colors.surface2 }]} accessibilityLabel={t('Set options')}><AppText style={{ fontWeight: '800', color: set.fail ? colors.danger : colors.text, fontSize: 15 }}>{set.kind === 'w' ? 'W' : set.kind === 'd' ? 'D' : set.kind === 'a' ? 'A' : setIndex + 1}</AppText><MaterialCommunityIcons name="dots-horizontal" size={12} color={colors.dim} style={{ marginTop: -2 }} /></Pressable>{mode === 'cardio' ? <><SetField value={set.min} suffix="min" onChange={value => change(setIndex, 'min', value)} /><SetField value={set.speed} suffix="km/h" onChange={value => change(setIndex, 'speed', value)} /></> : mode === 'time' ? <><SetField value={set.sec} suffix="s" onChange={value => change(setIndex, 'sec', value)} />{!bodyweight || set.w > 0 ? <SetField value={set.w} suffix={S.unit} onChange={value => change(setIndex, 'w', value)} /> : null}<IconButton name="play" disabled={set.done} onPress={() => onWork(setIndex, set.sec || 45)} style={styles.check} /></> : <>{!bodyweight || set.w > 0 ? <SetField value={set.w} suffix={S.unit} onChange={value => change(setIndex, 'w', value)} /> : null}<SetField value={set.r} suffix="reps" onChange={value => change(setIndex, 'r', value)} />{effort ? <SetField value={set[effort.f] ?? ''} suffix={effort.hd} onChange={value => change(setIndex, effort.f, Math.min(effort.max, value))} /> : null}</>}<IconButton name={set.done ? 'check-circle' : 'checkbox-blank-circle-outline'} color={set.done ? colors.accent : colors.muted} onPress={() => onToggle(setIndex)} style={styles.check} /></View>)}<View style={styles.nav}><Button compact title={t('Remove set')} disabled={entry.sets.length <= 1} onPress={remove} style={{ flex: 1 }} /><Button compact title={t('Add set')} icon="plus" onPress={addSet} style={{ flex: 1 }} /></View></Card></View>;
+  return <View style={{ gap: 10 }}><ExerciseMedia exercise={exercise} compact /><View style={styles.between}><Pressable onPress={onDetail} style={{ flex: 1 }}><AppText style={{ fontSize: 21, fontWeight: '800', textTransform: 'capitalize' }}>{exercise.n}</AppText><AppText muted style={{ textTransform: 'capitalize' }}>{exercise.tg || exercise.bp} · {exercise.eq}</AppText></Pressable><IconButton name="information-outline" onPress={onDetail} /></View>{entry.plan?.why && entry.plan.kind !== 'off' ? <Card style={{ backgroundColor: `${colors.accent}18` }}><AppText style={{ color: colors.accent, fontSize: 13 }}>{t(...entry.plan.why)}</AppText></Card> : null}<Card style={{ paddingVertical: 8 }}>{entry.sets.map((set, setIndex) => <View key={setIndex} style={[styles.setRow, { borderBottomColor: colors.border, opacity: set.done ? .55 : 1 }]}><Pressable onPress={() => onSetMenu(setIndex, set)} style={[styles.setNumberBtn, { backgroundColor: colors.surface2 }]} accessibilityLabel={t('Set options')}><AppText style={{ fontWeight: '800', color: set.fail ? colors.danger : colors.text, fontSize: 15 }}>{set.kind === 'w' ? 'W' : set.kind === 'd' ? 'D' : set.kind === 'a' ? 'A' : setIndex + 1}</AppText><MaterialCommunityIcons name="dots-horizontal" size={12} color={colors.dim} style={{ marginTop: -2 }} /></Pressable>{mode === 'cardio' ? <><SetField value={set.min} suffix="min" onChange={value => change(setIndex, 'min', value)} /><SetField value={set.speed} suffix="km/h" onChange={value => change(setIndex, 'speed', value)} /></> : mode === 'time' ? <><SetField value={set.sec} suffix="s" onChange={value => change(setIndex, 'sec', value)} />{!bodyweight || set.w > 0 ? <SetField value={set.w} suffix={S.unit} onChange={value => change(setIndex, 'w', value)} /> : null}<IconButton name="play" disabled={set.done} onPress={() => onWork(setIndex, set.sec || 45)} style={styles.check} /></> : <>{!bodyweight || set.w > 0 ? <SetField value={set.w} suffix={S.unit} onChange={value => change(setIndex, 'w', value)} /> : null}<SetField value={set.r} suffix={set.kind === 'a' ? 'reps (AMRAP)' : 'reps'} onChange={value => change(setIndex, 'r', value)} placeholder={set.kind === 'a' || set.kind === 'd' ? '?' : undefined} />{effort ? <SetField value={set[effort.f] ?? ''} suffix={effort.hd} onChange={value => change(setIndex, effort.f, Math.min(effort.max, value))} /> : null}</>}<IconButton name={set.done ? 'check-circle' : 'checkbox-blank-circle-outline'} color={set.done ? colors.accent : colors.muted} onPress={() => onToggle(setIndex)} style={styles.check} /></View>)}<View style={styles.nav}><Button compact title={t('Remove set')} disabled={entry.sets.length <= 1} onPress={remove} style={{ flex: 1 }} /><Button compact title={t('Add set')} icon="plus" onPress={addSet} style={{ flex: 1 }} /></View></Card></View>;
 }
-function SetField({ value, suffix, onChange }) { const colors = useColors(); return <View style={[styles.setField, { backgroundColor: colors.surface2 }]}><TextInput keyboardType="decimal-pad" value={String(value)} onChangeText={text => onChange(Number(text.replace(',', '.')) || 0)} style={[styles.setInput, { color: colors.text }]} /><AppText dim style={{ fontSize: 9 }}>{suffix}</AppText></View>; }
+function SetField({ value, suffix, onChange, placeholder }) { const colors = useColors(); return <View style={[styles.setField, { backgroundColor: colors.surface2 }]}><TextInput keyboardType="decimal-pad" value={value === undefined ? '' : String(value)} onChangeText={text => onChange(text === '' ? undefined : (Number(text.replace(',', '.')) || 0))} style={[styles.setInput, { color: colors.text }]} placeholder={placeholder} placeholderTextColor={colors.dim} /><AppText dim style={{ fontSize: 9 }}>{suffix}</AppText></View>; }
 function WorkTimer({ work, close, complete }) { const colors = useColors(); const [left, setLeft] = useState(0); useEffect(() => { if (!work) return undefined; setLeft(work.seconds); const id = setInterval(() => setLeft(Math.max(0, Math.ceil((work.started + work.seconds * 1000 - Date.now()) / 1000))), 250); return () => clearInterval(id); }, [work]); useEffect(() => { if (work && left === 0 && Date.now() >= work.started + work.seconds * 1000) complete(work.seconds); }, [left, work]); if (!work) return null; const elapsed = Math.max(1, work.seconds - left); return <Modal transparent visible animationType="fade"><View style={styles.overlay}><View style={[styles.dialog, { backgroundColor: colors.surface, alignItems: 'center' }]}><AppText muted>{t('Timed set')}</AppText><AppText style={{ fontSize: 64, fontWeight: '800' }}>{Math.floor(left / 60)}:{String(left % 60).padStart(2, '0')}</AppText><Button title={t('Finish set')} primary onPress={() => complete(elapsed)} style={{ width: '100%' }} /><Button title={t('Cancel')} onPress={close} style={{ width: '100%' }} /></View></View></Modal>; }
 const styles = StyleSheet.create({ summaryHero: { alignItems: 'center', gap: 6, paddingVertical: 20 }, summaryTitle: { fontSize: 24, fontWeight: '800' }, summaryGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 }, summaryTile: { width: '48%', gap: 4 }, summaryValue: { fontSize: 20, fontWeight: '800' }, summaryRow: { flexDirection: 'row', alignItems: 'center', gap: 7, marginTop: 8 }, between: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 }, elapsed: { flexDirection: 'row', justifyContent: 'space-between' }, nav: { flexDirection: 'row', gap: 8, marginTop: 6 }, setRow: { minHeight: 62, flexDirection: 'row', alignItems: 'center', gap: 6, borderBottomWidth: StyleSheet.hairlineWidth }, setNumberBtn: { width: 32, alignItems: 'center', justifyContent: 'center', paddingVertical: 4, borderRadius: 8 }, setField: { flex: 1, minWidth: 56, borderRadius: 9, alignItems: 'center', paddingVertical: 4 }, setInput: { minWidth: 48, textAlign: 'center', fontWeight: '800', fontSize: 17, padding: 0 }, check: { width: 38, height: 38 }, overlay: { flex: 1, backgroundColor: '#000b', justifyContent: 'center', padding: 22 }, dialog: { borderRadius: 20, padding: 18, gap: 12 }, qrDialog: { alignItems: 'center' }, qr: { padding: 12, backgroundColor: '#fff', borderRadius: 14 }, scanner: { flex: 1, padding: 16, gap: 12 }, camera: { flex: 1, minHeight: 360, borderRadius: 20, overflow: 'hidden' }, sharedEntry: { paddingVertical: 10, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#8886' } });
