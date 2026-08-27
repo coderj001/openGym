@@ -1,0 +1,5416 @@
+{
+  "routines": [
+    {
+      "id": "mtb6e1qywd0ah",
+      "name": "Push Day",
+      "emoji": "barbell",
+      "ex": [
+        {
+          "id": "0025",
+          "sets": 4,
+          "reps": 8,
+          "weight": 0
+        },
+        {
+          "id": "0047",
+          "sets": 3,
+          "reps": 10,
+          "weight": 0
+        },
+        {
+          "id": "0426",
+          "sets": 3,
+          "reps": 10,
+          "weight": 0
+        },
+        {
+          "id": "0334",
+          "sets": 3,
+          "reps": 12,
+          "weight": 0
+        },
+        {
+          "id": "0241",
+          "sets": 3,
+          "reps": 12,
+          "weight": 0
+        },
+        {
+          "id": "0251",
+          "sets": 3,
+          "reps": 10,
+          "weight": 0
+        }
+      ]
+    },
+    {
+      "id": "mtb6e1qznh6ea",
+      "name": "Pull Day",
+      "emoji": "pullup",
+      "ex": [
+        {
+          "id": "2330",
+          "sets": 4,
+          "reps": 10,
+          "weight": 0
+        },
+        {
+          "id": "0027",
+          "sets": 4,
+          "reps": 8,
+          "weight": 0
+        },
+        {
+          "id": "1323",
+          "sets": 3,
+          "reps": 10,
+          "weight": 0
+        },
+        {
+          "id": "0031",
+          "sets": 3,
+          "reps": 10,
+          "weight": 0
+        },
+        {
+          "id": "0313",
+          "sets": 3,
+          "reps": 12,
+          "weight": 0
+        }
+      ]
+    },
+    {
+      "id": "mtb6e1qzzjtka",
+      "name": "Leg Day",
+      "emoji": "legs",
+      "ex": [
+        {
+          "id": "0043",
+          "sets": 4,
+          "reps": 8,
+          "weight": 0
+        },
+        {
+          "id": "0085",
+          "sets": 3,
+          "reps": 10,
+          "weight": 0
+        },
+        {
+          "id": "0739",
+          "sets": 3,
+          "reps": 12,
+          "weight": 0
+        },
+        {
+          "id": "0585",
+          "sets": 3,
+          "reps": 12,
+          "weight": 0
+        },
+        {
+          "id": "0586",
+          "sets": 3,
+          "reps": 12,
+          "weight": 0
+        },
+        {
+          "id": "0605",
+          "sets": 4,
+          "reps": 15,
+          "weight": 0
+        }
+      ]
+    }
+  ],
+  "week": {
+    "1": "mtb6e1qywd0ah",
+    "3": "mtb6e1qznh6ea",
+    "5": "mtb6e1qzzjtka"
+  },
+  "dayPlan": {
+    "2026-08-27": "mtb6e1qzzjtka"
+  },
+  "workouts": [
+    {
+      "id": "mtb6e1r0mthy7",
+      "d": "2026-06-05",
+      "start": 1780663320000,
+      "end": 1780666620000,
+      "routineId": "mtb6e1qzzjtka",
+      "name": "Leg Day",
+      "bw": 82.3,
+      "entries": [
+        {
+          "id": "0043",
+          "sets": [
+            {
+              "w": 70,
+              "r": 8,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 70,
+              "r": 8,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 70,
+              "r": 8,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 70,
+              "r": 6,
+              "done": true,
+              "rpe": 6
+            }
+          ],
+          "topW": 70
+        },
+        {
+          "id": "0085",
+          "sets": [
+            {
+              "w": 60,
+              "r": 10,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 60,
+              "r": 10,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 60,
+              "r": 10,
+              "done": true,
+              "rpe": 6.5
+            }
+          ],
+          "topW": 60
+        },
+        {
+          "id": "0739",
+          "sets": [
+            {
+              "w": 120,
+              "r": 12,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 120,
+              "r": 12,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 120,
+              "r": 12,
+              "done": true
+            }
+          ],
+          "topW": 120
+        },
+        {
+          "id": "0585",
+          "sets": [
+            {
+              "w": 45,
+              "r": 12,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 45,
+              "r": 12,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 45,
+              "r": 12,
+              "done": true,
+              "rpe": 6.5
+            }
+          ],
+          "topW": 45
+        },
+        {
+          "id": "0586",
+          "sets": [
+            {
+              "w": 40,
+              "r": 12,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 40,
+              "r": 12,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 40,
+              "r": 12,
+              "done": true,
+              "rpe": 7
+            }
+          ],
+          "topW": 40
+        },
+        {
+          "id": "0605",
+          "sets": [
+            {
+              "w": 60,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 60,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 60,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 60,
+              "r": 15,
+              "done": true
+            }
+          ],
+          "topW": 60
+        }
+      ],
+      "prs": [],
+      "vol": 14880
+    },
+    {
+      "id": "mtb6e1r0xva8s",
+      "d": "2026-06-08",
+      "start": 1780923420000,
+      "end": 1780926960000,
+      "routineId": "mtb6e1qywd0ah",
+      "name": "Push Day",
+      "bw": 82.7,
+      "entries": [
+        {
+          "id": "0025",
+          "sets": [
+            {
+              "w": 60,
+              "r": 8,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 60,
+              "r": 8,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 60,
+              "r": 8,
+              "done": true,
+              "rpe": 7
+            },
+            {
+              "w": 60,
+              "r": 8,
+              "done": true,
+              "rpe": 7
+            }
+          ],
+          "topW": 60
+        },
+        {
+          "id": "0047",
+          "sets": [
+            {
+              "w": 45,
+              "r": 10,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 45,
+              "r": 10,
+              "done": true,
+              "rpe": 7
+            },
+            {
+              "w": 45,
+              "r": 10,
+              "done": true,
+              "rpe": 8
+            }
+          ],
+          "topW": 45
+        },
+        {
+          "id": "0426",
+          "sets": [
+            {
+              "w": 20,
+              "r": 10,
+              "done": true,
+              "rpe": 7
+            },
+            {
+              "w": 20,
+              "r": 10,
+              "done": true,
+              "rpe": 7.5
+            },
+            {
+              "w": 20,
+              "r": 10,
+              "done": true,
+              "rpe": 7.5
+            }
+          ],
+          "topW": 20
+        },
+        {
+          "id": "0334",
+          "sets": [
+            {
+              "w": 10,
+              "r": 12,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 10,
+              "r": 12,
+              "done": true,
+              "rpe": 7
+            },
+            {
+              "w": 10,
+              "r": 11,
+              "done": true
+            }
+          ],
+          "topW": 10
+        },
+        {
+          "id": "0241",
+          "sets": [
+            {
+              "w": 25,
+              "r": 12,
+              "done": true,
+              "rpe": 7
+            },
+            {
+              "w": 25,
+              "r": 12,
+              "done": true,
+              "rpe": 7.5
+            },
+            {
+              "w": 25,
+              "r": 12,
+              "done": true,
+              "rpe": 8
+            }
+          ],
+          "topW": 25
+        },
+        {
+          "id": "0251",
+          "sets": [
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rpe": 7.5
+            },
+            {
+              "w": 0,
+              "r": 9,
+              "done": true,
+              "rpe": 8.5
+            }
+          ],
+          "topW": null
+        }
+      ],
+      "prs": [],
+      "vol": 5120
+    },
+    {
+      "id": "mtb6e1r03b2pb",
+      "d": "2026-06-10",
+      "start": 1781095440000,
+      "end": 1781098500000,
+      "routineId": "mtb6e1qznh6ea",
+      "name": "Pull Day",
+      "bw": 82.7,
+      "entries": [
+        {
+          "id": "2330",
+          "sets": [
+            {
+              "w": 50,
+              "r": 10,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 50,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 50,
+              "r": 10,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 50,
+              "r": 10,
+              "done": true,
+              "rpe": 7.5
+            }
+          ],
+          "topW": 50
+        },
+        {
+          "id": "0027",
+          "sets": [
+            {
+              "w": 50,
+              "r": 8,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 50,
+              "r": 8,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 50,
+              "r": 8,
+              "done": true,
+              "rpe": 7.5
+            },
+            {
+              "w": 50,
+              "r": 8,
+              "done": true,
+              "rpe": 7
+            }
+          ],
+          "topW": 50
+        },
+        {
+          "id": "1323",
+          "sets": [
+            {
+              "w": 45,
+              "r": 10,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 45,
+              "r": 10,
+              "done": true,
+              "rpe": 7.5
+            },
+            {
+              "w": 45,
+              "r": 9,
+              "done": true,
+              "rpe": 8
+            }
+          ],
+          "topW": 45
+        },
+        {
+          "id": "0031",
+          "sets": [
+            {
+              "w": 30,
+              "r": 10,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 30,
+              "r": 10,
+              "done": true,
+              "rpe": 7.5
+            },
+            {
+              "w": 30,
+              "r": 8,
+              "done": true,
+              "rpe": 8.5
+            }
+          ],
+          "topW": 30
+        },
+        {
+          "id": "0313",
+          "sets": [
+            {
+              "w": 12.5,
+              "r": 12,
+              "done": true,
+              "rpe": 7
+            },
+            {
+              "w": 12.5,
+              "r": 12,
+              "done": true,
+              "rpe": 7.5
+            },
+            {
+              "w": 12.5,
+              "r": 12,
+              "done": true,
+              "rpe": 8
+            }
+          ],
+          "topW": 12.5
+        }
+      ],
+      "prs": [],
+      "vol": 6195
+    },
+    {
+      "id": "mtb6e1r0klpjg",
+      "d": "2026-06-12",
+      "start": 1781268240000,
+      "end": 1781271960000,
+      "routineId": "mtb6e1qzzjtka",
+      "name": "Leg Day",
+      "bw": 81.9,
+      "entries": [
+        {
+          "id": "0043",
+          "sets": [
+            {
+              "w": 72.5,
+              "r": 8,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 72.5,
+              "r": 8,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 72.5,
+              "r": 8,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 72.5,
+              "r": 6,
+              "done": true,
+              "rpe": 7
+            }
+          ],
+          "topW": 72.5
+        },
+        {
+          "id": "0085",
+          "sets": [
+            {
+              "w": 62.5,
+              "r": 10,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 62.5,
+              "r": 10,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 62.5,
+              "r": 8,
+              "done": true
+            }
+          ],
+          "topW": 62.5
+        },
+        {
+          "id": "0739",
+          "sets": [
+            {
+              "w": 122.5,
+              "r": 12,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 122.5,
+              "r": 12,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 122.5,
+              "r": 12,
+              "done": true,
+              "rpe": 6.5
+            }
+          ],
+          "topW": 122.5
+        },
+        {
+          "id": "0585",
+          "sets": [
+            {
+              "w": 45,
+              "r": 12,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 45,
+              "r": 12,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 45,
+              "r": 12,
+              "done": true,
+              "rpe": 7
+            }
+          ],
+          "topW": 45
+        },
+        {
+          "id": "0586",
+          "sets": [
+            {
+              "w": 40,
+              "r": 12,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 40,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 40,
+              "r": 10,
+              "done": true,
+              "rpe": 7.5
+            }
+          ],
+          "topW": 40
+        },
+        {
+          "id": "0605",
+          "sets": [
+            {
+              "w": 62.5,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 62.5,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 62.5,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 62.5,
+              "r": 13,
+              "done": true
+            }
+          ],
+          "topW": 62.5
+        }
+      ],
+      "prs": [
+        "0043",
+        "0085",
+        "0739",
+        "0605"
+      ],
+      "vol": 14940
+    },
+    {
+      "id": "mtb6e1r0tzth2",
+      "d": "2026-06-15",
+      "start": 1781527500000,
+      "end": 1781530620000,
+      "routineId": "mtb6e1qywd0ah",
+      "name": "Push Day",
+      "bw": 82.1,
+      "entries": [
+        {
+          "id": "0025",
+          "sets": [
+            {
+              "w": 62.5,
+              "r": 8,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 62.5,
+              "r": 8,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 62.5,
+              "r": 8,
+              "done": true,
+              "rpe": 7.5
+            },
+            {
+              "w": 62.5,
+              "r": 8,
+              "done": true,
+              "rpe": 8
+            }
+          ],
+          "topW": 62.5
+        },
+        {
+          "id": "0047",
+          "sets": [
+            {
+              "w": 45,
+              "r": 10,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 45,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 45,
+              "r": 10,
+              "done": true,
+              "rpe": 7.5
+            }
+          ],
+          "topW": 45
+        },
+        {
+          "id": "0426",
+          "sets": [
+            {
+              "w": 20,
+              "r": 10,
+              "done": true,
+              "rpe": 7
+            },
+            {
+              "w": 20,
+              "r": 10,
+              "done": true,
+              "rpe": 7.5
+            },
+            {
+              "w": 20,
+              "r": 9,
+              "done": true,
+              "rpe": 9
+            }
+          ],
+          "topW": 20
+        },
+        {
+          "id": "0334",
+          "sets": [
+            {
+              "w": 10,
+              "r": 12,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 10,
+              "r": 12,
+              "done": true,
+              "rpe": 7.5
+            },
+            {
+              "w": 10,
+              "r": 12,
+              "done": true,
+              "rpe": 8.5
+            }
+          ],
+          "topW": 10
+        },
+        {
+          "id": "0241",
+          "sets": [
+            {
+              "w": 26.25,
+              "r": 12,
+              "done": true,
+              "rpe": 7.5
+            },
+            {
+              "w": 26.25,
+              "r": 12,
+              "done": true,
+              "rpe": 8
+            },
+            {
+              "w": 26.25,
+              "r": 11,
+              "done": true,
+              "rpe": 8.5
+            }
+          ],
+          "topW": 26.25
+        },
+        {
+          "id": "0251",
+          "sets": [
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rpe": 7.5
+            },
+            {
+              "w": 0,
+              "r": 9,
+              "done": true,
+              "rpe": 9
+            }
+          ],
+          "topW": null
+        }
+      ],
+      "prs": [
+        "0025",
+        "0241"
+      ],
+      "vol": 5208.75
+    },
+    {
+      "id": "mtb6e1r1hobq6",
+      "d": "2026-06-17",
+      "start": 1781700240000,
+      "end": 1781703720000,
+      "routineId": "mtb6e1qznh6ea",
+      "name": "Pull Day",
+      "bw": 82.1,
+      "entries": [
+        {
+          "id": "2330",
+          "sets": [
+            {
+              "w": 52.5,
+              "r": 10,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 52.5,
+              "r": 10,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 52.5,
+              "r": 10,
+              "done": true,
+              "rpe": 7
+            },
+            {
+              "w": 52.5,
+              "r": 9,
+              "done": true,
+              "rpe": 8.5
+            }
+          ],
+          "topW": 52.5
+        },
+        {
+          "id": "0027",
+          "sets": [
+            {
+              "w": 50,
+              "r": 8,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 50,
+              "r": 8,
+              "done": true
+            },
+            {
+              "w": 50,
+              "r": 8,
+              "done": true,
+              "rpe": 7.5
+            },
+            {
+              "w": 50,
+              "r": 8,
+              "done": true,
+              "rpe": 8
+            }
+          ],
+          "topW": 50
+        },
+        {
+          "id": "1323",
+          "sets": [
+            {
+              "w": 45,
+              "r": 10,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 45,
+              "r": 10,
+              "done": true,
+              "rpe": 7
+            },
+            {
+              "w": 45,
+              "r": 9,
+              "done": true
+            }
+          ],
+          "topW": 45
+        },
+        {
+          "id": "0031",
+          "sets": [
+            {
+              "w": 30,
+              "r": 10,
+              "done": true,
+              "rpe": 7
+            },
+            {
+              "w": 30,
+              "r": 10,
+              "done": true,
+              "rpe": 7
+            },
+            {
+              "w": 30,
+              "r": 9,
+              "done": true,
+              "rpe": 8.5
+            }
+          ],
+          "topW": 30
+        },
+        {
+          "id": "0313",
+          "sets": [
+            {
+              "w": 12.5,
+              "r": 12,
+              "done": true,
+              "rpe": 7
+            },
+            {
+              "w": 12.5,
+              "r": 12,
+              "done": true,
+              "rpe": 7
+            },
+            {
+              "w": 12.5,
+              "r": 11,
+              "done": true,
+              "rpe": 9
+            }
+          ],
+          "topW": 12.5
+        }
+      ],
+      "prs": [
+        "2330"
+      ],
+      "vol": 6260
+    },
+    {
+      "id": "mtb6e1r11vo3n",
+      "d": "2026-06-19",
+      "start": 1781873760000,
+      "end": 1781876880000,
+      "routineId": "mtb6e1qzzjtka",
+      "name": "Leg Day",
+      "bw": 81.5,
+      "entries": [
+        {
+          "id": "0043",
+          "sets": [
+            {
+              "w": 72.5,
+              "r": 8,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 72.5,
+              "r": 8,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 72.5,
+              "r": 8,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 72.5,
+              "r": 7,
+              "done": true,
+              "rpe": 7
+            }
+          ],
+          "topW": 72.5
+        },
+        {
+          "id": "0085",
+          "sets": [
+            {
+              "w": 62.5,
+              "r": 10,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 62.5,
+              "r": 10,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 62.5,
+              "r": 9,
+              "done": true,
+              "rpe": 7
+            }
+          ],
+          "topW": 62.5
+        },
+        {
+          "id": "0739",
+          "sets": [
+            {
+              "w": 125,
+              "r": 12,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 125,
+              "r": 12,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 125,
+              "r": 10,
+              "done": true
+            }
+          ],
+          "topW": 125
+        },
+        {
+          "id": "0585",
+          "sets": [
+            {
+              "w": 47.5,
+              "r": 12,
+              "done": true,
+              "rpe": 6
+            },
+            {
+              "w": 47.5,
+              "r": 12,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 47.5,
+              "r": 11,
+              "done": true,
+              "rpe": 7.5
+            }
+          ],
+          "topW": 47.5
+        },
+        {
+          "id": "0586",
+          "sets": [
+            {
+              "w": 42.5,
+              "r": 12,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 42.5,
+              "r": 12,
+              "done": true,
+              "rpe": 6.5
+            },
+            {
+              "w": 42.5,
+              "r": 12,
+              "done": true,
+              "rpe": 7.5
+            }
+          ],
+          "topW": 42.5
+        },
+        {
+          "id": "0605",
+          "sets": [
+            {
+              "w": 62.5,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 62.5,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 62.5,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 62.5,
+              "r": 13,
+              "done": true
+            }
+          ],
+          "topW": 62.5
+        }
+      ],
+      "prs": [
+        "0739",
+        "0585",
+        "0586"
+      ],
+      "vol": 15127.5
+    },
+    {
+      "id": "mtb6e1r1y5foe",
+      "d": "2026-06-22",
+      "start": 1782131760000,
+      "end": 1782134880000,
+      "routineId": "mtb6e1qywd0ah",
+      "name": "Push Day",
+      "bw": 81.6,
+      "entries": [
+        {
+          "id": "0025",
+          "sets": [
+            {
+              "w": 62.5,
+              "r": 8,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 62.5,
+              "r": 8,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 62.5,
+              "r": 8,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 62.5,
+              "r": 8,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 62.5
+        },
+        {
+          "id": "0047",
+          "sets": [
+            {
+              "w": 47.5,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 47.5,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 47.5,
+              "r": 8,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 47.5
+        },
+        {
+          "id": "0426",
+          "sets": [
+            {
+              "w": 21.25,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 21.25,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 21.25,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 21.25
+        },
+        {
+          "id": "0334",
+          "sets": [
+            {
+              "w": 10,
+              "r": 12,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 10,
+              "r": 12,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 10,
+              "r": 12,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 10
+        },
+        {
+          "id": "0241",
+          "sets": [
+            {
+              "w": 26.25,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 26.25,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 26.25,
+              "r": 10,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 26.25
+        },
+        {
+          "id": "0251",
+          "sets": [
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 0,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 0,
+              "r": 9,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": null
+        }
+      ],
+      "prs": [
+        "0047",
+        "0426"
+      ],
+      "vol": 5220
+    },
+    {
+      "id": "mtb6e1r1cqvto",
+      "d": "2026-07-01",
+      "start": 1782910440000,
+      "end": 1782914400000,
+      "routineId": "mtb6e1qznh6ea",
+      "name": "Pull Day",
+      "bw": 81.6,
+      "entries": [
+        {
+          "id": "2330",
+          "sets": [
+            {
+              "w": 55,
+              "r": 10,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 55,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 55,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 55,
+              "r": 8,
+              "done": true,
+              "rir": 0.5
+            }
+          ],
+          "topW": 55
+        },
+        {
+          "id": "0027",
+          "sets": [
+            {
+              "w": 52.5,
+              "r": 8,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 52.5,
+              "r": 8,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 52.5,
+              "r": 8,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 52.5,
+              "r": 8,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 52.5
+        },
+        {
+          "id": "1323",
+          "sets": [
+            {
+              "w": 47.5,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 47.5,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 47.5,
+              "r": 9,
+              "done": true
+            }
+          ],
+          "topW": 47.5
+        },
+        {
+          "id": "0031",
+          "sets": [
+            {
+              "w": 31.25,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 31.25,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 31.25,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 31.25
+        },
+        {
+          "id": "0313",
+          "sets": [
+            {
+              "w": 12.5,
+              "r": 12,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 12.5,
+              "r": 12,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 12.5,
+              "r": 12,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 12.5
+        }
+      ],
+      "prs": [
+        "2330",
+        "0027",
+        "1323",
+        "0031"
+      ],
+      "vol": 6535
+    },
+    {
+      "id": "mtb6e1r1to8pr",
+      "d": "2026-07-03",
+      "start": 1783083360000,
+      "end": 1783086780000,
+      "routineId": "mtb6e1qzzjtka",
+      "name": "Leg Day",
+      "bw": 80.7,
+      "entries": [
+        {
+          "id": "0043",
+          "sets": [
+            {
+              "w": 75,
+              "r": 8,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 75,
+              "r": 8,
+              "done": true
+            },
+            {
+              "w": 75,
+              "r": 8,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 75,
+              "r": 7,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 75
+        },
+        {
+          "id": "0085",
+          "sets": [
+            {
+              "w": 65,
+              "r": 10,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 65,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 65,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 65
+        },
+        {
+          "id": "0739",
+          "sets": [
+            {
+              "w": 132.5,
+              "r": 12,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 132.5,
+              "r": 12,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 132.5,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 132.5
+        },
+        {
+          "id": "0585",
+          "sets": [
+            {
+              "w": 50,
+              "r": 12,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 50,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 50,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 50
+        },
+        {
+          "id": "0586",
+          "sets": [
+            {
+              "w": 45,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 45,
+              "r": 12,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 45,
+              "r": 11,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 45
+        },
+        {
+          "id": "0605",
+          "sets": [
+            {
+              "w": 65,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 65,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 65,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 65,
+              "r": 15,
+              "done": true
+            }
+          ],
+          "topW": 65
+        }
+      ],
+      "prs": [
+        "0043",
+        "0085",
+        "0739",
+        "0585",
+        "0586",
+        "0605"
+      ],
+      "vol": 15955
+    },
+    {
+      "id": "mtb6e1r1c18tn",
+      "d": "2026-07-06",
+      "start": 1783342320000,
+      "end": 1783345860000,
+      "routineId": "mtb6e1qywd0ah",
+      "name": "Push Day",
+      "bw": 80.9,
+      "entries": [
+        {
+          "id": "0025",
+          "sets": [
+            {
+              "w": 57.5,
+              "r": 8,
+              "done": true
+            },
+            {
+              "w": 57.5,
+              "r": 8,
+              "done": true,
+              "rir": 5.5
+            },
+            {
+              "w": 57.5,
+              "r": 8,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 57.5,
+              "r": 8,
+              "done": true,
+              "rir": 4.5
+            }
+          ],
+          "topW": 57.5
+        },
+        {
+          "id": "0047",
+          "sets": [
+            {
+              "w": 42.5,
+              "r": 10,
+              "done": true,
+              "rir": 5.5
+            },
+            {
+              "w": 42.5,
+              "r": 10,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 42.5,
+              "r": 10,
+              "done": true,
+              "rir": 4.5
+            }
+          ],
+          "topW": 42.5
+        },
+        {
+          "id": "0426",
+          "sets": [
+            {
+              "w": 18.75,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 18.75,
+              "r": 10,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 18.75,
+              "r": 10,
+              "done": true,
+              "rir": 4
+            }
+          ],
+          "topW": 18.75
+        },
+        {
+          "id": "0334",
+          "sets": [
+            {
+              "w": 10,
+              "r": 12,
+              "done": true,
+              "rir": 5.5
+            },
+            {
+              "w": 10,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 10,
+              "r": 10,
+              "done": true,
+              "rir": 4
+            }
+          ],
+          "topW": 10
+        },
+        {
+          "id": "0241",
+          "sets": [
+            {
+              "w": 25,
+              "r": 12,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 25,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 25,
+              "r": 10,
+              "done": true
+            }
+          ],
+          "topW": 25
+        },
+        {
+          "id": "0251",
+          "sets": [
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 0,
+              "r": 8,
+              "done": true,
+              "rir": 3
+            }
+          ],
+          "topW": null
+        }
+      ],
+      "prs": [],
+      "vol": 4867.5
+    },
+    {
+      "id": "mtb6e1r14h1eb",
+      "d": "2026-07-08",
+      "start": 1783514220000,
+      "end": 1783518120000,
+      "routineId": "mtb6e1qznh6ea",
+      "name": "Pull Day",
+      "bw": 80.9,
+      "entries": [
+        {
+          "id": "2330",
+          "sets": [
+            {
+              "w": 47.5,
+              "r": 10,
+              "done": true,
+              "rir": 6
+            },
+            {
+              "w": 47.5,
+              "r": 10,
+              "done": true,
+              "rir": 5.5
+            },
+            {
+              "w": 47.5,
+              "r": 10,
+              "done": true,
+              "rir": 5.5
+            },
+            {
+              "w": 47.5,
+              "r": 10,
+              "done": true,
+              "rir": 4.5
+            }
+          ],
+          "topW": 47.5
+        },
+        {
+          "id": "0027",
+          "sets": [
+            {
+              "w": 47.5,
+              "r": 8,
+              "done": true
+            },
+            {
+              "w": 47.5,
+              "r": 8,
+              "done": true,
+              "rir": 5.5
+            },
+            {
+              "w": 47.5,
+              "r": 8,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 47.5,
+              "r": 7,
+              "done": true,
+              "rir": 4
+            }
+          ],
+          "topW": 47.5
+        },
+        {
+          "id": "1323",
+          "sets": [
+            {
+              "w": 42.5,
+              "r": 10,
+              "done": true,
+              "rir": 5.5
+            },
+            {
+              "w": 42.5,
+              "r": 10,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 42.5,
+              "r": 10,
+              "done": true,
+              "rir": 4
+            }
+          ],
+          "topW": 42.5
+        },
+        {
+          "id": "0031",
+          "sets": [
+            {
+              "w": 28.75,
+              "r": 10,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 28.75,
+              "r": 10,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 28.75,
+              "r": 10,
+              "done": true,
+              "rir": 4.5
+            }
+          ],
+          "topW": 28.75
+        },
+        {
+          "id": "0313",
+          "sets": [
+            {
+              "w": 11.25,
+              "r": 12,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 11.25,
+              "r": 12,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 11.25,
+              "r": 11,
+              "done": true,
+              "rir": 3.5
+            }
+          ],
+          "topW": 11.25
+        }
+      ],
+      "prs": [],
+      "vol": 5903.75
+    },
+    {
+      "id": "mtb6e1r18ndpn",
+      "d": "2026-07-10",
+      "start": 1783688340000,
+      "end": 1783691940000,
+      "routineId": "mtb6e1qzzjtka",
+      "name": "Leg Day",
+      "bw": 80.7,
+      "entries": [
+        {
+          "id": "0043",
+          "sets": [
+            {
+              "w": 67.5,
+              "r": 8,
+              "done": true,
+              "rir": 6
+            },
+            {
+              "w": 67.5,
+              "r": 8,
+              "done": true,
+              "rir": 6
+            },
+            {
+              "w": 67.5,
+              "r": 8,
+              "done": true,
+              "rir": 6
+            },
+            {
+              "w": 67.5,
+              "r": 8,
+              "done": true,
+              "rir": 6
+            }
+          ],
+          "topW": 67.5
+        },
+        {
+          "id": "0085",
+          "sets": [
+            {
+              "w": 57.5,
+              "r": 10,
+              "done": true,
+              "rir": 6
+            },
+            {
+              "w": 57.5,
+              "r": 10,
+              "done": true,
+              "rir": 6
+            },
+            {
+              "w": 57.5,
+              "r": 9,
+              "done": true,
+              "rir": 5.5
+            }
+          ],
+          "topW": 57.5
+        },
+        {
+          "id": "0739",
+          "sets": [
+            {
+              "w": 120,
+              "r": 12,
+              "done": true,
+              "rir": 6
+            },
+            {
+              "w": 120,
+              "r": 12,
+              "done": true,
+              "rir": 6
+            },
+            {
+              "w": 120,
+              "r": 12,
+              "done": true,
+              "rir": 5.5
+            }
+          ],
+          "topW": 120
+        },
+        {
+          "id": "0585",
+          "sets": [
+            {
+              "w": 45,
+              "r": 12,
+              "done": true,
+              "rir": 6
+            },
+            {
+              "w": 45,
+              "r": 12,
+              "done": true,
+              "rir": 5.5
+            },
+            {
+              "w": 45,
+              "r": 12,
+              "done": true,
+              "rir": 6
+            }
+          ],
+          "topW": 45
+        },
+        {
+          "id": "0586",
+          "sets": [
+            {
+              "w": 40,
+              "r": 12,
+              "done": true,
+              "rir": 6
+            },
+            {
+              "w": 40,
+              "r": 12,
+              "done": true,
+              "rir": 6
+            },
+            {
+              "w": 40,
+              "r": 12,
+              "done": true,
+              "rir": 5
+            }
+          ],
+          "topW": 40
+        },
+        {
+          "id": "0605",
+          "sets": [
+            {
+              "w": 60,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 60,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 60,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 60,
+              "r": 15,
+              "done": true
+            }
+          ],
+          "topW": 60
+        }
+      ],
+      "prs": [],
+      "vol": 14807.5
+    },
+    {
+      "id": "mtb6e1r1rq6z9",
+      "d": "2026-07-13",
+      "start": 1783947420000,
+      "end": 1783951680000,
+      "routineId": "mtb6e1qywd0ah",
+      "name": "Push Day",
+      "bw": 81,
+      "entries": [
+        {
+          "id": "0025",
+          "sets": [
+            {
+              "w": 67.5,
+              "r": 8,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 67.5,
+              "r": 8,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 67.5,
+              "r": 8,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 67.5,
+              "r": 7,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 67.5
+        },
+        {
+          "id": "0047",
+          "sets": [
+            {
+              "w": 50,
+              "r": 10,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 50,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 50,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 50
+        },
+        {
+          "id": "0426",
+          "sets": [
+            {
+              "w": 22.5,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 22.5,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 22.5,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 22.5
+        },
+        {
+          "id": "0334",
+          "sets": [
+            {
+              "w": 11.25,
+              "r": 12,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 11.25,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 11.25,
+              "r": 12,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 11.25
+        },
+        {
+          "id": "0241",
+          "sets": [
+            {
+              "w": 28.75,
+              "r": 12,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 28.75,
+              "r": 12,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 28.75,
+              "r": 11,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 28.75
+        },
+        {
+          "id": "0251",
+          "sets": [
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 0,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 0,
+              "r": 9,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": null
+        }
+      ],
+      "prs": [
+        "0025",
+        "0047",
+        "0426",
+        "0334",
+        "0241"
+      ],
+      "vol": 5678.75
+    },
+    {
+      "id": "mtb6e1r1o196f",
+      "d": "2026-07-15",
+      "start": 1784119800000,
+      "end": 1784123640000,
+      "routineId": "mtb6e1qznh6ea",
+      "name": "Pull Day",
+      "bw": 81,
+      "entries": [
+        {
+          "id": "2330",
+          "sets": [
+            {
+              "w": 57.5,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 57.5,
+              "r": 10,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 57.5,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 57.5,
+              "r": 9,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 57.5
+        },
+        {
+          "id": "0027",
+          "sets": [
+            {
+              "w": 55,
+              "r": 8,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 55,
+              "r": 8,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 55,
+              "r": 8,
+              "done": true
+            },
+            {
+              "w": 55,
+              "r": 6,
+              "done": true
+            }
+          ],
+          "topW": 55
+        },
+        {
+          "id": "1323",
+          "sets": [
+            {
+              "w": 50,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 50,
+              "r": 10,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 50,
+              "r": 9,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 50
+        },
+        {
+          "id": "0031",
+          "sets": [
+            {
+              "w": 32.5,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 32.5,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 32.5,
+              "r": 9,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 32.5
+        },
+        {
+          "id": "0313",
+          "sets": [
+            {
+              "w": 13.75,
+              "r": 12,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 13.75,
+              "r": 12,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 13.75,
+              "r": 12,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 13.75
+        }
+      ],
+      "prs": [
+        "2330",
+        "0027",
+        "1323",
+        "0031",
+        "0313"
+      ],
+      "vol": 6780
+    },
+    {
+      "id": "mtb6e1r16kwk5",
+      "d": "2026-07-17",
+      "start": 1784292720000,
+      "end": 1784296500000,
+      "routineId": "mtb6e1qzzjtka",
+      "name": "Leg Day",
+      "bw": 80.4,
+      "entries": [
+        {
+          "id": "0043",
+          "sets": [
+            {
+              "w": 80,
+              "r": 8,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 80,
+              "r": 8,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 80,
+              "r": 8,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 80,
+              "r": 6,
+              "done": true,
+              "rir": 3
+            }
+          ],
+          "topW": 80
+        },
+        {
+          "id": "0085",
+          "sets": [
+            {
+              "w": 67.5,
+              "r": 10,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 67.5,
+              "r": 10,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 67.5,
+              "r": 10,
+              "done": true,
+              "rir": 4
+            }
+          ],
+          "topW": 67.5
+        },
+        {
+          "id": "0739",
+          "sets": [
+            {
+              "w": 137.5,
+              "r": 12,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 137.5,
+              "r": 12,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 137.5,
+              "r": 12,
+              "done": true,
+              "rir": 3.5
+            }
+          ],
+          "topW": 137.5
+        },
+        {
+          "id": "0585",
+          "sets": [
+            {
+              "w": 50,
+              "r": 12,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 50,
+              "r": 12,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 50,
+              "r": 11,
+              "done": true,
+              "rir": 3
+            }
+          ],
+          "topW": 50
+        },
+        {
+          "id": "0586",
+          "sets": [
+            {
+              "w": 45,
+              "r": 12,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 45,
+              "r": 12,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 45,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 45
+        },
+        {
+          "id": "0605",
+          "sets": [
+            {
+              "w": 70,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 70,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 70,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 70,
+              "r": 15,
+              "done": true
+            }
+          ],
+          "topW": 70
+        }
+      ],
+      "prs": [
+        "0043",
+        "0085",
+        "0739",
+        "0605"
+      ],
+      "vol": 16855
+    },
+    {
+      "id": "mtb6e1r1xgkzu",
+      "d": "2026-07-20",
+      "start": 1784551320000,
+      "end": 1784554260000,
+      "routineId": "mtb6e1qywd0ah",
+      "name": "Push Day",
+      "bw": 80.5,
+      "entries": [
+        {
+          "id": "0025",
+          "sets": [
+            {
+              "w": 67.5,
+              "r": 8,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 67.5,
+              "r": 8,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 67.5,
+              "r": 8,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 67.5,
+              "r": 8,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 67.5
+        },
+        {
+          "id": "0047",
+          "sets": [
+            {
+              "w": 50,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 50,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 50,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 50
+        },
+        {
+          "id": "0426",
+          "sets": [
+            {
+              "w": 22.5,
+              "r": 10,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 22.5,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 22.5,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 22.5
+        },
+        {
+          "id": "0334",
+          "sets": [
+            {
+              "w": 11.25,
+              "r": 12,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 11.25,
+              "r": 12,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 11.25,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 11.25
+        },
+        {
+          "id": "0241",
+          "sets": [
+            {
+              "w": 30,
+              "r": 12,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 30,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 30,
+              "r": 12,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 30
+        },
+        {
+          "id": "0251",
+          "sets": [
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": null
+        }
+      ],
+      "prs": [
+        "0241"
+      ],
+      "vol": 5797.5
+    },
+    {
+      "id": "mtb6e1r19fq1v",
+      "d": "2026-07-22",
+      "start": 1784723760000,
+      "end": 1784726760000,
+      "routineId": "mtb6e1qznh6ea",
+      "name": "Pull Day",
+      "bw": 80.5,
+      "entries": [
+        {
+          "id": "2330",
+          "sets": [
+            {
+              "w": 57.5,
+              "r": 10,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 57.5,
+              "r": 10,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 57.5,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 57.5,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 57.5
+        },
+        {
+          "id": "0027",
+          "sets": [
+            {
+              "w": 55,
+              "r": 8,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 55,
+              "r": 8,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 55,
+              "r": 8,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 55,
+              "r": 8,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 55
+        },
+        {
+          "id": "1323",
+          "sets": [
+            {
+              "w": 50,
+              "r": 10,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 50,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 50,
+              "r": 9,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 50
+        },
+        {
+          "id": "0031",
+          "sets": [
+            {
+              "w": 32.5,
+              "r": 10,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 32.5,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 32.5,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 32.5
+        },
+        {
+          "id": "0313",
+          "sets": [
+            {
+              "w": 13.75,
+              "r": 12,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 13.75,
+              "r": 12,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 13.75,
+              "r": 10,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 13.75
+        }
+      ],
+      "prs": [],
+      "vol": 6952.5
+    },
+    {
+      "id": "mtb6e1r1x1lnb",
+      "d": "2026-07-24",
+      "start": 1784896620000,
+      "end": 1784900880000,
+      "routineId": "mtb6e1qzzjtka",
+      "name": "Leg Day",
+      "bw": 80.2,
+      "entries": [
+        {
+          "id": "0043",
+          "sets": [
+            {
+              "w": 80,
+              "r": 8,
+              "done": true,
+              "rir": 5.5
+            },
+            {
+              "w": 80,
+              "r": 8,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 80,
+              "r": 8,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 80,
+              "r": 7,
+              "done": true,
+              "rir": 3
+            }
+          ],
+          "topW": 80
+        },
+        {
+          "id": "0085",
+          "sets": [
+            {
+              "w": 70,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 70,
+              "r": 10,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 70,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            }
+          ],
+          "topW": 70
+        },
+        {
+          "id": "0739",
+          "sets": [
+            {
+              "w": 140,
+              "r": 12,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 140,
+              "r": 12,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 140,
+              "r": 11,
+              "done": true,
+              "rir": 3.5
+            }
+          ],
+          "topW": 140
+        },
+        {
+          "id": "0585",
+          "sets": [
+            {
+              "w": 52.5,
+              "r": 12,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 52.5,
+              "r": 12,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 52.5,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 52.5
+        },
+        {
+          "id": "0586",
+          "sets": [
+            {
+              "w": 47.5,
+              "r": 12,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 47.5,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 47.5,
+              "r": 12,
+              "done": true,
+              "rir": 3.5
+            }
+          ],
+          "topW": 47.5
+        },
+        {
+          "id": "0605",
+          "sets": [
+            {
+              "w": 70,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 70,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 70,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 70,
+              "r": 13,
+              "done": true
+            }
+          ],
+          "topW": 70
+        }
+      ],
+      "prs": [
+        "0085",
+        "0739",
+        "0585",
+        "0586"
+      ],
+      "vol": 17035
+    },
+    {
+      "id": "mtb6e1r1g06ed",
+      "d": "2026-07-27",
+      "start": 1785155700000,
+      "end": 1785159060000,
+      "routineId": "mtb6e1qywd0ah",
+      "name": "Push Day",
+      "bw": 79.9,
+      "entries": [
+        {
+          "id": "0025",
+          "sets": [
+            {
+              "w": 70,
+              "r": 8,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 70,
+              "r": 8,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 70,
+              "r": 8,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 70,
+              "r": 7,
+              "done": true
+            }
+          ],
+          "topW": 70
+        },
+        {
+          "id": "0047",
+          "sets": [
+            {
+              "w": 52.5,
+              "r": 10,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 52.5,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 52.5,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 52.5
+        },
+        {
+          "id": "0426",
+          "sets": [
+            {
+              "w": 23.75,
+              "r": 10,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 23.75,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 23.75,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 23.75
+        },
+        {
+          "id": "0334",
+          "sets": [
+            {
+              "w": 11.25,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 11.25,
+              "r": 12,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 11.25,
+              "r": 11,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 11.25
+        },
+        {
+          "id": "0241",
+          "sets": [
+            {
+              "w": 30,
+              "r": 12,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 30,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 30,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 30
+        },
+        {
+          "id": "0251",
+          "sets": [
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": null
+        }
+      ],
+      "prs": [
+        "0025",
+        "0047",
+        "0426"
+      ],
+      "vol": 5871.25
+    },
+    {
+      "id": "mtb6e1r111p2m",
+      "d": "2026-07-29",
+      "start": 1785329160000,
+      "end": 1785332400000,
+      "routineId": "mtb6e1qznh6ea",
+      "name": "Pull Day",
+      "bw": 79.9,
+      "entries": [
+        {
+          "id": "2330",
+          "sets": [
+            {
+              "w": 60,
+              "r": 10,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 60,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 60,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 60,
+              "r": 9,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 60
+        },
+        {
+          "id": "0027",
+          "sets": [
+            {
+              "w": 57.5,
+              "r": 8,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 57.5,
+              "r": 8,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 57.5,
+              "r": 8,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 57.5,
+              "r": 8,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 57.5
+        },
+        {
+          "id": "1323",
+          "sets": [
+            {
+              "w": 52.5,
+              "r": 10,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 52.5,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 52.5,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 52.5
+        },
+        {
+          "id": "0031",
+          "sets": [
+            {
+              "w": 33.75,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 33.75,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 33.75,
+              "r": 9,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 33.75
+        },
+        {
+          "id": "0313",
+          "sets": [
+            {
+              "w": 13.75,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 13.75,
+              "r": 12,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 13.75,
+              "r": 12,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 13.75
+        }
+      ],
+      "prs": [
+        "2330",
+        "0027",
+        "1323",
+        "0031"
+      ],
+      "vol": 7228.75
+    },
+    {
+      "id": "mtb6e1r1kwrlx",
+      "d": "2026-07-31",
+      "start": 1785501300000,
+      "end": 1785505380000,
+      "routineId": "mtb6e1qzzjtka",
+      "name": "Leg Day",
+      "bw": 79.6,
+      "entries": [
+        {
+          "id": "0043",
+          "sets": [
+            {
+              "w": 82.5,
+              "r": 8,
+              "done": true,
+              "rir": 5
+            },
+            {
+              "w": 82.5,
+              "r": 8,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 82.5,
+              "r": 8,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 82.5,
+              "r": 8,
+              "done": true,
+              "rir": 3.5
+            }
+          ],
+          "topW": 82.5
+        },
+        {
+          "id": "0085",
+          "sets": [
+            {
+              "w": 70,
+              "r": 10,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 70,
+              "r": 10,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 70,
+              "r": 9,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 70
+        },
+        {
+          "id": "0739",
+          "sets": [
+            {
+              "w": 145,
+              "r": 12,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 145,
+              "r": 12,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 145,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 145
+        },
+        {
+          "id": "0585",
+          "sets": [
+            {
+              "w": 52.5,
+              "r": 12,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 52.5,
+              "r": 12,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 52.5,
+              "r": 12,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 52.5
+        },
+        {
+          "id": "0586",
+          "sets": [
+            {
+              "w": 47.5,
+              "r": 12,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 47.5,
+              "r": 12,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 47.5,
+              "r": 11,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 47.5
+        },
+        {
+          "id": "0605",
+          "sets": [
+            {
+              "w": 72.5,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 72.5,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 72.5,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 72.5,
+              "r": 15,
+              "done": true
+            }
+          ],
+          "topW": 72.5
+        }
+      ],
+      "prs": [
+        "0043",
+        "0739",
+        "0605"
+      ],
+      "vol": 17502.5
+    },
+    {
+      "id": "mtb6e1r1pcm00",
+      "d": "2026-08-03",
+      "start": 1785761400000,
+      "end": 1785765480000,
+      "routineId": "mtb6e1qywd0ah",
+      "name": "Push Day",
+      "bw": 79.5,
+      "entries": [
+        {
+          "id": "0025",
+          "sets": [
+            {
+              "w": 70,
+              "r": 8,
+              "done": true
+            },
+            {
+              "w": 70,
+              "r": 8,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 70,
+              "r": 8,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 70,
+              "r": 6,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 70
+        },
+        {
+          "id": "0047",
+          "sets": [
+            {
+              "w": 52.5,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 52.5,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 52.5,
+              "r": 8,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 52.5
+        },
+        {
+          "id": "0426",
+          "sets": [
+            {
+              "w": 23.75,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 23.75,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 23.75,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 23.75
+        },
+        {
+          "id": "0334",
+          "sets": [
+            {
+              "w": 12.5,
+              "r": 12,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 12.5,
+              "r": 12,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 12.5,
+              "r": 12,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 12.5
+        },
+        {
+          "id": "0241",
+          "sets": [
+            {
+              "w": 31.25,
+              "r": 12,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 31.25,
+              "r": 12,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 31.25,
+              "r": 10,
+              "done": true,
+              "rir": 0.5
+            }
+          ],
+          "topW": 31.25
+        },
+        {
+          "id": "0251",
+          "sets": [
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 0,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 0,
+              "r": 9,
+              "done": true,
+              "rir": 0.5
+            }
+          ],
+          "topW": null
+        }
+      ],
+      "prs": [
+        "0334",
+        "0241"
+      ],
+      "vol": 5795
+    },
+    {
+      "id": "mtb6e1r1nvjix",
+      "d": "2026-08-05",
+      "start": 1785933660000,
+      "end": 1785937320000,
+      "routineId": "mtb6e1qznh6ea",
+      "name": "Pull Day",
+      "bw": 79.5,
+      "entries": [
+        {
+          "id": "2330",
+          "sets": [
+            {
+              "w": 60,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 60,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 60,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 60,
+              "r": 9,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 60
+        },
+        {
+          "id": "0027",
+          "sets": [
+            {
+              "w": 57.5,
+              "r": 8,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 57.5,
+              "r": 8,
+              "done": true
+            },
+            {
+              "w": 57.5,
+              "r": 8,
+              "done": true
+            },
+            {
+              "w": 57.5,
+              "r": 7,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 57.5
+        },
+        {
+          "id": "1323",
+          "sets": [
+            {
+              "w": 52.5,
+              "r": 10,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 52.5,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 52.5,
+              "r": 9,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 52.5
+        },
+        {
+          "id": "0031",
+          "sets": [
+            {
+              "w": 33.75,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 33.75,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 33.75,
+              "r": 9,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 33.75
+        },
+        {
+          "id": "0313",
+          "sets": [
+            {
+              "w": 15,
+              "r": 12,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 15,
+              "r": 12,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 15,
+              "r": 11,
+              "done": true,
+              "rir": 0.5
+            }
+          ],
+          "topW": 15
+        }
+      ],
+      "prs": [
+        "0313"
+      ],
+      "vol": 7148.75
+    },
+    {
+      "id": "mtb6e1r26z9e3",
+      "d": "2026-08-07",
+      "start": 1786106700000,
+      "end": 1786110180000,
+      "routineId": "mtb6e1qzzjtka",
+      "name": "Leg Day",
+      "bw": 79.3,
+      "entries": [
+        {
+          "id": "0043",
+          "sets": [
+            {
+              "w": 82.5,
+              "r": 8,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 82.5,
+              "r": 8,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 82.5,
+              "r": 8,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 82.5,
+              "r": 8,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 82.5
+        },
+        {
+          "id": "0085",
+          "sets": [
+            {
+              "w": 72.5,
+              "r": 10,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 72.5,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 72.5,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            }
+          ],
+          "topW": 72.5
+        },
+        {
+          "id": "0739",
+          "sets": [
+            {
+              "w": 147.5,
+              "r": 12,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 147.5,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 147.5,
+              "r": 12,
+              "done": true,
+              "rir": 3
+            }
+          ],
+          "topW": 147.5
+        },
+        {
+          "id": "0585",
+          "sets": [
+            {
+              "w": 55,
+              "r": 12,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 55,
+              "r": 12,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 55,
+              "r": 12,
+              "done": true,
+              "rir": 3
+            }
+          ],
+          "topW": 55
+        },
+        {
+          "id": "0586",
+          "sets": [
+            {
+              "w": 50,
+              "r": 12,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 50,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 50,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 50
+        },
+        {
+          "id": "0605",
+          "sets": [
+            {
+              "w": 72.5,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 72.5,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 72.5,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 72.5,
+              "r": 15,
+              "done": true
+            }
+          ],
+          "topW": 72.5
+        }
+      ],
+      "prs": [
+        "0085",
+        "0739",
+        "0585",
+        "0586"
+      ],
+      "vol": 18155
+    },
+    {
+      "id": "mtb6e1r27hvg0",
+      "d": "2026-08-10",
+      "start": 1786365600000,
+      "end": 1786369680000,
+      "routineId": "mtb6e1qywd0ah",
+      "name": "Push Day",
+      "bw": 79.2,
+      "entries": [
+        {
+          "id": "0025",
+          "sets": [
+            {
+              "w": 72.5,
+              "r": 8,
+              "done": true
+            },
+            {
+              "w": 72.5,
+              "r": 8,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 72.5,
+              "r": 8,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 72.5,
+              "r": 7,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 72.5
+        },
+        {
+          "id": "0047",
+          "sets": [
+            {
+              "w": 55,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 55,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 55,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 55
+        },
+        {
+          "id": "0426",
+          "sets": [
+            {
+              "w": 25,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 25,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 25,
+              "r": 8,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 25
+        },
+        {
+          "id": "0334",
+          "sets": [
+            {
+              "w": 12.5,
+              "r": 12,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 12.5,
+              "r": 12,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 12.5,
+              "r": 10,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 12.5
+        },
+        {
+          "id": "0241",
+          "sets": [
+            {
+              "w": 31.25,
+              "r": 12,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 31.25,
+              "r": 12,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 31.25,
+              "r": 12,
+              "done": true,
+              "rir": 0.5
+            }
+          ],
+          "topW": 31.25
+        },
+        {
+          "id": "0251",
+          "sets": [
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": null
+        }
+      ],
+      "prs": [
+        "0025",
+        "0047",
+        "0426"
+      ],
+      "vol": 6147.5
+    },
+    {
+      "id": "mtb6e1r2orpxe",
+      "d": "2026-08-12",
+      "start": 1786538940000,
+      "end": 1786541700000,
+      "routineId": "mtb6e1qznh6ea",
+      "name": "Pull Day",
+      "bw": 79.2,
+      "entries": [
+        {
+          "id": "2330",
+          "sets": [
+            {
+              "w": 62.5,
+              "r": 10,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 62.5,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 62.5,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 62.5,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 62.5
+        },
+        {
+          "id": "0027",
+          "sets": [
+            {
+              "w": 60,
+              "r": 8,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 60,
+              "r": 8,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 60,
+              "r": 8,
+              "done": true
+            },
+            {
+              "w": 60,
+              "r": 8,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 60
+        },
+        {
+          "id": "1323",
+          "sets": [
+            {
+              "w": 55,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 55,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 55,
+              "r": 9,
+              "done": true,
+              "rir": 0.5
+            }
+          ],
+          "topW": 55
+        },
+        {
+          "id": "0031",
+          "sets": [
+            {
+              "w": 35,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 35,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 35,
+              "r": 8,
+              "done": true,
+              "rir": 0.5
+            }
+          ],
+          "topW": 35
+        },
+        {
+          "id": "0313",
+          "sets": [
+            {
+              "w": 15,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 15,
+              "r": 12,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 15,
+              "r": 12,
+              "done": true,
+              "rir": 0.5
+            }
+          ],
+          "topW": 15
+        }
+      ],
+      "prs": [
+        "2330",
+        "0027",
+        "1323",
+        "0031"
+      ],
+      "vol": 7535
+    },
+    {
+      "id": "mtb6e1r267kk4",
+      "d": "2026-08-14",
+      "start": 1786711800000,
+      "end": 1786715220000,
+      "routineId": "mtb6e1qzzjtka",
+      "name": "Leg Day",
+      "bw": 78.9,
+      "entries": [
+        {
+          "id": "0043",
+          "sets": [
+            {
+              "w": 85,
+              "r": 8,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 85,
+              "r": 8,
+              "done": true,
+              "rir": 4.5
+            },
+            {
+              "w": 85,
+              "r": 8,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 85,
+              "r": 8,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 85
+        },
+        {
+          "id": "0085",
+          "sets": [
+            {
+              "w": 72.5,
+              "r": 10,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 72.5,
+              "r": 10,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 72.5,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 72.5
+        },
+        {
+          "id": "0739",
+          "sets": [
+            {
+              "w": 150,
+              "r": 12,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 150,
+              "r": 12,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 150,
+              "r": 12,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 150
+        },
+        {
+          "id": "0585",
+          "sets": [
+            {
+              "w": 55,
+              "r": 12,
+              "done": true
+            },
+            {
+              "w": 55,
+              "r": 12,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 55,
+              "r": 11,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 55
+        },
+        {
+          "id": "0586",
+          "sets": [
+            {
+              "w": 50,
+              "r": 12,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 50,
+              "r": 12,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 50,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 50
+        },
+        {
+          "id": "0605",
+          "sets": [
+            {
+              "w": 75,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 75,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 75,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 75,
+              "r": 15,
+              "done": true
+            }
+          ],
+          "topW": 75
+        }
+      ],
+      "prs": [
+        "0043",
+        "0739",
+        "0605"
+      ],
+      "vol": 18420
+    },
+    {
+      "id": "mtb6e1r2zyjlj",
+      "d": "2026-08-19",
+      "start": 1787143320000,
+      "end": 1787146380000,
+      "routineId": "mtb6e1qznh6ea",
+      "name": "Pull Day",
+      "bw": 79,
+      "entries": [
+        {
+          "id": "2330",
+          "sets": [
+            {
+              "w": 62.5,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 62.5,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 62.5,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 62.5,
+              "r": 10,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 62.5
+        },
+        {
+          "id": "0027",
+          "sets": [
+            {
+              "w": 60,
+              "r": 8,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 60,
+              "r": 8,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 60,
+              "r": 8,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 60,
+              "r": 7,
+              "done": true,
+              "rir": 0.5
+            }
+          ],
+          "topW": 60
+        },
+        {
+          "id": "1323",
+          "sets": [
+            {
+              "w": 55,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 55,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 55,
+              "r": 9,
+              "done": true,
+              "rir": 0.5
+            }
+          ],
+          "topW": 55
+        },
+        {
+          "id": "0031",
+          "sets": [
+            {
+              "w": 35,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 35,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 35,
+              "r": 10,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 35
+        },
+        {
+          "id": "0313",
+          "sets": [
+            {
+              "w": 15,
+              "r": 12,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 15,
+              "r": 12,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 15,
+              "r": 12,
+              "done": true,
+              "rir": 0.5
+            }
+          ],
+          "topW": 15
+        }
+      ],
+      "prs": [],
+      "vol": 7545
+    },
+    {
+      "id": "mtb6e1r2knckf",
+      "d": "2026-08-21",
+      "start": 1787316840000,
+      "end": 1787320980000,
+      "routineId": "mtb6e1qzzjtka",
+      "name": "Leg Day",
+      "bw": 78.9,
+      "entries": [
+        {
+          "id": "0043",
+          "sets": [
+            {
+              "w": 87.5,
+              "r": 8,
+              "done": true,
+              "rir": 4
+            },
+            {
+              "w": 87.5,
+              "r": 8,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 87.5,
+              "r": 8,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 87.5,
+              "r": 8,
+              "done": true,
+              "rir": 2.5
+            }
+          ],
+          "topW": 87.5
+        },
+        {
+          "id": "0085",
+          "sets": [
+            {
+              "w": 75,
+              "r": 10,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 75,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 75,
+              "r": 10,
+              "done": true
+            }
+          ],
+          "topW": 75
+        },
+        {
+          "id": "0739",
+          "sets": [
+            {
+              "w": 152.5,
+              "r": 12,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 152.5,
+              "r": 12,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 152.5,
+              "r": 11,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 152.5
+        },
+        {
+          "id": "0585",
+          "sets": [
+            {
+              "w": 55,
+              "r": 12,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 55,
+              "r": 12,
+              "done": true,
+              "rir": 3
+            },
+            {
+              "w": 55,
+              "r": 11,
+              "done": true,
+              "rir": 1.5
+            }
+          ],
+          "topW": 55
+        },
+        {
+          "id": "0586",
+          "sets": [
+            {
+              "w": 50,
+              "r": 12,
+              "done": true,
+              "rir": 3.5
+            },
+            {
+              "w": 50,
+              "r": 12,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 50,
+              "r": 11,
+              "done": true,
+              "rir": 2
+            }
+          ],
+          "topW": 50
+        },
+        {
+          "id": "0605",
+          "sets": [
+            {
+              "w": 77.5,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 77.5,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 77.5,
+              "r": 15,
+              "done": true
+            },
+            {
+              "w": 77.5,
+              "r": 13,
+              "done": true
+            }
+          ],
+          "topW": 77.5
+        }
+      ],
+      "prs": [
+        "0043",
+        "0085",
+        "0739",
+        "0605"
+      ],
+      "vol": 18557.5
+    },
+    {
+      "id": "mtb6e1r2os93l",
+      "d": "2026-08-24",
+      "start": 1787574960000,
+      "end": 1787578080000,
+      "routineId": "mtb6e1qywd0ah",
+      "name": "Push Day",
+      "bw": 78.4,
+      "entries": [
+        {
+          "id": "0025",
+          "sets": [
+            {
+              "w": 75,
+              "r": 8,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 75,
+              "r": 8,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 75,
+              "r": 8,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 75,
+              "r": 6,
+              "done": true
+            }
+          ],
+          "topW": 75
+        },
+        {
+          "id": "0047",
+          "sets": [
+            {
+              "w": 55,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 55,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 55,
+              "r": 9,
+              "done": true,
+              "rir": 0
+            }
+          ],
+          "topW": 55
+        },
+        {
+          "id": "0426",
+          "sets": [
+            {
+              "w": 25,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 25,
+              "r": 10,
+              "done": true,
+              "rir": 1
+            },
+            {
+              "w": 25,
+              "r": 8,
+              "done": true,
+              "rir": 0
+            }
+          ],
+          "topW": 25
+        },
+        {
+          "id": "0334",
+          "sets": [
+            {
+              "w": 12.5,
+              "r": 12,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 12.5,
+              "r": 12,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 12.5,
+              "r": 11,
+              "done": true
+            }
+          ],
+          "topW": 12.5
+        },
+        {
+          "id": "0241",
+          "sets": [
+            {
+              "w": 33.75,
+              "r": 12,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 33.75,
+              "r": 12,
+              "done": true,
+              "rir": 1
+            },
+            {
+              "w": 33.75,
+              "r": 12,
+              "done": true,
+              "rir": 0.5
+            }
+          ],
+          "topW": 33.75
+        },
+        {
+          "id": "0251",
+          "sets": [
+            {
+              "w": 0,
+              "r": 10,
+              "done": true
+            },
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 1
+            },
+            {
+              "w": 0,
+              "r": 10,
+              "done": true,
+              "rir": 0.5
+            }
+          ],
+          "topW": null
+        }
+      ],
+      "prs": [
+        "0025",
+        "0241"
+      ],
+      "vol": 6197.5
+    },
+    {
+      "id": "mtb6e1r2edjlk",
+      "d": "2026-08-26",
+      "start": 1787748480000,
+      "end": 1787752140000,
+      "routineId": "mtb6e1qznh6ea",
+      "name": "Pull Day",
+      "bw": 78.4,
+      "entries": [
+        {
+          "id": "2330",
+          "sets": [
+            {
+              "w": 65,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 65,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 65,
+              "r": 10,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 65,
+              "r": 10,
+              "done": true
+            }
+          ],
+          "topW": 65
+        },
+        {
+          "id": "0027",
+          "sets": [
+            {
+              "w": 60,
+              "r": 8,
+              "done": true
+            },
+            {
+              "w": 60,
+              "r": 8,
+              "done": true,
+              "rir": 2
+            },
+            {
+              "w": 60,
+              "r": 8,
+              "done": true,
+              "rir": 1
+            },
+            {
+              "w": 60,
+              "r": 7,
+              "done": true,
+              "rir": 0.5
+            }
+          ],
+          "topW": 60
+        },
+        {
+          "id": "1323",
+          "sets": [
+            {
+              "w": 55,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 55,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 55,
+              "r": 8,
+              "done": true,
+              "rir": 0
+            }
+          ],
+          "topW": 55
+        },
+        {
+          "id": "0031",
+          "sets": [
+            {
+              "w": 35,
+              "r": 10,
+              "done": true,
+              "rir": 2.5
+            },
+            {
+              "w": 35,
+              "r": 10,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 35,
+              "r": 8,
+              "done": true,
+              "rir": 0
+            }
+          ],
+          "topW": 35
+        },
+        {
+          "id": "0313",
+          "sets": [
+            {
+              "w": 15,
+              "r": 12,
+              "done": true,
+              "rir": 1.5
+            },
+            {
+              "w": 15,
+              "r": 12,
+              "done": true,
+              "rir": 1
+            },
+            {
+              "w": 15,
+              "r": 12,
+              "done": true,
+              "rir": 1
+            }
+          ],
+          "topW": 15
+        }
+      ],
+      "prs": [
+        "2330"
+      ],
+      "vol": 7520
+    }
+  ],
+  "bodyweight": [
+    {
+      "d": "2026-06-04",
+      "w": 82.3,
+      "t": 1780538400000
+    },
+    {
+      "d": "2026-06-08",
+      "w": 82.7,
+      "t": 1780884000000
+    },
+    {
+      "d": "2026-06-11",
+      "w": 81.9,
+      "t": 1781143200000
+    },
+    {
+      "d": "2026-06-15",
+      "w": 82.1,
+      "t": 1781488800000
+    },
+    {
+      "d": "2026-06-18",
+      "w": 81.5,
+      "t": 1781748000000
+    },
+    {
+      "d": "2026-06-22",
+      "w": 81.6,
+      "t": 1782093600000
+    },
+    {
+      "d": "2026-06-25",
+      "w": 81.4,
+      "t": 1782352800000
+    },
+    {
+      "d": "2026-06-29",
+      "w": 81.6,
+      "t": 1782698400000
+    },
+    {
+      "d": "2026-07-02",
+      "w": 80.7,
+      "t": 1782957600000
+    },
+    {
+      "d": "2026-07-06",
+      "w": 80.9,
+      "t": 1783303200000
+    },
+    {
+      "d": "2026-07-09",
+      "w": 80.7,
+      "t": 1783562400000
+    },
+    {
+      "d": "2026-07-13",
+      "w": 81,
+      "t": 1783908000000
+    },
+    {
+      "d": "2026-07-16",
+      "w": 80.4,
+      "t": 1784167200000
+    },
+    {
+      "d": "2026-07-20",
+      "w": 80.5,
+      "t": 1784512800000
+    },
+    {
+      "d": "2026-07-23",
+      "w": 80.2,
+      "t": 1784772000000
+    },
+    {
+      "d": "2026-07-27",
+      "w": 79.9,
+      "t": 1785117600000
+    },
+    {
+      "d": "2026-07-30",
+      "w": 79.6,
+      "t": 1785376800000
+    },
+    {
+      "d": "2026-08-03",
+      "w": 79.5,
+      "t": 1785722400000
+    },
+    {
+      "d": "2026-08-06",
+      "w": 79.3,
+      "t": 1785981600000
+    },
+    {
+      "d": "2026-08-10",
+      "w": 79.2,
+      "t": 1786327200000
+    },
+    {
+      "d": "2026-08-13",
+      "w": 78.9,
+      "t": 1786586400000
+    },
+    {
+      "d": "2026-08-17",
+      "w": 79,
+      "t": 1786932000000
+    },
+    {
+      "d": "2026-08-20",
+      "w": 78.9,
+      "t": 1787191200000
+    },
+    {
+      "d": "2026-08-24",
+      "w": 78.4,
+      "t": 1787536800000
+    },
+    {
+      "d": "2026-08-27",
+      "w": 78.4,
+      "t": 1787796000000
+    }
+  ],
+  "exWeights": {
+    "1323": {
+      "w": 55,
+      "d": "2026-08-26"
+    },
+    "2330": {
+      "w": 65,
+      "d": "2026-08-26"
+    },
+    "0043": {
+      "w": 87.5,
+      "d": "2026-08-21"
+    },
+    "0085": {
+      "w": 75,
+      "d": "2026-08-21"
+    },
+    "0739": {
+      "w": 152.5,
+      "d": "2026-08-21"
+    },
+    "0585": {
+      "w": 55,
+      "d": "2026-08-21"
+    },
+    "0586": {
+      "w": 50,
+      "d": "2026-08-21"
+    },
+    "0605": {
+      "w": 77.5,
+      "d": "2026-08-21"
+    },
+    "0025": {
+      "w": 75,
+      "d": "2026-08-24"
+    },
+    "0047": {
+      "w": 55,
+      "d": "2026-08-24"
+    },
+    "0426": {
+      "w": 25,
+      "d": "2026-08-24"
+    },
+    "0334": {
+      "w": 12.5,
+      "d": "2026-08-24"
+    },
+    "0241": {
+      "w": 33.75,
+      "d": "2026-08-24"
+    },
+    "0251": {
+      "w": 0,
+      "d": "2026-08-24"
+    },
+    "0027": {
+      "w": 60,
+      "d": "2026-08-26"
+    },
+    "0031": {
+      "w": 35,
+      "d": "2026-08-26"
+    },
+    "0313": {
+      "w": 15,
+      "d": "2026-08-26"
+    }
+  },
+  "targetW": 77,
+  "effort": "rir"
+}
