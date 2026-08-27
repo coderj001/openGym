@@ -23,30 +23,34 @@ export function ExerciseRow({ exercise, onPress, accessory, fullName = false }) 
   </Pressable>;
 }
 export function useExerciseSearch(S, query, muscles) {
-  return useMemo(() => {
-    const q = query.trim().toLowerCase();
-    const qWords = q.split(/\s+/).filter(Boolean);
-    const usage = new Map();
+  const usage = useMemo(() => {
+    const next = new Map();
     S.workouts.forEach(w => {
       const time = new Date(w.d).getTime() || 0;
       w.entries.forEach(e => {
-        const u = usage.get(e.id) || { count: 0, last: 0, routine: 0 };
+        const u = next.get(e.id) || { count: 0, last: 0, routine: 0 };
         u.count++;
         if (time > u.last) u.last = time;
-        usage.set(e.id, u);
+        next.set(e.id, u);
       });
     });
     S.routines.forEach(r => {
       r.ex.forEach(e => {
-        const u = usage.get(e.id) || { count: 0, last: 0, routine: 0 };
+        const u = next.get(e.id) || { count: 0, last: 0, routine: 0 };
         u.routine++;
-        usage.set(e.id, u);
+        next.set(e.id, u);
       });
     });
-
+    return next;
+  }, [S.workouts, S.routines]);
+  return useMemo(() => {
+    const q = query.trim().toLowerCase();
+    const qWords = q.split(/\s+/).filter(Boolean);
+    const selectedMuscles = [...muscles];
     const results = [];
     for (const ex of allExercises(S)) {
-      if (muscles.size > 0 && ![...muscles].some(m => musclesOf(ex)[m])) continue;
+      const exerciseMuscles = selectedMuscles.length ? musclesOf(ex) : null;
+      if (selectedMuscles.length > 0 && !selectedMuscles.some(m => exerciseMuscles[m])) continue;
       
       const tStr = `${ex.n} ${ex.tg} ${ex.eq} ${ex.desc || ''}`.toLowerCase();
       let score = 100;
@@ -116,7 +120,7 @@ export function useExerciseSearch(S, query, muscles) {
       if (a.u.last !== b.u.last) return b.u.last - a.u.last;
       return a.ex.n.localeCompare(b.ex.n);
     }).map(r => r.ex);
-  }, [S, query, muscles]);
+  }, [S.customEx, query, muscles, usage]);
 }
 
 export function ExercisePicker({ visible, onClose, onPick }) {

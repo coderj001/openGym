@@ -2,10 +2,9 @@ import React from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Switch as NativeSwitch, Text, TextInput, View } from 'react-native';
 import Icon from './Icon';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useStore } from '../store';
-import { palette } from '../theme';
+import { useStoreColors } from '../store';
 
-export const useColors = () => palette(useStore().S);
+export const useColors = useStoreColors;
 export function Screen({ children, scroll = true, contentStyle, testID }) {
   const colors = useColors();
   const body = scroll ? <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[styles.content, contentStyle]}>{children}</ScrollView> : <View style={[styles.content, { flex: 1 }, contentStyle]}>{children}</View>;

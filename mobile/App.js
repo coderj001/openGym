@@ -5,9 +5,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from './src/components/Icon';
 import { StatusBar } from 'expo-status-bar';
 import { Notifications } from './src/lib/native';
-import { StoreProvider, useStore } from './src/store';
+import { StoreProvider, useStore, useStoreColors } from './src/store';
 import { TimerProvider } from './src/timers';
-import { palette } from './src/theme';
 import { Loading } from './src/components/ui';
 import HomeScreen from './src/screens/HomeScreen';
 import PlanScreen from './src/screens/PlanScreen';
@@ -27,7 +26,7 @@ const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 const TAB_ICONS = { Home: 'house', Plan: 'clipboard', Workout: 'dumbbell', Stats: 'chartLine', Library: 'list' };
 function MainTabs() {
-  const { S } = useStore(); const colors = palette(S);
+  const { S } = useStore(); const colors = useStoreColors();
   return <Tabs.Navigator screenOptions={({ route }) => ({ headerShown: false, tabBarActiveTintColor: route.name === 'Workout' && S.active ? colors.orange : colors.accent, tabBarInactiveTintColor: colors.dim, tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border, height: 70, paddingBottom: 9, paddingTop: 6 }, tabBarLabelStyle: { fontSize: 11, fontWeight: '700' }, tabBarIcon: ({ color, size }) => <Icon name={TAB_ICONS[route.name]} size={size} color={color} /> })}>
     <Tabs.Screen name="Home" component={HomeScreen} /><Tabs.Screen name="Plan" component={PlanScreen} /><Tabs.Screen name="Workout" component={WorkoutScreen} options={{ tabBarBadge: S.active ? '•' : undefined, tabBarBadgeStyle: { backgroundColor: colors.orange } }} /><Tabs.Screen name="Stats" component={StatsScreen} /><Tabs.Screen name="Library" component={LibraryScreen} />
   </Tabs.Navigator>;
@@ -35,7 +34,8 @@ function MainTabs() {
 function AppShell() {
   const { S, ready } = useStore();
   useEffect(() => { if (ready && S.reminder?.on) syncReminders(S).catch(() => {}); }, [ready, S.reminder?.on, S.reminder?.time, JSON.stringify(S.week)]);
-  if (!ready) return <Loading />; const colors = palette(S); const base = colors.dark ? DarkTheme : DefaultTheme; const theme = { ...base, dark: colors.dark, colors: { ...base.colors, primary: colors.accent, background: colors.bg, card: colors.surface, text: colors.text, border: colors.border, notification: colors.orange } };
+  const colors = useStoreColors();
+  if (!ready) return <Loading />; const base = colors.dark ? DarkTheme : DefaultTheme; const theme = { ...base, dark: colors.dark, colors: { ...base.colors, primary: colors.accent, background: colors.bg, card: colors.surface, text: colors.text, border: colors.border, notification: colors.orange } };
   return <><StatusBar style={colors.dark ? 'light' : 'dark'} /><NavigationContainer theme={theme}><TimerProvider><Stack.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg } }}><Stack.Screen name="Main" component={MainTabs} /><Stack.Screen name="RoutineEdit" component={RoutineEditScreen} /><Stack.Screen name="History" component={HistoryScreen} /><Stack.Screen name="Settings" component={SettingsScreen} /></Stack.Navigator></TimerProvider></NavigationContainer></>;
 }
 export default function App() { return <StoreProvider><AppShell /></StoreProvider>; }

@@ -5,7 +5,8 @@ import { Haptics, useSoundPlayer } from './lib/native';
 import { useColors } from './components/ui';
 import { useStore } from './store';
 
-const TimerContext = createContext(null);
+const TimerActionsContext = createContext(null);
+const TimerStateContext = createContext(null);
 export function TimerProvider({ children }) {
   const [rest, setRest] = useState(null);
   const [now, setNow] = useState(Date.now());
@@ -27,12 +28,13 @@ export function TimerProvider({ children }) {
   const startRest = useCallback(seconds => setRest({ total: seconds, endsAt: Date.now() + seconds * 1000 }), []);
   const addRest = useCallback(seconds => setRest(value => value ? { total: Math.max(1, value.total + seconds), endsAt: value.endsAt + seconds * 1000 } : null), []);
   const stopRest = useCallback(() => setRest(null), []);
-  const value = useMemo(() => ({ rest, left, startRest, addRest, stopRest }), [rest, left, startRest, addRest, stopRest]);
-  return <TimerContext.Provider value={value}>{children}<TimerBanner /></TimerContext.Provider>;
+  const actions = useMemo(() => ({ startRest, addRest, stopRest }), [startRest, addRest, stopRest]);
+  const state = useMemo(() => ({ rest, left }), [rest, left]);
+  return <TimerActionsContext.Provider value={actions}><TimerStateContext.Provider value={state}>{children}<TimerBanner /></TimerStateContext.Provider></TimerActionsContext.Provider>;
 }
-export const useTimers = () => useContext(TimerContext);
+export const useTimers = () => useContext(TimerActionsContext);
 function TimerBanner() {
-  const colors = useColors(); const { rest, left, addRest, stopRest } = useTimers();
+  const colors = useColors(); const { rest, left } = useContext(TimerStateContext); const { addRest, stopRest } = useTimers();
   if (!rest) return null;
   return <View style={[styles.banner, { backgroundColor: colors.surface, borderColor: colors.border }]}>
     <Icon name="timer-outline" size={20} color={colors.orange} />

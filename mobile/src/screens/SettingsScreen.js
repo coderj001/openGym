@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Modal, ScrollView, Share, StyleSheet, View } from 'react-native';
+import { Alert, Modal, ScrollView, Share, StyleSheet, View, Linking } from 'react-native';
 import { useStore, DEF } from '../store';
 import { ACCENTS } from '../lib/format';
 import { addStarterPlan } from '../lib/plans';
@@ -28,7 +28,13 @@ export default function SettingsScreen({ navigation }) {
     <SectionTitle>{t('Appearance')}</SectionTitle><Card><AppText muted style={styles.label}>{t('Theme')}</AppText><View style={styles.chips}>{['dark', 'light'].map(value => <Chip key={value} title={t(value === 'dark' ? 'Dark' : 'Light')} active={S.theme === value} onPress={() => update(state => { state.theme = value; })} />)}</View><AppText muted style={styles.label}>{t('Body diagram')}</AppText><View style={styles.chips}>{['male', 'female'].map(value => <Chip key={value} title={t(value === 'male' ? 'Male' : 'Female')} active={S.body === value} onPress={() => update(state => { state.body = value; })} />)}</View><AppText muted style={styles.label}>{t('Accent color')}</AppText><View style={styles.swatches}>{Object.entries(ACCENTS).map(([name, color]) => <View key={name} style={[styles.swatchRing, S.accent === name && { borderColor: colors.text }]}><View onTouchEnd={() => update(state => { state.accent = name; })} style={[styles.swatch, { backgroundColor: color }]} /></View>)}</View></Card>
     <SectionTitle>{t('Data')}</SectionTitle><Card style={{ paddingVertical: 0 }}><Row icon="creation" title={t('Load starter plan (PPL)')} onPress={() => { update(addStarterPlan); notify(t('Starter plan loaded — Mon Push · Wed Pull · Fri Legs')); }} /><Row icon="database" title={t('Load demo data')} subtitle={t('Populates 12 weeks of workouts & body weight')} onPress={loadDemo} /><Row icon="swap-horizontal" title={t('Import from another app')} subtitle={t('FitNotes, Strong, Hevy, or Apple Health')} onPress={importApp} /><Row icon="upload" title={t('Import backup')} onPress={importData} /><Row icon="download" title={t('Export backup (JSON)')} onPress={() => exportBackup(S).then(() => notify(t('Backup exported'))).catch(error => notify(error.message))} /><Row icon="trash-can" danger title={t('Reset everything')} onPress={reset} /></Card><SectionTitle>{t('AI Plan')}</SectionTitle>
     <AiPlanSection onLoad={plan => { update(state => { state.routines.push(...plan.routines); Object.assign(state.week, plan.week); }); notify(t('AI plan loaded!')); }} />
-    <AppText dim style={{ textAlign: 'center', marginTop: 12, lineHeight: 20 }}>openGym · {t('free & open source (AGPL v3)')}\n{t('Offline-first · no account · no server')}</AppText>
+    <AppText dim style={{ textAlign: 'center', marginTop: 12, lineHeight: 20, paddingBottom: 24 }}>
+      openGym · {t('free & open source (AGPL v3)')}{'\n'}
+      {t('Offline-first · no account · no server')}{'\n\n'}
+      <AppText onPress={() => Linking.openURL('https://github.com/coderj001/openGym/issues')} style={{ textDecorationLine: 'underline', color: colors.accent }}>
+        {t('Found a bug? Report an issue on GitHub')}
+      </AppText>
+    </AppText>
   </Screen>;
 }
 const styles = StyleSheet.create({ label: { fontSize: 13, fontWeight: '700', marginTop: 5 }, chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, paddingVertical: 4 }, swatches: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 }, swatchRing: { width: 36, height: 36, borderRadius: 18, borderWidth: 2, borderColor: 'transparent', padding: 3 }, swatch: { flex: 1, borderRadius: 14 } });
