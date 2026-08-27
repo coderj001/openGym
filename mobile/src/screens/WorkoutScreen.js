@@ -9,7 +9,7 @@ import { EFFORT, effortOf, isBw, modeOf, setLabel, setsDoneActive, supersetUnits
 import { effectiveRoutine, lastBW } from '../lib/history';
 import { allExercises, exOr } from '../lib/exercises';
 import { decodeWorkoutShare, encodeWorkoutShare } from '../lib/workoutShare';
-import { fmtDur, fmtNum, fmtVol, todayISO } from '../lib/format';
+import { fmtDur, fmtNum, fmtVol, todayISO, uid } from '../lib/format';
 import { t } from '../lib/i18n';
 import { useTimers } from '../timers';
 import { ExerciseConfig, ExerciseDetail, ExerciseMedia, ExercisePicker } from '../components/exercises';
@@ -40,11 +40,16 @@ function StartChooser({ open, startId, weight, setWeight, begin, close }) {
   </Screen>;
 }
 function ShareWorkoutBuilder({ visible, onClose }) {
-  const { S } = useStore(); const colors = useColors(); const [plan, setPlan] = useState({ name: 'Shared workout', entries: [] }); const [picker, setPicker] = useState(false); const [configEx, setConfigEx] = useState(null); const [qr, setQr] = useState(null);
+  const { S, update } = useStore(); const colors = useColors(); const [plan, setPlan] = useState({ name: 'Shared workout', entries: [] }); const [picker, setPicker] = useState(false); const [configEx, setConfigEx] = useState(null); const [qr, setQr] = useState(null);
   useEffect(() => { if (visible) { setPlan({ name: 'Shared workout', entries: [] }); setQr(null); } }, [visible]);
   const showQr = () => { try { setQr(encodeWorkoutShare(plan)); } catch (error) { Alert.alert(t('Unable to share workout'), error.message); } };
+  const saveToCatalog = () => {
+    update(state => state.routines.push({ id: uid(), name: plan.name, emoji: 'dumbbell', prog: 'linear', ex: plan.entries }));
+    Alert.alert(t('Saved to catalog'), t('{0} was added to your routines.', plan.name));
+    onClose();
+  };
   if (!visible) return null;
-  return <Modal visible animationType="slide" onRequestClose={onClose}><Screen><Header title={t('Create workout to share')} subtitle={t('Build a plan for someone else to scan')} left={<IconButton name="close" onPress={onClose} />} /><Input value={plan.name} onChangeText={name => setPlan(value => ({ ...value, name }))} placeholder={t('Workout name')} />{plan.entries.map((entry, index) => { const exercise = exOr(entry.id); return <Card key={`${entry.id}-${index}`}><View style={styles.between}><View style={{ flex: 1 }}><AppText style={{ fontWeight: '800', textTransform: 'capitalize' }}>{exercise.n}</AppText><AppText muted>{entry.sets} {t('sets')} · {entry.mode || 'reps'}</AppText></View><IconButton name="close" accessibilityLabel={t('Remove exercise')} onPress={() => setPlan(value => ({ ...value, entries: value.entries.filter((_, itemIndex) => itemIndex !== index) }))} /></View></Card>; })}<Button title={t('Add exercise')} icon="plus" onPress={() => setPicker(true)} /><Button title={t('Share workout')} icon="qrcode" primary disabled={!plan.entries.length} onPress={showQr} />
+  return <Modal visible animationType="slide" onRequestClose={onClose}><Screen><Header title={t('Create workout to share')} subtitle={t('Build a plan for someone else to scan')} left={<IconButton name="close" onPress={onClose} />} /><Input value={plan.name} onChangeText={name => setPlan(value => ({ ...value, name }))} placeholder={t('Workout name')} />{plan.entries.map((entry, index) => { const exercise = exOr(entry.id); return <Card key={`${entry.id}-${index}`}><View style={styles.between}><View style={{ flex: 1 }}><AppText style={{ fontWeight: '800', textTransform: 'capitalize' }}>{exercise.n}</AppText><AppText muted>{entry.sets} {t('sets')} · {entry.mode || 'reps'}</AppText></View><IconButton name="close" accessibilityLabel={t('Remove exercise')} onPress={() => setPlan(value => ({ ...value, entries: value.entries.filter((_, itemIndex) => itemIndex !== index) }))} /></View></Card>; })}<Button title={t('Add exercise')} icon="plus" onPress={() => setPicker(true)} /><Button title={t('Share workout')} icon="qrcode" primary disabled={!plan.entries.length} onPress={showQr} /><Button title={t('Save to routines')} icon="content-save" disabled={!plan.entries.length} onPress={saveToCatalog} />
     <ExercisePicker visible={picker} onClose={() => setPicker(false)} onPick={exercise => { setPicker(false); setConfigEx(exercise); }} /><ExerciseConfig exercise={configEx} visible={!!configEx} onClose={() => setConfigEx(null)} onSave={config => { setPlan(value => ({ ...value, entries: [...value.entries, { ...config, id: configEx.id }] })); setConfigEx(null); }} />
     <Modal transparent visible={!!qr} animationType="fade" onRequestClose={() => setQr(null)}><View style={styles.overlay}><View style={[styles.dialog, styles.qrDialog, { backgroundColor: colors.surface }]}><AppText style={{ fontWeight: '800', fontSize: 22 }}>{t('Share workout')}</AppText><AppText muted style={{ textAlign: 'center' }}>{t('Scan this code in openGym to start this workout.')}</AppText>{qr ? <View style={styles.qr}><QRCode value={qr} size={230} /></View> : null}<Button title={t('Done')} primary onPress={() => { setQr(null); onClose(); }} /></View></View></Modal>
   </Screen></Modal>;
@@ -57,9 +62,15 @@ function WorkoutScanner({ visible, knownIds, onClose, onFound }) {
   return <Modal visible animationType="slide" onRequestClose={onClose}><View style={[styles.scanner, { backgroundColor: colors.bg }]}><Header title={t('Scan workout QR')} subtitle={t('Point your camera at an openGym workout QR code')} left={<IconButton name="close" onPress={onClose} />} />{!CameraView ? <Card><AppText>{t('Camera scanning is unavailable in this app build.')}</AppText></Card> : !permission?.granted ? <Card><AppText style={{ marginBottom: 12 }}>{t('Camera permission is needed to scan a workout QR code.')}</AppText><Button title={t('Allow camera')} primary onPress={requestPermission} /></Card> : <CameraView style={styles.camera} onBarcodeScanned={scanning ? scan : undefined} barcodeScannerSettings={{ barcodeTypes: ['qr'] }} />}</View></Modal>;
 }
 function ScannedPlan({ plan, onClose, onStart }) {
+  const { update } = useStore();
   const colors = useColors();
   if (!plan) return null;
-  return <Modal visible animationType="slide" onRequestClose={onClose}><Screen><Header title={plan.name} subtitle={t('Shared workout')} left={<IconButton name="close" onPress={onClose} />} /><Card style={{ borderColor: colors.accent }}><AppText muted>{t('Review the workout before starting.')}</AppText>{plan.entries.map((entry, index) => <View key={`${entry.id}-${index}`} style={styles.sharedEntry}><AppText style={{ fontWeight: '700', textTransform: 'capitalize' }}>{exOr(entry.id).n}</AppText><AppText muted>{entry.sets} {t('sets')} · {entry.mode || 'reps'}</AppText></View>)}</Card><Button title={t('Start workout')} icon="play" primary onPress={onStart} /><Button title={t('Cancel')} onPress={onClose} /></Screen></Modal>;
+  const saveToCatalog = () => {
+    update(state => state.routines.push({ id: uid(), name: plan.name, emoji: 'dumbbell', prog: 'linear', ex: plan.entries }));
+    Alert.alert(t('Saved to catalog'), t('{0} was added to your routines.', plan.name));
+    onClose();
+  };
+  return <Modal visible animationType="slide" onRequestClose={onClose}><Screen><Header title={plan.name} subtitle={t('Shared workout')} left={<IconButton name="close" onPress={onClose} />} /><Card style={{ borderColor: colors.accent }}><AppText muted>{t('Review the workout before starting.')}</AppText>{plan.entries.map((entry, index) => <View key={`${entry.id}-${index}`} style={styles.sharedEntry}><AppText style={{ fontWeight: '700', textTransform: 'capitalize' }}>{exOr(entry.id).n}</AppText><AppText muted>{entry.sets} {t('sets')} · {entry.mode || 'reps'}</AppText></View>)}</Card><Button title={t('Save to routines')} icon="content-save" onPress={saveToCatalog} /><Button title={t('Start workout')} icon="play" primary onPress={onStart} /><Button title={t('Cancel')} onPress={onClose} /></Screen></Modal>;
 }
 function FinishSummary({ workout, onDone }) {
   const { S } = useStore(); const colors = useColors(); const load = loadOfWorkouts([workout]); const muscles = new Set(Object.entries(load).filter(([, value]) => value > 0).map(([muscle]) => muscle)); const sets = workout.entries.reduce((total, entry) => total + entry.sets.filter(set => set.done).length, 0);
