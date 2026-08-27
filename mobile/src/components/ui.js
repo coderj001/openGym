@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Switch as NativeSwitch, Text, TextInput, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Icon from './Icon';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useStore } from '../store';
 import { palette } from '../theme';
@@ -22,14 +22,14 @@ export function AppText({ children, muted, dim, style, numberOfLines }) { const 
 export function Button({ title, onPress, icon, danger, primary, disabled, compact, style }) {
   const c = useColors(); const bg = danger ? c.danger : primary ? c.accent : c.surface2;
   return <Pressable accessibilityRole="button" disabled={disabled} onPress={onPress} style={({ pressed }) => [styles.button, compact && styles.buttonCompact, { backgroundColor: bg, opacity: disabled ? .35 : pressed ? .7 : 1 }, style]}>
-    {icon ? <MaterialCommunityIcons name={icon} size={18} color={primary && !c.dark ? '#000' : '#fff'} /> : null}
+    {icon ? <Icon name={icon} size={18} color={primary && !c.dark ? '#000' : '#fff'} /> : null}
     <Text style={[styles.buttonText, { color: primary && !c.dark ? '#000' : danger || primary || c.dark ? '#fff' : c.text }]}>{title}</Text>
   </Pressable>;
 }
-export function IconButton({ name, onPress, color, size = 22, disabled, style, accessibilityLabel }) { const c = useColors(); return <Pressable accessibilityLabel={accessibilityLabel} disabled={disabled} onPress={onPress} hitSlop={8} style={({ pressed }) => [styles.iconButton, { backgroundColor: c.surface2, opacity: disabled ? .3 : pressed ? .6 : 1 }, style]}><MaterialCommunityIcons name={name} size={size} color={color || c.text} /></Pressable>; }
+export function IconButton({ name, onPress, color, size = 22, disabled, style, accessibilityLabel }) { const c = useColors(); return <Pressable accessibilityLabel={accessibilityLabel} disabled={disabled} onPress={onPress} hitSlop={8} style={({ pressed }) => [styles.iconButton, { backgroundColor: c.surface2, opacity: disabled ? .3 : pressed ? .6 : 1 }, style]}><Icon name={name} size={size} color={color || c.text} /></Pressable>; }
 export function Input({ style, ...props }) { const c = useColors(); return <TextInput placeholderTextColor={c.dim} {...props} style={[styles.input, { color: c.text, backgroundColor: c.surface2, borderColor: c.border }, style]} />; }
 export function Row({ title, subtitle, icon, onPress, children, danger, style }) {
-  const c = useColors(); const inner = <><View style={[styles.rowIcon, { backgroundColor: c.surface2 }]}>{icon ? <MaterialCommunityIcons name={icon} size={21} color={danger ? c.danger : c.accent} /> : null}</View><View style={{ flex: 1 }}><AppText style={{ fontWeight: '600' }}>{title}</AppText>{subtitle ? <AppText muted style={{ fontSize: 12, marginTop: 2 }}>{subtitle}</AppText> : null}</View>{children}{onPress ? <MaterialCommunityIcons name="chevron-right" size={22} color={c.dim} /> : null}</>;
+  const c = useColors(); const inner = <><View style={[styles.rowIcon, { backgroundColor: c.surface2 }]}>{icon ? <Icon name={icon} size={21} color={danger ? c.danger : c.accent} /> : null}</View><View style={{ flex: 1 }}><AppText style={{ fontWeight: '600' }}>{title}</AppText>{subtitle ? <AppText muted style={{ fontSize: 12, marginTop: 2 }}>{subtitle}</AppText> : null}</View>{children}{onPress ? <Icon name="chevron-right" size={22} color={c.dim} /> : null}</>;
   return onPress ? <Pressable onPress={onPress} style={({ pressed }) => [styles.row, { borderBottomColor: c.border, opacity: pressed ? .65 : 1 }, style]}>{inner}</Pressable> : <View style={[styles.row, { borderBottomColor: c.border }, style]}>{inner}</View>;
 }
 export function Toggle({ value, onValueChange, disabled }) { const c = useColors(); return <NativeSwitch disabled={disabled} value={value} onValueChange={onValueChange} trackColor={{ true: c.accent }} />; }

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Icon from './src/components/Icon';
 import { StatusBar } from 'expo-status-bar';
 import { Notifications } from './src/lib/native';
 import { StoreProvider, useStore } from './src/store';
@@ -25,10 +25,10 @@ Notifications?.setNotificationHandler({
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
-const TAB_ICONS = { Home: 'home', Plan: 'clipboard-text', Workout: 'dumbbell', Stats: 'chart-line', Library: 'book-open-variant' };
+const TAB_ICONS = { Home: 'house', Plan: 'clipboard', Workout: 'dumbbell', Stats: 'chartLine', Library: 'list' };
 function MainTabs() {
   const { S } = useStore(); const colors = palette(S);
-  return <Tabs.Navigator screenOptions={({ route }) => ({ headerShown: false, tabBarActiveTintColor: route.name === 'Workout' && S.active ? colors.orange : colors.accent, tabBarInactiveTintColor: colors.dim, tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border, height: 70, paddingBottom: 9, paddingTop: 6 }, tabBarLabelStyle: { fontSize: 11, fontWeight: '700' }, tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name={TAB_ICONS[route.name]} size={size} color={color} /> })}>
+  return <Tabs.Navigator screenOptions={({ route }) => ({ headerShown: false, tabBarActiveTintColor: route.name === 'Workout' && S.active ? colors.orange : colors.accent, tabBarInactiveTintColor: colors.dim, tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border, height: 70, paddingBottom: 9, paddingTop: 6 }, tabBarLabelStyle: { fontSize: 11, fontWeight: '700' }, tabBarIcon: ({ color, size }) => <Icon name={TAB_ICONS[route.name]} size={size} color={color} /> })}>
     <Tabs.Screen name="Home" component={HomeScreen} /><Tabs.Screen name="Plan" component={PlanScreen} /><Tabs.Screen name="Workout" component={WorkoutScreen} options={{ tabBarBadge: S.active ? '•' : undefined, tabBarBadgeStyle: { backgroundColor: colors.orange } }} /><Tabs.Screen name="Stats" component={StatsScreen} /><Tabs.Screen name="Library" component={LibraryScreen} />
   </Tabs.Navigator>;
 }

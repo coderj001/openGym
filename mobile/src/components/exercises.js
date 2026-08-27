@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { FlatList, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { Image } from 'expo-image';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Icon from './Icon';
 import { allExercises, BODYPARTS, equipmentOf, exOr, mediaFor } from '../lib/exercises';
 import { MUSCLE_NAME, musclesOf } from '../lib/muscles';
 import { defaultConfig, modeOf } from '../lib/history';
@@ -12,13 +12,13 @@ import { AppText, Button, Card, Chip, Header, IconButton, Input, Screen, Section
 
 export function ExerciseMedia({ exercise, compact = false, mini = false }) {
   const source = mediaFor(exercise); const colors = useColors(); const height = mini ? 112 : compact ? 180 : 280;
-  if (!source) return <View style={[styles.mediaFallback, { height, backgroundColor: colors.surface2 }]}><MaterialCommunityIcons name="dumbbell" size={44} color={colors.dim} /></View>;
+  if (!source) return <View style={[styles.mediaFallback, { height, backgroundColor: colors.surface2 }]}><Icon name="dumbbell" size={44} color={colors.dim} /></View>;
   return <Image source={source} style={[styles.media, { height, backgroundColor: '#fff' }]} contentFit="contain" autoplay />;
 }
 export function ExerciseRow({ exercise, onPress, accessory, fullName = false }) {
   const colors = useColors();
   return <Pressable onPress={onPress} style={({ pressed }) => [styles.exerciseRow, fullName && styles.exerciseRowFullName, { borderBottomColor: colors.border, opacity: pressed ? .6 : 1 }]}>
-    <View style={[styles.exerciseIcon, fullName && styles.exerciseIconFullName, { backgroundColor: colors.surface2 }]}><MaterialCommunityIcons name={exercise.bp === 'cardio' ? 'run' : 'dumbbell'} size={22} color={colors.accent} /></View>
+    <View style={[styles.exerciseIcon, fullName && styles.exerciseIconFullName, { backgroundColor: colors.surface2 }]}><Icon name={exercise.bp === 'cardio' ? 'figureRun' : 'dumbbell'} size={22} color={colors.accent} /></View>
     <View style={styles.exerciseText}><AppText numberOfLines={fullName ? undefined : 1} style={styles.exerciseName}>{exercise.n}</AppText><AppText muted numberOfLines={1} style={styles.exerciseMeta}>{exercise.tg || exercise.bp} · {exercise.eq}</AppText></View>{accessory}
   </Pressable>;
 }
@@ -49,10 +49,10 @@ function ConfigStepper({ label, value, onChange, step = 1, min = 0, suffix = '' 
   return <View style={styles.stepperField}>
     <AppText muted style={styles.fieldLabel}>{label}</AppText>
     <View style={[styles.stepperRow, { backgroundColor: colors.surface2, borderColor: colors.border }]}>
-      <Pressable accessibilityRole="button" accessibilityLabel={`Decrease ${label}`} onPress={dec} disabled={num <= min} style={({ pressed }) => [styles.stepperBtn, { opacity: num <= min ? 0.3 : pressed ? 0.6 : 1 }]}><MaterialCommunityIcons name="minus" size={20} color={colors.text} /></Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel={`Decrease ${label}`} onPress={dec} disabled={num <= min} style={({ pressed }) => [styles.stepperBtn, { opacity: num <= min ? 0.3 : pressed ? 0.6 : 1 }]}><Icon name="minus" size={20} color={colors.text} /></Pressable>
       <TextInput keyboardType="decimal-pad" selectTextOnFocus value={String(value ?? min)} onChangeText={text => onChange(Number(text.replace(',', '.')) || 0)} style={[styles.stepperInput, { color: colors.text }]} />
       {suffix ? <AppText dim style={styles.stepperSuffix}>{suffix}</AppText> : null}
-      <Pressable accessibilityRole="button" accessibilityLabel={`Increase ${label}`} onPress={inc} style={({ pressed }) => [styles.stepperBtn, { opacity: pressed ? 0.6 : 1 }]}><MaterialCommunityIcons name="plus" size={20} color={colors.text} /></Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel={`Increase ${label}`} onPress={inc} style={({ pressed }) => [styles.stepperBtn, { opacity: pressed ? 0.6 : 1 }]}><Icon name="plus" size={20} color={colors.text} /></Pressable>
     </View>
   </View>;
 }
@@ -78,7 +78,7 @@ export function ExerciseConfig({ exercise, initial, visible, onClose, onSave, on
             {mode === 'cardio' && <ConfigStepper label={t('Speed')} value={config.speed ?? 8} onChange={val => updateField('speed', val)} step={0.5} min={0} suffix="km/h" />}
             {mode !== 'cardio' && <ConfigStepper label={config.bodyweight ? t('Added weight') : t('Weight')} value={config.weight ?? 0} onChange={val => updateField('weight', val)} step={2.5} min={0} suffix={S.unit} />}
           </View>
-          {mode !== 'cardio' ? <><Pressable style={styles.option} onPress={() => setConfig(value => ({ ...value, bodyweight: !value.bodyweight }))}><MaterialCommunityIcons name={config.bodyweight ? 'checkbox-marked' : 'checkbox-blank-outline'} color={colors.accent} size={24} /><AppText>{t('Bodyweight exercise')}</AppText></Pressable>{mode === 'reps' ? <Pressable style={styles.option} onPress={() => setConfig(value => ({ ...value, side: !value.side }))}><MaterialCommunityIcons name={config.side ? 'checkbox-marked' : 'checkbox-blank-outline'} color={colors.accent} size={24} /><AppText>{t('Log total reps across both sides')}</AppText></Pressable> : null}</> : null}
+          {mode !== 'cardio' ? <><Pressable style={styles.option} onPress={() => setConfig(value => ({ ...value, bodyweight: !value.bodyweight }))}><Icon name={config.bodyweight ? 'checkCircle' : 'circle'} color={colors.accent} size={24} /><AppText>{t('Bodyweight exercise')}</AppText></Pressable>{mode === 'reps' ? <Pressable style={styles.option} onPress={() => setConfig(value => ({ ...value, side: !value.side }))}><Icon name={config.side ? 'checkCircle' : 'circle'} color={colors.accent} size={24} /><AppText>{t('Log total reps across both sides')}</AppText></Pressable> : null}</> : null}
           <Button title={t('Save')} primary onPress={() => onSave(config)} />{onDelete ? <Button title={t('Remove exercise')} danger onPress={onDelete} /> : null}
         </ScrollView>
       </View>

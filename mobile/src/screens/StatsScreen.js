@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Icon from '../components/Icon';
 import { useStore } from '../store';
 import { EXIDX } from '../lib/exercises';
 import { bestWeightFor, lastBW, setLabel, streakWeeks, workoutVolume } from '../lib/history';
@@ -24,5 +24,5 @@ export default function StatsScreen({ navigation }) {
     {S.workouts.length ? <><SectionTitle>{t('Recent workouts')}</SectionTitle>{[...S.workouts].reverse().slice(0, 6).map(workout => <Pressable key={workout.id} onPress={() => navigation.navigate('History', { workoutId: workout.id })}><Card><View style={styles.between}><View><AppText style={{ fontWeight: '800' }}>{workout.name}</AppText><AppText muted>{fmtDate(workout.d, true)} · {workout.entries.length} {t('exercises')}</AppText></View><AppText style={{ color: colors.accent, fontWeight: '700' }}>{fmtNum(workoutVolume(workout))} {S.unit}</AppText></View></Card></Pressable>)}</> : null}
   </Screen>;
 }
-function Tile({ icon, title, value }) { const colors = useColors(); return <Card style={styles.tile}><MaterialCommunityIcons name={icon} color={colors.accent} size={20} /><AppText muted style={{ fontSize: 11 }}>{title}</AppText><AppText style={{ fontWeight: '800', fontSize: 21 }}>{value}</AppText></Card>; }
+function Tile({ icon, title, value }) { const colors = useColors(); return <Card style={styles.tile}><Icon name={icon} color={colors.accent} size={20} /><AppText muted style={{ fontSize: 11 }}>{title}</AppText><AppText style={{ fontWeight: '800', fontSize: 21 }}>{value}</AppText></Card>; }
 const styles = StyleSheet.create({ tiles: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 }, tile: { width: '48%', gap: 5 }, cardTitle: { fontWeight: '800', fontSize: 20, marginBottom: 8 }, chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 7 }, barRow: { minHeight: 34, flexDirection: 'row', alignItems: 'center', gap: 7 }, between: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 10 } });

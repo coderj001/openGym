@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Modal, Pressable, StyleSheet, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Icon from '../components/Icon';
 import { useStore } from '../store';
 import { cleanupSg, exLine, supersetUnits } from '../lib/history';
 import { exOr } from '../lib/exercises';
