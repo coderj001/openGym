@@ -27,7 +27,7 @@ export function finishActiveWorkout(state) {
   workout.prs = [];
   workout.e1prs = [];
   workout.entries.forEach(entry => {
-    const top = Math.max(0, ...entry.sets.filter(set => set.done).map(set => set.w || 0), entry.topW || 0);
+    const top = Math.max(0, ...entry.sets.filter(set => set.done && set.kind !== 'w').map(set => set.w || 0), entry.topW || 0);
     if (top > bestWeightFor(state, entry.id)) workout.prs.push(entry.id);
     const estimate = is1RMRecord(state, entry.id, entry);
     if (estimate && !workout.prs.includes(entry.id)) workout.e1prs.push({ id: entry.id, ...estimate });
