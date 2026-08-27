@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { FlatList, Modal, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { FlatList, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { Image } from 'expo-image';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { allExercises, BODYPARTS, equipmentOf, exOr, mediaFor } from '../lib/exercises';
@@ -42,19 +42,47 @@ export function ExerciseDetail({ exercise, visible, onClose, footer }) {
     {ex ? <><ExerciseMedia exercise={ex} /><View style={styles.tags}><Chip title={t(ex.tg || ex.bp)} active /><Chip title={t(ex.eq)} /></View>{ex.mg ? <AppText muted>{t('Also works:')} {t(ex.mg)}</AppText> : null}<SectionTitle>{t('Instructions')}</SectionTitle><Card>{instrFor(ex).map((step, index) => <View key={index} style={styles.step}><AppText style={{ fontWeight: '800', width: 24 }}>{index + 1}</AppText><AppText style={{ flex: 1, lineHeight: 22 }}>{step}</AppText></View>)}</Card>{footer}</> : null}
   </Screen></Modal>;
 }
+function ConfigStepper({ label, value, onChange, step = 1, min = 0, suffix = '' }) {
+  const colors = useColors(); const num = Number(value) || 0;
+  const dec = () => onChange(Math.max(min, Math.round((num - step) * 10) / 10));
+  const inc = () => onChange(Math.round((num + step) * 10) / 10);
+  return <View style={styles.stepperField}>
+    <AppText muted style={styles.fieldLabel}>{label}</AppText>
+    <View style={[styles.stepperRow, { backgroundColor: colors.surface2, borderColor: colors.border }]}>
+      <Pressable accessibilityRole="button" accessibilityLabel={`Decrease ${label}`} onPress={dec} disabled={num <= min} style={({ pressed }) => [styles.stepperBtn, { opacity: num <= min ? 0.3 : pressed ? 0.6 : 1 }]}><MaterialCommunityIcons name="minus" size={20} color={colors.text} /></Pressable>
+      <TextInput keyboardType="decimal-pad" selectTextOnFocus value={String(value ?? min)} onChangeText={text => onChange(Number(text.replace(',', '.')) || 0)} style={[styles.stepperInput, { color: colors.text }]} />
+      {suffix ? <AppText dim style={styles.stepperSuffix}>{suffix}</AppText> : null}
+      <Pressable accessibilityRole="button" accessibilityLabel={`Increase ${label}`} onPress={inc} style={({ pressed }) => [styles.stepperBtn, { opacity: pressed ? 0.6 : 1 }]}><MaterialCommunityIcons name="plus" size={20} color={colors.text} /></Pressable>
+    </View>
+  </View>;
+}
 export function ExerciseConfig({ exercise, initial, visible, onClose, onSave, onDelete }) {
-  const [config, setConfig] = useState(null); const colors = useColors();
+  const { S } = useStore(); const [config, setConfig] = useState(null); const colors = useColors();
   useEffect(() => { if (exercise && visible) setConfig({ ...defaultConfig(exercise.id), ...(initial || {}) }); }, [exercise, initial, visible]);
   if (!exercise || !config) return null;
   const mode = modeOf({ ...config, id: exercise.id });
-  const field = (key, label, fallback) => <View style={{ flex: 1 }}><AppText muted style={styles.fieldLabel}>{label}</AppText><Input keyboardType="decimal-pad" value={String(config[key] ?? fallback)} onChangeText={value => setConfig(current => ({ ...current, [key]: Number(value.replace(',', '.')) || 0 }))} /></View>;
-  return <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}><View style={styles.overlay}><ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[styles.dialog, { backgroundColor: colors.surface }]}>
-    <Header title={exercise.n} titleStyle={{ textTransform: 'capitalize' }} right={<IconButton name="close" onPress={onClose} />} />
-    <ExerciseMedia exercise={exercise} mini />
-    <SectionTitle>{t('Logging mode')}</SectionTitle><View style={styles.tags}>{['reps', 'time', 'cardio'].map(value => <Chip key={value} title={t(value === 'reps' ? 'Reps' : value === 'time' ? 'Timed hold' : 'Cardio')} active={mode === value} onPress={() => setConfig({ ...defaultConfig(exercise.id, value), mode: value })} />)}</View>
-    <View style={styles.fields}>{field('sets', t('Sets'), 3)}{mode === 'reps' && field('reps', t('Reps'), 10)}{mode === 'time' && field('sec', t('Seconds'), 45)}{mode === 'cardio' && field('min', t('Duration (min)'), 20)}{mode === 'cardio' && field('speed', t('Speed (km/h)'), 8)}{mode !== 'cardio' && field('weight', config.bodyweight ? t('Added weight') : t('Weight'), 0)}</View>
-    {mode !== 'cardio' ? <><Pressable style={styles.option} onPress={() => setConfig(value => ({ ...value, bodyweight: !value.bodyweight }))}><MaterialCommunityIcons name={config.bodyweight ? 'checkbox-marked' : 'checkbox-blank-outline'} color={colors.accent} size={24} /><AppText>{t('Bodyweight exercise')}</AppText></Pressable>{mode === 'reps' ? <Pressable style={styles.option} onPress={() => setConfig(value => ({ ...value, side: !value.side }))}><MaterialCommunityIcons name={config.side ? 'checkbox-marked' : 'checkbox-blank-outline'} color={colors.accent} size={24} /><AppText>{t('Log total reps across both sides')}</AppText></Pressable> : null}</> : null}
-    <Button title={t('Save')} primary onPress={() => onSave(config)} />{onDelete ? <Button title={t('Remove exercise')} danger onPress={onDelete} /> : null}
-  </ScrollView></View></Modal>;
+  const updateField = (key, val) => setConfig(current => ({ ...current, [key]: val }));
+  return <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.overlay}>
+      <View style={[styles.dialog, { backgroundColor: colors.surface }]}>
+        <ScrollView keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false} contentContainerStyle={{ gap: 12 }}>
+          <Header title={exercise.n} titleStyle={{ textTransform: 'capitalize' }} right={<IconButton name="close" onPress={onClose} />} />
+          <ExerciseMedia exercise={exercise} mini />
+          <SectionTitle>{t('Logging mode')}</SectionTitle>
+          <View style={styles.tags}>{['reps', 'time', 'cardio'].map(value => <Chip key={value} title={t(value === 'reps' ? 'Reps' : value === 'time' ? 'Timed hold' : 'Cardio')} active={mode === value} onPress={() => setConfig({ ...defaultConfig(exercise.id, value), mode: value })} />)}</View>
+          <View style={styles.fields}>
+            <ConfigStepper label={t('Sets')} value={config.sets ?? (mode === 'cardio' ? 1 : 3)} onChange={val => updateField('sets', val)} step={1} min={1} />
+            {mode === 'reps' && <ConfigStepper label={t('Reps')} value={config.reps ?? 10} onChange={val => updateField('reps', val)} step={config.side ? 2 : 1} min={1} />}
+            {mode === 'time' && <ConfigStepper label={t('Seconds')} value={config.sec ?? 45} onChange={val => updateField('sec', val)} step={5} min={5} suffix="s" />}
+            {mode === 'cardio' && <ConfigStepper label={t('Duration')} value={config.min ?? 20} onChange={val => updateField('min', val)} step={5} min={1} suffix="min" />}
+            {mode === 'cardio' && <ConfigStepper label={t('Speed')} value={config.speed ?? 8} onChange={val => updateField('speed', val)} step={0.5} min={0} suffix="km/h" />}
+            {mode !== 'cardio' && <ConfigStepper label={config.bodyweight ? t('Added weight') : t('Weight')} value={config.weight ?? 0} onChange={val => updateField('weight', val)} step={2.5} min={0} suffix={S.unit} />}
+          </View>
+          {mode !== 'cardio' ? <><Pressable style={styles.option} onPress={() => setConfig(value => ({ ...value, bodyweight: !value.bodyweight }))}><MaterialCommunityIcons name={config.bodyweight ? 'checkbox-marked' : 'checkbox-blank-outline'} color={colors.accent} size={24} /><AppText>{t('Bodyweight exercise')}</AppText></Pressable>{mode === 'reps' ? <Pressable style={styles.option} onPress={() => setConfig(value => ({ ...value, side: !value.side }))}><MaterialCommunityIcons name={config.side ? 'checkbox-marked' : 'checkbox-blank-outline'} color={colors.accent} size={24} /><AppText>{t('Log total reps across both sides')}</AppText></Pressable> : null}</> : null}
+          <Button title={t('Save')} primary onPress={() => onSave(config)} />{onDelete ? <Button title={t('Remove exercise')} danger onPress={onDelete} /> : null}
+        </ScrollView>
+      </View>
+    </KeyboardAvoidingView>
+  </Modal>;
 }
-const styles = StyleSheet.create({ media: { width: '100%', borderRadius: 16 }, mediaFallback: { width: '100%', borderRadius: 16, alignItems: 'center', justifyContent: 'center' }, exerciseRow: { minHeight: 66, flexDirection: 'row', alignItems: 'center', gap: 10, borderBottomWidth: StyleSheet.hairlineWidth }, exerciseRowFullName: { paddingVertical: 12, alignItems: 'flex-start' }, exerciseIcon: { width: 42, height: 42, borderRadius: 11, alignItems: 'center', justifyContent: 'center' }, exerciseIconFullName: { marginTop: 1 }, exerciseText: { flex: 1, minWidth: 0 }, exerciseName: { fontWeight: '700', textTransform: 'capitalize', lineHeight: 21 }, exerciseMeta: { fontSize: 12, textTransform: 'capitalize', marginTop: 3 }, pickerFilters: { flexGrow: 0, height: 48 }, pickerFilterContent: { gap: 8, paddingVertical: 6, alignItems: 'center' }, muscleCard: { gap: 6, marginBottom: 8 }, tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 }, step: { flexDirection: 'row', gap: 8, marginBottom: 12 }, overlay: { flex: 1, backgroundColor: '#000a', justifyContent: 'center', padding: 16 }, dialog: { borderRadius: 20, padding: 16, gap: 12, maxHeight: '90%' }, fields: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 }, fieldLabel: { fontSize: 12, marginBottom: 5 }, option: { flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 42 } });
+const styles = StyleSheet.create({ media: { width: '100%', borderRadius: 16 }, mediaFallback: { width: '100%', borderRadius: 16, alignItems: 'center', justifyContent: 'center' }, exerciseRow: { minHeight: 66, flexDirection: 'row', alignItems: 'center', gap: 10, borderBottomWidth: StyleSheet.hairlineWidth }, exerciseRowFullName: { paddingVertical: 12, alignItems: 'flex-start' }, exerciseIcon: { width: 42, height: 42, borderRadius: 11, alignItems: 'center', justifyContent: 'center' }, exerciseIconFullName: { marginTop: 1 }, exerciseText: { flex: 1, minWidth: 0 }, exerciseName: { fontWeight: '700', textTransform: 'capitalize', lineHeight: 21 }, exerciseMeta: { fontSize: 12, textTransform: 'capitalize', marginTop: 3 }, pickerFilters: { flexGrow: 0, height: 48 }, pickerFilterContent: { gap: 8, paddingVertical: 6, alignItems: 'center' }, muscleCard: { gap: 6, marginBottom: 8 }, tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 }, step: { flexDirection: 'row', gap: 8, marginBottom: 12 }, overlay: { flex: 1, backgroundColor: '#000a', justifyContent: 'center', padding: 16 }, dialog: { borderRadius: 20, padding: 16, maxHeight: '90%' }, fields: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 }, fieldLabel: { fontSize: 12, marginBottom: 5 }, stepperField: { flex: 1, minWidth: 130 }, stepperRow: { height: 44, flexDirection: 'row', alignItems: 'center', borderRadius: 11, borderWidth: StyleSheet.hairlineWidth }, stepperBtn: { width: 36, height: 44, alignItems: 'center', justifyContent: 'center' }, stepperInput: { flex: 1, textAlign: 'center', fontWeight: '800', fontSize: 16, padding: 0 }, stepperSuffix: { fontSize: 11, marginRight: 4 }, option: { flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 42 } });
