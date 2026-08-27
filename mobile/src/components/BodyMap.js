@@ -14,7 +14,7 @@ function Figure({ paths, label, selected, onMuscle, colors }) {
       {Object.entries(paths).map(([muscle, segments]) => {
         const active = selected.has(muscle);
         return <G key={muscle} onPress={() => onMuscle(muscle)} accessibilityRole="button" accessibilityLabel={t(MUSCLE_NAME[muscle])}>
-          {segments.map((d, index) => <Path key={index} d={d} fill={active ? colors.accent : colors.dark ? colors.muted : colors.surface2} stroke={active ? colors.accent : colors.border} strokeWidth={active ? 0 : 1.5} opacity={active ? 1 : 0.85} />)}
+          {segments.map((d, index) => <Path key={index} d={d} fill={active ? colors.accent : colors.dark ? colors.muted : colors.border} stroke={active ? colors.accent : colors.muted} strokeWidth={active ? 0 : 1.5} opacity={active ? 1 : 0.85} />)}
         </G>;
       })}
     </Svg>
