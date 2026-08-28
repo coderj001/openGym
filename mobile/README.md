@@ -50,16 +50,36 @@ A physical device must be reachable by the development machine while using Expo'
 
 ## Release builds
 
-Production binaries are built with Expo Application Services (EAS). The Android output is an App Bundle (`.aab`) for Google Play; the iOS output is an archive for App Store Connect. The first two commands require an Expo account and create/link the account-specific EAS project ID; do not commit an ID owned by another account.
+Production Android APKs are built locally with Gradle on GitHub Actions; no Expo account, EAS project, or Expo access token is used. Pushing a `vMAJOR.MINOR.PATCH` tag runs the mobile tests, creates a signed APK, and attaches it to a GitHub Release. The tag supplies the Android version name and monotonically increasing version code.
+
+Add these repository GitHub Actions secrets before the first release:
+
+- `ANDROID_KEYSTORE_BASE64` — the base64-encoded release keystore
+- `ANDROID_KEYSTORE_PASSWORD` — the keystore password
+- `ANDROID_KEY_ALIAS` — the signing-key alias
+- `ANDROID_KEY_PASSWORD` — the signing-key password
+
+### Create the signing secrets
+
+Install and authenticate the [GitHub CLI](https://cli.github.com/), then create a signing keystore once. Keep the passwords and keystore somewhere safe: losing this key prevents future APKs from updating an installed copy.
 
 ```bash
-cd mobile
-npx eas-cli@latest login
-npx eas-cli@latest init
-npx eas-cli@latest build --platform all --profile production
+keytool -genkeypair -v -keystore opengym-release.jks -alias opengym -keyalg RSA -keysize 2048 -validity 10000
 ```
 
-The resulting build links are printed by EAS. Builds bundle the app and its exercise media, so no backend is required after installation. `eas.json` enables EAS-managed build-number increments for both platforms.
+`keytool` prompts for the keystore and key passwords; record both. Upload the keystore and values to the current repository with the GitHub CLI:
+
+```bash
+gh auth login
+gh secret set ANDROID_KEYSTORE_BASE64 < <(base64 < opengym-release.jks | tr -d '\n')
+gh secret set ANDROID_KEYSTORE_PASSWORD
+gh secret set ANDROID_KEY_ALIAS --body opengym
+gh secret set ANDROID_KEY_PASSWORD
+```
+
+The two password commands prompt for their values without placing them in shell history. Do not commit the `.jks` file; it is already ignored. Back it up securely before releasing.
+
+The build generates the native Android project from the tracked Expo configuration, then uses Java, the Android SDK, and Gradle on the runner. Builds bundle the app and its exercise media, so no backend is required after installation.
 
 ## Native development builds
 

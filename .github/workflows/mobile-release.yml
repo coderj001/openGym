@@ -1,0 +1,65 @@
+name: Release mobile APK
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and release Android APK
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - run: npm ci
+      - run: npm test -- --runInBand
+
+      - name: Set Android version from tag
+        run: |
+          node -e 'const fs = require("fs"); const version = process.env.GITHUB_REF_NAME.replace(/^v/, ""); if (!/^\d+\.\d+\.\d+$/.test(version)) throw new Error("Tags must use vMAJOR.MINOR.PATCH"); const [major, minor, patch] = version.split(".").map(Number); const app = JSON.parse(fs.readFileSync("app.json")); app.expo.version = version; app.expo.android.versionCode = major * 1000000 + minor * 1000 + patch; fs.writeFileSync("app.json", `${JSON.stringify(app, null, 2)}\n`);'
+
+      - name: Generate Android project
+        run: npx expo prebuild --platform android --no-install
+
+      - name: Build and sign APK
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          : "${ANDROID_KEYSTORE_BASE64:?Set ANDROID_KEYSTORE_BASE64}"
+          : "${ANDROID_KEYSTORE_PASSWORD:?Set ANDROID_KEYSTORE_PASSWORD}"
+          : "${ANDROID_KEY_ALIAS:?Set ANDROID_KEY_ALIAS}"
+          : "${ANDROID_KEY_PASSWORD:?Set ANDROID_KEY_PASSWORD}"
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/release.keystore"
+          cd android
+          ./gradlew :app:assembleRelease
+          build_tools="$(find "$ANDROID_HOME/build-tools" -maxdepth 1 -mindepth 1 -type d -print | sort -V | tail -n 1)"
+          "$build_tools/zipalign" -p -f 4 app/build/outputs/apk/release/app-release.apk "$RUNNER_TEMP/aligned.apk"
+          "$build_tools/apksigner" sign --ks "$RUNNER_TEMP/release.keystore" --ks-key-alias "$ANDROID_KEY_ALIAS" --ks-pass env:ANDROID_KEYSTORE_PASSWORD --key-pass env:ANDROID_KEY_PASSWORD --out "$RUNNER_TEMP/openGym-${GITHUB_REF_NAME}.apk" "$RUNNER_TEMP/aligned.apk"
+          "$build_tools/apksigner" verify --verbose "$RUNNER_TEMP/openGym-${GITHUB_REF_NAME}.apk"
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        working-directory: .
+        run: gh release create "$GITHUB_REF_NAME" "$RUNNER_TEMP/openGym-${GITHUB_REF_NAME}.apk" --generate-notes

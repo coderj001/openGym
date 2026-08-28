@@ -41,12 +41,6 @@
       "expo-font",
       "expo-audio",
       "expo-camera"
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "a0ba2b11-2be8-4173-871a-b950ba6ef696"
-      }
-    },
-    "owner": "ccomelons-team"
+    ]
   }
 }
