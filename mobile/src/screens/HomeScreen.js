@@ -12,7 +12,7 @@ import { AppText, Button, Card, Chip, Header, IconButton, Input, Screen, useColo
 const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 // -- Week view (existing) --
-function WeekView({ weekDays, today, done, S, colors, setOverrideDay }) {
+const WeekView = React.memo(function WeekView({ weekDays, today, done, S, colors, setOverrideDay }) {
   return (
     <View style={styles.week}>
       {weekDays.map(({ date, iso }) => {
@@ -29,10 +29,10 @@ function WeekView({ weekDays, today, done, S, colors, setOverrideDay }) {
       })}
     </View>
   );
-}
+});
 
 // -- Month view --
-function MonthView({ today, done, colors }) {
+const MonthView = React.memo(function MonthView({ today, done, colors }) {
   const ref = new Date(`${today}T12:00:00`);
   const year = ref.getFullYear();
   const month = ref.getMonth();
@@ -81,10 +81,10 @@ function MonthView({ today, done, colors }) {
       </AppText>
     </View>
   );
-}
+});
 
 // -- Year view --
-function YearView({ today, done, colors }) {
+const YearView = React.memo(function YearView({ today, done, colors }) {
   const year = new Date(`${today}T12:00:00`).getFullYear();
   const countPerDay = useMemo(() => {
     const map = {};
@@ -122,7 +122,7 @@ function YearView({ today, done, colors }) {
       </AppText>
     </View>
   );
-}
+});
 
 export default function HomeScreen({ navigation }) {
   const { S, update } = useStore(); const colors = useColors();
