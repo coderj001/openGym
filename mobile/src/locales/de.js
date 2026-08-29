@@ -216,6 +216,8 @@ export default {
   'Delete routine': 'Routine löschen',
   // --- library / history ---
   '{0} exercises with animations': '{0} Übungen mit Animationen',
+  'Play exercise animation': 'Übungsanimation abspielen',
+  'Pause exercise animation': 'Übungsanimation pausieren',
   'Search…': 'Suchen…',
   'No workouts yet.': 'Noch keine Trainings.',
   'Starter plan loaded — Mon Push · Wed Pull · Fri Legs': 'Starterplan geladen — Mo Push · Mi Pull · Fr Beine',

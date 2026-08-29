@@ -204,6 +204,8 @@ export default {
   '“{0}” and its exercises will be removed.': '"{0}" और उसके व्यायाम हटा दिए जाएँगे।',
   'Delete routine': 'रूटीन हटाएँ',
   '{0} exercises with animations': 'एनिमेशन के साथ {0} व्यायाम',
+  'Play exercise animation': 'व्यायाम एनीमेशन चलाएँ',
+  'Pause exercise animation': 'व्यायाम एनीमेशन रोकें',
   'Search…': 'खोजें…',
   'No workouts yet.': 'अभी कोई वर्कआउट नहीं।',
   'Starter plan loaded — Mon Push · Wed Pull · Fri Legs': 'स्टार्टर प्लान लोड हुआ — सोम पुश · बुध पुल · शुक्र लेग्स',

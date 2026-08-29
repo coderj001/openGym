@@ -204,6 +204,8 @@ export default {
   '“{0}” and its exercises will be removed.': '« {0} » et ses exercices seront supprimés.',
   'Delete routine': 'Supprimer la routine',
   '{0} exercises with animations': '{0} exercices avec animations',
+  'Play exercise animation': 'Lire l’animation de l’exercice',
+  'Pause exercise animation': 'Mettre en pause l’animation de l’exercice',
   'Search…': 'Rechercher…',
   'No workouts yet.': 'Aucune séance pour l’instant.',
   'Starter plan loaded — Mon Push · Wed Pull · Fri Legs': 'Plan de départ chargé — Lun Push · Mer Pull · Ven Jambes',

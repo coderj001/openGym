@@ -204,6 +204,8 @@ export default {
   '“{0}” and its exercises will be removed.': '“{0}”及其动作将被移除。',
   'Delete routine': '删除训练日',
   '{0} exercises with animations': '{0} 个带动画的动作',
+  'Play exercise animation': '播放动作动画',
+  'Pause exercise animation': '暂停动作动画',
   'Search…': '搜索…',
   'No workouts yet.': '还没有训练。',
   'Starter plan loaded — Mon Push · Wed Pull · Fri Legs': '入门计划已加载——周一推 · 周三拉 · 周五腿',
