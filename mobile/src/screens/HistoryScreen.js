@@ -63,6 +63,8 @@ export default function HistoryScreen({ navigation, route }) {
       data={filtered}
       keyExtractor={workout => workout.id}
       initialNumToRender={15}
+      windowSize={5}
+      maxToRenderPerBatch={8}
       contentContainerStyle={styles.list}
       ListEmptyComponent={<Card><AppText muted style={{ textAlign: 'center' }}>{t('No workouts yet.')}</AppText></Card>}
       renderItem={({ item: workout }) => {
