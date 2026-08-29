@@ -36,6 +36,8 @@ const MonthView = React.memo(function MonthView({ today, done, colors }) {
   const ref = new Date(`${today}T12:00:00`);
   const year = ref.getFullYear();
   const month = ref.getMonth();
+  const monthPrefix = `${year}-${String(month + 1).padStart(2, '0')}`;
+  const monthWorkoutCount = useMemo(() => [...done].filter(d => d.startsWith(monthPrefix)).length, [done, monthPrefix]);
   // days in month grid, starting Monday
   const days = useMemo(() => {
     const first = new Date(year, month, 1);
@@ -77,7 +79,7 @@ const MonthView = React.memo(function MonthView({ today, done, colors }) {
         })}
       </View>
       <AppText muted style={{ fontSize: 12, textAlign: 'center', marginTop: 6 }}>
-        {MONTH_NAMES[month]} {year} · {[...done].filter(d => d.startsWith(`${year}-${String(month+1).padStart(2,'0')}`)).length} {t('workouts')}
+        {MONTH_NAMES[month]} {year} · {monthWorkoutCount} {t('workouts')}
       </AppText>
     </View>
   );
@@ -134,7 +136,7 @@ export default function HomeScreen({ navigation }) {
   const today = todayISO(); const routine = effectiveRoutine(S, today); const bw = lastBW(S);
   const weekDays = useMemo(() => { const date = new Date(); const monday = new Date(date); monday.setDate(date.getDate() - ((date.getDay() + 6) % 7)); return Array.from({ length: 7 }, (_, index) => { const item = new Date(monday); item.setDate(monday.getDate() + index); return { date: item, iso: isoOf(item) }; }); }, [today]);
   const done = useMemo(() => new Set(S.workouts.map(w => w.d)), [S.workouts]);
-  const weekCount = S.workouts.filter(workout => weekKey(workout.d) === weekKey(today)).length;
+  const weekCount = useMemo(() => S.workouts.filter(w => weekKey(w.d) === weekKey(today)).length, [S.workouts, today]);
   const openWeight = goal => { const current = goal ? S.targetW : bw?.w; setValue(String(current || (S.unit === 'kg' ? 75 : 165))); goal ? setGoalOpen(true) : setWeightOpen(true); };
   const saveWeight = goal => { const number = Number(value.replace(',', '.')); if (!(number > 0)) return; update(state => { if (goal) state.targetW = number; else { const current = state.bodyweight.find(item => item.d === today); if (current) { current.w = number; current.t = Date.now(); } else state.bodyweight.push({ id: uid(), d: today, t: Date.now(), w: number }); } }); goal ? setGoalOpen(false) : setWeightOpen(false); };
   const start = () => navigation.navigate('Workout', { routineId: routine?.id || null, requestStart: Date.now() });
