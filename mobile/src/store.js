@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { AppState } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { produce } from 'immer';
@@ -30,7 +30,23 @@ export const updateState = (current, producer) => produce(current, draft => { pr
 const StoreContext = createContext(null);
 const ColorsContext = createContext(null);
 export function StoreProvider({ children }) {
-  const [S, setState] = useState(() => clone(DEF));
+  const store = useRef(null);
+  if (!store.current) {
+    store.current = {
+      state: clone(DEF),
+      listeners: new Set(),
+      getState: () => store.current.state,
+      subscribe: (listener) => {
+        store.current.listeners.add(listener);
+        return () => store.current.listeners.delete(listener);
+      },
+      setState: (next) => {
+        store.current.state = next;
+        store.current.listeners.forEach(l => l());
+      },
+    };
+  }
+
   const [ready, setReady] = useState(false);
   const loaded = useRef(false);
   const saveQueue = useRef(Promise.resolve());
@@ -47,7 +63,6 @@ export function StoreProvider({ children }) {
     if (!loaded.current) return;
     pendingSave.current = next;
     clearTimeout(saveTimer.current);
-    // ponytail: 500 ms coalesces taps; AppState flush covers normal exits, SQLite transactions are upgrade path for crash-proof writes.
     saveTimer.current = setTimeout(flushSave, 500);
   }, [flushSave]);
 
@@ -56,7 +71,7 @@ export function StoreProvider({ children }) {
       const next = normalizeState(raw ? JSON.parse(raw) : null);
       registerCustom(next.customEx);
       setLang(next.lang);
-      setState(next);
+      store.current.setState(next);
     }).catch(() => {}).finally(() => { loaded.current = true; setReady(true); });
   }, []);
   useEffect(() => {
@@ -68,27 +83,65 @@ export function StoreProvider({ children }) {
     next._ts = Date.now();
     registerCustom(next.customEx);
     setLang(next.lang);
-    setState(next);
+    store.current.setState(next);
     save(next);
   }, [save]);
   const update = useCallback(producer => {
-    setState(current => {
-      const next = updateState(current, producer);
-      registerCustom(next.customEx);
-      setLang(next.lang);
-      save(next);
-      return next;
-    });
+    const next = updateState(store.current.state, producer);
+    registerCustom(next.customEx);
+    setLang(next.lang);
+    store.current.setState(next);
+    save(next);
   }, [save]);
   const replaceState = useCallback(value => persist(normalizeState(value)), [persist]);
-  const value = useMemo(() => ({ S, ready, update, replaceState }), [S, ready, update, replaceState]);
-  const colors = useMemo(() => palette(S), [S.theme, S.accent]);
+  
+  const value = useMemo(() => ({
+    store: store.current,
+    ready,
+    update,
+    replaceState
+  }), [ready, update, replaceState]);
+  
+  const colorsState = useSyncExternalStore(store.current.subscribe, store.current.getState);
+  const colors = useMemo(() => palette(colorsState), [colorsState.theme, colorsState.accent]);
+  
   return <ColorsContext.Provider value={colors}><StoreContext.Provider value={value}>{children}</StoreContext.Provider></ColorsContext.Provider>;
 }
+
+function shallowEqual(objA, objB) {
+  if (Object.is(objA, objB)) return true;
+  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) return false;
+  const keysA = Object.keys(objA);
+  if (keysA.length !== Object.keys(objB).length) return false;
+  for (let i = 0; i < keysA.length; i++) {
+    if (!Object.prototype.hasOwnProperty.call(objB, keysA[i]) || !Object.is(objA[keysA[i]], objB[keysA[i]])) return false;
+  }
+  return true;
+}
+
+export function useSelector(selector) {
+  const value = useContext(StoreContext);
+  if (!value) throw new Error('useSelector must be used inside StoreProvider');
+  
+  const stateRef = useRef(null);
+  const selectorRef = useRef(selector);
+  selectorRef.current = selector;
+
+  return useSyncExternalStore(value.store.subscribe, () => {
+    const nextState = selectorRef.current(value.store.getState());
+    if (stateRef.current !== null && shallowEqual(stateRef.current, nextState)) {
+      return stateRef.current;
+    }
+    stateRef.current = nextState;
+    return nextState;
+  });
+}
+
 export function useStore() {
   const value = useContext(StoreContext);
   if (!value) throw new Error('useStore must be used inside StoreProvider');
-  return value;
+  const S = useSyncExternalStore(value.store.subscribe, value.store.getState);
+  return { S, ready: value.ready, update: value.update, replaceState: value.replaceState };
 }
 export function useStoreColors() {
   const value = useContext(ColorsContext);
