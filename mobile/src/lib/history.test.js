@@ -1,4 +1,4 @@
-import { modeOf, isTimed, fmtSec, setLabel, defaultConfig, buildSets, exLine, workoutVolume, effortOf, stepEffort, capEffort, isBw, isPerSide, sideReps, repStep } from './history.js'
+import { modeOf, isTimed, fmtSec, setLabel, defaultConfig, buildSets, exLine, workoutVolume, effortOf, stepEffort, capEffort, isBw, isPerSide, sideReps, repStep, historyMonths, filterWorkouts } from './history.js'
 import { EXDB } from './exercises.js'
 
 // Real ids out of the shipped catalogue, so the body-part fallback is exercised for real.
@@ -56,6 +56,7 @@ describe('fmtSec', () => {
 describe('setLabel', () => {
   it('describes each mode in its own terms', () => {
     expect(setLabel(LIFT, { w: 60, r: 10 })).toBe('60×10')
+    expect(setLabel(LIFT, { w: 60, r: 10 }, undefined, 'kg')).toBe('60 kg × 10')
     expect(setLabel(CARDIO, { min: 20, speed: 9 })).toBe('20 min @ 9 km/h')
     expect(setLabel(LIFT, { sec: 45, w: 0 }, { mode: 'time' })).toBe('0:45')
     expect(setLabel(LIFT, { sec: 90, w: 20 }, { mode: 'time' })).toBe('1:30 · 20')
@@ -372,6 +373,24 @@ describe('buildSets', () => {
   it('still prefers the confirmed working weight for reps sets', () => {
     const S = { exWeights: { [LIFT]: { w: 75 } }, workouts: [{ d: '2026-01-01', entries: [{ id: LIFT, sets: [{ w: 60, r: 10, done: true }] }] }] }
     expect(buildSets(S, { id: LIFT, sets: 1, reps: 8, weight: 50 })).toEqual([{ w: 75, r: 10, done: false }])
+  })
+})
+
+describe('history filters', () => {
+  const workouts = [
+    { id: '3', d: '2026-02-10', name: 'Push' },
+    { id: '2', d: '2026-01-20', name: 'Pull' },
+    { id: '1', d: '2026-01-05', name: 'Push' },
+  ]
+
+  it('lists available months newest first without duplicates', () => {
+    expect(historyMonths(workouts)).toEqual(['2026-02', '2026-01'])
+  })
+
+  it('filters by month and routine together', () => {
+    expect(filterWorkouts(workouts, '2026-01', null).map(w => w.id)).toEqual(['2', '1'])
+    expect(filterWorkouts(workouts, '2026-01', 'Push').map(w => w.id)).toEqual(['1'])
+    expect(filterWorkouts(workouts, null, 'Push').map(w => w.id)).toEqual(['3', '1'])
   })
 })
 

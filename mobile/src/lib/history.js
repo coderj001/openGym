@@ -91,7 +91,7 @@ const effortTail = s => {
 
 // One-line summary of a logged set. `cfg` carries the mode when the caller has it (a routine
 // entry or a workout entry); passing an id alone keeps the old body-part behaviour.
-export function setLabel(id, s, cfg) {
+export function setLabel(id, s, cfg, unit) {
   const c = cfg || { id }
   const mode = modeOf(c)
   let prefix = ''
@@ -105,7 +105,7 @@ export function setLabel(id, s, cfg) {
   else if (isBw({ ...c, id: c.id ?? id })) {
     const load = s.w > 0 ? `+${fmtNum(s.w)} × ` : ''
     base = `${load}${s.r || 0}` + effortTail(s)
-  } else base = `${fmtNum(s.w || 0)}×${s.r || 0}` + effortTail(s)
+  } else base = `${fmtNum(s.w || 0)}${unit ? ` ${unit} × ` : '×'}${s.r || 0}` + effortTail(s)
   return prefix + base + suffix
 }
 // Default config for a freshly added exercise.
@@ -230,6 +230,9 @@ export function advancedSetsSummary(w) {
   if (fails) parts.push(`${fails} F`)
   return { total, text: parts.join(' · ') }
 }
+export const historyMonths = workouts => [...new Set((workouts || []).map(w => w.d.slice(0, 7)))].sort().reverse()
+export const filterWorkouts = (workouts, month, routine) => (workouts || []).filter(w => (!month || w.d.startsWith(month)) && (!routine || w.name === routine))
+
 export function setsDoneActive(A) {
   let n = 0
   if (A) A.entries.forEach(e => e.sets.forEach(s => { if (s.done) n++ }))

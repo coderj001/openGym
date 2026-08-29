@@ -1,6 +1,7 @@
 import React from 'react';
 import Svg, { Path, Circle, Rect } from 'react-native-svg';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Text } from 'react-native';
 
 export default function Icon({ name, size = 24, color = '#000', style }) {
   const P = {
@@ -115,6 +116,10 @@ export default function Icon({ name, size = 24, color = '#000', style }) {
     'chart-line': 'chartLine',
     'close': 'xmark'
   };
+
+  if (typeof name === 'string' && /[^\u0000-\u007f]/.test(name)) {
+    return <Text style={[{ fontSize: size, lineHeight: size, color }, style]}>{name}</Text>;
+  }
 
   const actualName = P[name] ? name : fallbackMap[name] || name;
   const d = P[actualName];
