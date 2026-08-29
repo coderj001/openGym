@@ -105,7 +105,7 @@ export function setLabel(id, s, cfg, unit) {
   else if (isBw({ ...c, id: c.id ?? id })) {
     const load = s.w > 0 ? `+${fmtNum(s.w)} × ` : ''
     base = `${load}${s.r || 0}` + effortTail(s)
-  } else base = `${fmtNum(s.w || 0)}${unit ? ` ${unit} × ` : '×'}${s.r || 0}` + effortTail(s)
+  } else base = `${fmtNum(s.w || 0)}${unit ? ` ${unit} × ${s.r || 0} ${t('Reps').toLocaleLowerCase()}` : `×${s.r || 0}`}` + effortTail(s)
   return prefix + base + suffix
 }
 // Default config for a freshly added exercise.

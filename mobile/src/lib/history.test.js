@@ -56,7 +56,7 @@ describe('fmtSec', () => {
 describe('setLabel', () => {
   it('describes each mode in its own terms', () => {
     expect(setLabel(LIFT, { w: 60, r: 10 })).toBe('60×10')
-    expect(setLabel(LIFT, { w: 60, r: 10 }, undefined, 'kg')).toBe('60 kg × 10')
+    expect(setLabel(LIFT, { w: 60, r: 10 }, undefined, 'kg')).toBe('60 kg × 10 reps')
     expect(setLabel(CARDIO, { min: 20, speed: 9 })).toBe('20 min @ 9 km/h')
     expect(setLabel(LIFT, { sec: 45, w: 0 }, { mode: 'time' })).toBe('0:45')
     expect(setLabel(LIFT, { sec: 90, w: 20 }, { mode: 'time' })).toBe('1:30 · 20')
@@ -69,6 +69,7 @@ describe('setLabel', () => {
 
   it('appends RIR when present, including a valid 0', () => {
     expect(setLabel(LIFT, { w: 60, r: 10, rir: 2 })).toBe('60×10 (RIR 2)')
+    expect(setLabel(LIFT, { w: 60, r: 10, rir: 2 }, undefined, 'kg')).toBe('60 kg × 10 reps (RIR 2)')
     expect(setLabel(LIFT, { w: 60, r: 10, rir: 1.5 })).toBe('60×10 (RIR 1.5)')
     expect(setLabel(LIFT, { w: 60, r: 10, rir: 0 })).toBe('60×10 (RIR 0)')
   })
