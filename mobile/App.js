@@ -27,7 +27,7 @@ const Tabs = createBottomTabNavigator();
 const TAB_ICONS = { Home: 'house', Plan: 'clipboard', Workout: 'dumbbell', Stats: 'chartLine', Library: 'list' };
 function MainTabs() {
   const { S } = useStore(); const colors = useStoreColors();
-  return <Tabs.Navigator screenOptions={({ route }) => ({ headerShown: false, tabBarActiveTintColor: route.name === 'Workout' && S.active ? colors.orange : colors.accent, tabBarInactiveTintColor: colors.dim, tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border, height: 70, paddingBottom: 9, paddingTop: 6 }, tabBarLabelStyle: { fontSize: 11, fontWeight: '700' }, tabBarIcon: ({ color, size }) => <Icon name={TAB_ICONS[route.name]} size={size} color={color} /> })}>
+  return <Tabs.Navigator screenOptions={({ route }) => ({ lazy: true, headerShown: false, tabBarActiveTintColor: route.name === 'Workout' && S.active ? colors.orange : colors.accent, tabBarInactiveTintColor: colors.dim, tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border, height: 70, paddingBottom: 9, paddingTop: 6 }, tabBarLabelStyle: { fontSize: 11, fontWeight: '700' }, tabBarIcon: ({ color, size }) => <Icon name={TAB_ICONS[route.name]} size={size} color={color} /> })}>
     <Tabs.Screen name="Home" component={HomeScreen} /><Tabs.Screen name="Plan" component={PlanScreen} /><Tabs.Screen name="Workout" component={WorkoutScreen} options={{ tabBarBadge: S.active ? '•' : undefined, tabBarBadgeStyle: { backgroundColor: colors.orange } }} /><Tabs.Screen name="Stats" component={StatsScreen} /><Tabs.Screen name="Library" component={LibraryScreen} />
   </Tabs.Navigator>;
 }
