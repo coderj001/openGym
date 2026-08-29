@@ -1,4 +1,4 @@
-import { modeOf, isTimed, fmtSec, setLabel, defaultConfig, buildSets, exLine, workoutVolume, effortOf, stepEffort, capEffort, isBw, isPerSide, sideReps, repStep, historyMonths, filterWorkouts } from './history.js'
+import { modeOf, isTimed, fmtSec, setLabel, defaultConfig, buildSets, exLine, workoutVolume, effortOf, stepEffort, capEffort, isBw, isPerSide, sideReps, repStep, historyMonths, filterWorkouts, previousPerformance, copyPreviousSets } from './history.js'
 import { EXDB } from './exercises.js'
 
 // Real ids out of the shipped catalogue, so the body-part fallback is exercised for real.
@@ -374,6 +374,35 @@ describe('buildSets', () => {
   it('still prefers the confirmed working weight for reps sets', () => {
     const S = { exWeights: { [LIFT]: { w: 75 } }, workouts: [{ d: '2026-01-01', entries: [{ id: LIFT, sets: [{ w: 60, r: 10, done: true }] }] }] }
     expect(buildSets(S, { id: LIFT, sets: 1, reps: 8, weight: 50 })).toEqual([{ w: 75, r: 10, done: false }])
+  })
+})
+
+describe('previous performance', () => {
+  const cfg = { id: LIFT, mode: 'reps' }
+  const prior = { d: '2026-03-12', entries: [{ id: LIFT, target: cfg, sets: [
+    { w: 80, r: 8, done: true }, { w: 80, r: 8, done: true }, { w: 60, r: 10, kind: 'w', done: true },
+  ] }] }
+
+  it('formats the latest completed working sets without storing a duplicate', () => {
+    expect(previousPerformance({ workouts: [prior] }, LIFT, cfg, 'kg')).toEqual({
+      d: '2026-03-12', labels: ['80 kg × 8 reps', '80 kg × 8 reps'], compatible: true,
+      sets: [{ w: 80, r: 8, done: true }, { w: 80, r: 8, done: true }],
+    })
+  })
+
+  it('marks a changed logging mode as display-only', () => {
+    expect(previousPerformance({ workouts: [prior] }, LIFT, { id: LIFT, mode: 'time' }, 'kg').compatible).toBe(false)
+  })
+
+  it('copies values only into unfinished ordinary sets', () => {
+    const current = [
+      { w: 0, r: 10, done: false }, { w: 70, r: 7, done: true },
+      { w: 0, r: 5, kind: 'd', done: false },
+    ]
+    expect(copyPreviousSets(current, [{ w: 80, r: 8 }, { w: 80, r: 8 }], 'reps')).toEqual([
+      { w: 80, r: 8, done: false }, { w: 70, r: 7, done: true },
+      { w: 0, r: 5, kind: 'd', done: false },
+    ])
   })
 })
 

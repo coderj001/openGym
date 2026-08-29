@@ -149,6 +149,32 @@ export function lastEntryFor(S, exId) {
   }
   return null
 }
+export function previousPerformance(S, exId, cfg, unit) {
+  const last = lastEntryFor(S, exId)
+  if (!last) return null
+  const sets = last.sets.filter(set => set.kind !== 'w')
+  if (!sets.length) return null
+  const target = last.target || { id: exId }
+  return {
+    d: last.d,
+    labels: sets.map(set => setLabel(exId, set, target, unit)),
+    compatible: modeOf({ ...cfg, id: exId }) === modeOf({ ...target, id: exId }),
+    sets,
+  }
+}
+
+export function copyPreviousSets(current, previous, mode) {
+  const source = (previous || []).filter(set => !set.kind)
+  return current.map((set, index) => {
+    if (set.done || set.kind || set.fail) return set
+    const prior = source[index] || source[source.length - 1]
+    if (!prior) return set
+    if (mode === 'cardio') return { ...set, min: prior.min, speed: prior.speed }
+    if (mode === 'time') return { ...set, sec: prior.sec, w: prior.w || 0 }
+    return { ...set, w: prior.w || 0, r: prior.r || 0 }
+  })
+}
+
 export function bestWeightFor(S, exId) {
   let best = 0
   S.workouts.forEach(w => w.entries.forEach(e => {
