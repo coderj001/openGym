@@ -1,0 +1,42 @@
+The best gym-person additions are not social features; they reduce friction while lifting:
+
+ 1. Previous performance beside each exercise
+    “Last: 80 kg × 8 reps × 3” and a one-tap “copy last set.” Biggest in-workout win.
+
+ 2. Automatic rest timer after a completed work set
+    Keep manual controls, but remove one repeated tap. Per-exercise overrides can come later.
+
+ 3. PR detection and celebration
+    Detect best weight, reps-at-weight, estimated 1RM, and session volume—all computed locally.
+
+ 4. Plate calculator
+    Enter target barbell weight; show plates per side using the user’s locally configured plates/bar weight.
+
+ 5. Edit completed workouts
+    Lifters mistype sets. Allow correcting sets, notes, date, and body weight; progression already derives from history.
+
+ 6. Exercise-specific history
+    From an exercise detail, show recent sessions, best set, e1RM trend, and prior notes—not just global charts.
+
+ 7. Workout/exercise notes
+    Local-only notes such as “rack occupied,” “elbow sore,” or “use belt next time.” High practical value.
+
+ 8. Routine templates and duplicate routine
+    Clone an existing routine for a cut, deload, home gym, or alternate equipment setup.
+
+ 9. Missed-workout handling
+    “Move today’s Push to tomorrow” rather than silently losing schedule intent.
+
+ 10. Better volume feedback
+        Weekly sets per muscle, compare against the user’s own recent baseline, and flag abrupt jumps—not generic fitness
+     advice.
+
+ 11. Favorites, substitutions, and available-equipment profile
+        Faster exercise picking when a gym is busy or home equipment is limited.
+
+ 12. True unit migration/display conversion
+        The current kg/lb setting only changes labels. A lifter expects 83.5 kg to display as 184.1 lb; offer an explicit
+     local conversion/migration action.
+
+ I would prioritize previous performance + copy-last-set, automatic rest timer, PRs, and edit completed workout. Skip
+ social feeds, cloud sync, AI coaching, and nutrition tracking until users prove they need them.

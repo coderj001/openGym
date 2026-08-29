@@ -1,13 +1,33 @@
 import React, { useEffect } from 'react';
 import renderer from 'react-test-renderer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { STORAGE_KEY, StoreProvider, useStore } from './store';
+import { STORAGE_KEY, StoreProvider, updateState, useStore } from './store';
 
 function Probe({ onReady }) {
   const { ready, update } = useStore();
   useEffect(() => { if (ready) onReady(update); }, [ready, update, onReady]);
   return null;
 }
+
+test('updates structurally share untouched branches', () => {
+  const workouts = [{ id: 'history' }];
+  const routines = [{ id: 'routine' }];
+  const current = { workouts, routines, active: { cur: 0, entries: [] } };
+  const next = updateState(current, state => { state.active.cur = 1; });
+
+  expect(next).not.toBe(current);
+  expect(next.active).not.toBe(current.active);
+  expect(next.workouts).toBe(workouts);
+  expect(next.routines).toBe(routines);
+  expect(current.active.cur).toBe(0);
+  expect(next.active.cur).toBe(1);
+});
+
+test('keeps concise mutating callbacks compatible', () => {
+  const current = { routines: [] };
+  const next = updateState(current, state => state.routines.push({ id: 'routine' }));
+  expect(next.routines).toEqual([{ id: 'routine' }]);
+});
 
 test('rapid updates persist latest state in one write', async () => {
   jest.useFakeTimers();

@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { AppState } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { produce } from 'immer';
 import { registerCustom } from './lib/exercises';
 import { setLang } from './lib/i18n';
 import { palette } from './theme';
@@ -24,6 +25,7 @@ export const normalizeState = value => {
   });
 };
 export const isOpenGymBackup = value => !!value && Array.isArray(value.workouts) && Array.isArray(value.routines);
+export const updateState = (current, producer) => produce(current, draft => { producer(draft); draft._ts = Date.now(); });
 
 const StoreContext = createContext(null);
 const ColorsContext = createContext(null);
@@ -71,9 +73,7 @@ export function StoreProvider({ children }) {
   }, [save]);
   const update = useCallback(producer => {
     setState(current => {
-      const next = clone(current);
-      producer(next);
-      next._ts = Date.now();
+      const next = updateState(current, producer);
       registerCustom(next.customEx);
       setLang(next.lang);
       save(next);
