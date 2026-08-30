@@ -6,7 +6,7 @@ let customExCache = [];
 
 export const EXDB = new Proxy([], {
   get(target, prop, receiver) {
-    if (!_EXDB) _EXDB = require('./exercises-data').EXDB;
+    if (!_EXDB) _EXDB = require('./exercises-data').EXERCISE_DATA;
     const value = Reflect.get(_EXDB, prop);
     return typeof value === 'function' ? value.bind(_EXDB) : value;
   }

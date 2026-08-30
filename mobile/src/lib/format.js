@@ -10,7 +10,7 @@ export const fmtNum = value => (Math.round((Number(value) || 0) * 10) / 10).toLo
 export const fmtDate = (iso, long = false) => new Date(`${iso}T12:00:00`).toLocaleDateString(dateLocale(), long ? { weekday: 'short', day: 'numeric', month: 'short' } : { day: 'numeric', month: 'short' });
 export const fmtMonth = month => new Date(`${month}-01T12:00:00`).toLocaleDateString(dateLocale(), { month: 'long', year: 'numeric' });
 export const fmtDur = ms => { const minutes = Math.floor((ms || 0) / 60000); return minutes >= 60 ? `${Math.floor(minutes / 60)}h ${minutes % 60}m` : `${minutes} min`; };
-export const durPart = ms => ms >= 60000 ? [fmtDur(ms)] : [];
+const durPart = ms => ms >= 60000 ? [fmtDur(ms)] : [];
 export const fmtVol = (value, unit) => `${fmtNum(value)} ${unit}`;
 export const exCount = count => t(count === 1 ? '{0} exercise' : '{0} exercises', count);
 export function weekKey(iso) {

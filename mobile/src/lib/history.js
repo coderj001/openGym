@@ -32,7 +32,7 @@ export const isTimed = cfg => modeOf(cfg) === 'time'
 // Both are absent on every plan, workout and backup written before they existed, and absent
 // reads as false, so nothing needs migrating.
 export const isBw = cfg => (cfg && cfg.bodyweight != null ? !!cfg.bodyweight : isBodyweightEq(cfg && cfg.id))
-export const isPerSide = cfg => !!(cfg && cfg.side)
+const isPerSide = cfg => !!(cfg && cfg.side)
 // What one side did, for display only. Half of an odd total is shown as it falls (8.5) rather
 // than rounded away: it means the sides were not even, which is worth seeing.
 export const sideReps = reps => (reps || 0) / 2
@@ -139,7 +139,7 @@ export function cleanupSg(ex) {
   })
 }
 
-export function lastEntryFor(S, exId) {
+function lastEntryFor(S, exId) {
   for (let i = S.workouts.length - 1; i >= 0; i--) {
     const en = S.workouts[i].entries.find(e => e.id === exId)
     // `target` is what the session prescribed; finished workouts carry it so labels and the
@@ -185,7 +185,7 @@ export function bestWeightFor(S, exId) {
   }))
   return best
 }
-export function effectiveRoutineId(S, iso) {
+function effectiveRoutineId(S, iso) {
   const ov = S.dayPlan[iso]
   if (ov === 'rest') return null
   if (ov && S.routines.some(r => r.id === ov)) return ov

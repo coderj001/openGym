@@ -11,7 +11,7 @@ import { EXIDX } from './exercises.js'
 
 // The muscles a map can shade, in head-to-toe order — also the order of any list
 // built from them, so "what am I neglecting" reads top-down like a body.
-export const MUSCLES = [
+const MUSCLES = [
   'trapezius', 'deltoids', 'chest', 'upper-back', 'serratus',
   'biceps', 'triceps', 'forearm',
   'abs', 'obliques', 'lower-back',
@@ -20,7 +20,7 @@ export const MUSCLES = [
 ]
 
 // Drawn as the silhouette, never shaded: they carry no training load.
-export const INERT = ['head', 'hair', 'neck', 'hands', 'feet', 'knees', 'ankles']
+const INERT = ['head', 'hair', 'neck', 'hands', 'feet', 'knees', 'ankles']
 
 // English display names; these strings are the i18n keys (see lib/i18n.js).
 export const MUSCLE_NAME = {
@@ -90,7 +90,7 @@ export function musclesOf(ex) {
  * times a single set. Volume in kg is deliberately not used: 100 kg of leg press
  * against 12 kg of lateral raise says nothing about which muscle worked harder.
  */
-export function loadOf(items) {
+function loadOf(items) {
   const load = {}
   items.forEach(({ id, sets }) => {
     if (!sets) return
@@ -111,11 +111,11 @@ export const loadOfWorkouts = (workouts, pick) =>
     (w.entries || []).map(e => ({ id: e.id, sets: (e.sets || []).filter(s => s.done && (!pick || pick(s))).length }))))
 
 /** Load a routine *would* produce, from its planned set counts. */
-export const loadOfRoutine = routine =>
+const loadOfRoutine = routine =>
   loadOf((routine?.ex || []).map(c => ({ id: c.id, sets: c.sets || 1 })))
 
 /** Load for a workout still in progress — the sets ticked so far. */
-export const loadOfActive = active =>
+const loadOfActive = active =>
   loadOf((active?.entries || []).map(e => ({ id: e.id, sets: (e.sets || []).filter(s => s.done).length })))
 
 /**

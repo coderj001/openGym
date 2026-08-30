@@ -21,7 +21,7 @@ export const FORMULAS = {
   // Lombardi 1989 — w · r^0.10
   lombardi: (w, r) => w * Math.pow(r, 0.1)
 }
-export const DEFAULT_FORMULA = 'epley'
+const DEFAULT_FORMULA = 'epley'
 
 // Estimate a 1RM from one set. Returns null for anything it cannot honestly answer:
 // missing/zero/negative load, no reps, non-finite input, or more reps than REP_CAP.

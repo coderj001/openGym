@@ -24,7 +24,7 @@ export const LANGS = {
   pt: 'Português', pl: 'Polski', tr: 'Türkçe', ru: 'Русский', zh: '中文',
   ko: '한국어', hi: 'हिन्दी',
 };
-export const INSTR_LANGS = ['en', 'es', 'fr', 'it', 'tr', 'ru', 'zh', 'hi', 'pl', 'ko'];
+const INSTR_LANGS = ['en', 'es', 'fr', 'it', 'tr', 'ru', 'zh', 'hi', 'pl', 'ko'];
 const DATE_LOCALES = {
   en: 'en-GB', de: 'de-DE', es: 'es-ES', fr: 'fr-FR', it: 'it-IT', pt: 'pt-PT',
   pl: 'pl-PL', tr: 'tr-TR', ru: 'ru-RU', zh: 'zh-CN', ko: 'ko-KR', hi: 'hi-IN',
@@ -34,7 +34,7 @@ const INSTRUCTIONS = { es: esInstr, fr: frInstr, hi: hiInstr, it: itInstr, ko: k
 let lang = 'en';
 
 export const setLang = value => { lang = LANGS[value] ? value : 'en'; };
-export const getLang = () => lang;
+const getLang = () => lang;
 export const dateLocale = () => DATE_LOCALES[lang] || 'en-GB';
 export function t(source, ...args) {
   let value = DICTS[lang]?.[source] || source;

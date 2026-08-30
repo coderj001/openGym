@@ -37,7 +37,7 @@ export function displayScale(S) {
   eachDoneSet(S, s => { if (s.rir != null) rir++; else if (s.rpe != null) rpe++ })
   return rpe > rir ? 'rpe' : 'rir'
 }
-export const scaleName = kind => EFFORT[kind].hd
+const scaleName = kind => EFFORT[kind].hd
 
 // Every finished set in the profile, oldest first. `fn` gets the set plus the workout it
 // belongs to, which is what the windowed and per-week views need.
@@ -121,7 +121,7 @@ function mondayOf(iso) {
  * failure, or leaving nothing for the next session" — an average alone hides both, because
  * half the sets at 0 and half at 4 average to a healthy-looking 2.
  */
-export const BUCKETS = 4        // 0,1,2,3 and a "4+" tail
+const BUCKETS = 4        // 0,1,2,3 and a "4+" tail
 export function effortHistogram(S, days) {
   const bins = new Array(BUCKETS + 1).fill(0)
   let rated = 0

@@ -28,7 +28,7 @@ import { uid } from './format.js'
  * and CRLF. Splitting on commas breaks on the first exercise named "Bench Press, Close
  * Grip" — and a whole history would import shifted by one column without ever erroring.
  */
-export function parseCSV(text) {
+function parseCSV(text) {
   const rows = []
   let row = [], field = '', quoted = false
   const s = String(text).replace(/^﻿/, '')
@@ -91,7 +91,7 @@ function mapHeader(header) {
 }
 
 /** Name of the app a header looks like — shown back to the user so they can sanity-check. */
-export function detectSource(header) {
+function detectSource(header) {
   const h = header.map(norm)
   if (h.includes('exercise title') && h.includes('set index')) return 'Hevy'
   if (h.includes('exercise name') && h.includes('set order')) return 'Strong'
@@ -193,7 +193,7 @@ const aliasIndex = () => {
  * under the wrong lift, which is worse than leaving it as a custom exercise the user can
  * see and fix.
  */
-export function matchExercise(name) {
+function matchExercise(name) {
   const idx = buildIndex()
   const w = wordsOf(name)
   if (!w.length) return null
@@ -247,7 +247,7 @@ const p2 = n => String(n).padStart(2, '0')
 const MON = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 }
 
 /** "2020-12-30 18:51:52" · "2024-03-07" · "22 Dec 2025, 08:00" · "07/03/2024" -> { d, t } */
-export function parseWhen(s) {
+function parseWhen(s) {
   const v = String(s || '').trim()
   let m = v.match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:[T ](\d{1,2}):(\d{2}))?/)
   if (m) return { d: `${m[1]}-${p2(m[2])}-${p2(m[3])}`, t: hm(m[4], m[5]) }
@@ -441,7 +441,7 @@ export function parseWorkoutCSV(text, { unit = 'kg' } = {}) {
  * records are pulled out with a scan instead. Health writes weights in the unit the
  * phone is set to and labels each record, so the unit is read per record.
  */
-export function parseBodyweight(text, { unit = 'kg' } = {}) {
+function parseBodyweight(text, { unit = 'kg' } = {}) {
   const s = String(text)
   const out = new Map()          // iso date -> { w, t }  (one weigh-in per day, the last)
   let fileUnit = ''

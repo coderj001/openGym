@@ -119,7 +119,7 @@ function shallowEqual(objA, objB) {
   return true;
 }
 
-export function useSelector(selector) {
+function useSelector(selector) {
   const value = useContext(StoreContext);
   if (!value) throw new Error('useSelector must be used inside StoreProvider');
   

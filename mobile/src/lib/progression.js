@@ -19,7 +19,7 @@
 import { modeOf, repStep } from './history.js'
 import { EXIDX } from './exercises.js'
 
-export const POLICIES = ['off', 'linear', 'greyskull', 'double', 'time']
+const POLICIES = ['off', 'linear', 'greyskull', 'double', 'time']
 
 // Which policies can sensibly drive which logging mode.
 export const POLICIES_FOR = {
@@ -59,7 +59,7 @@ export function defaultIncrement(exId, unit) {
   if (unit === 'lb') return heavy ? 10 : 5
   return heavy ? 5 : 2.5
 }
-export const DEFAULT_SEC_INCREMENT = 5
+const DEFAULT_SEC_INCREMENT = 5
 // Where adding another set of push-ups stops being progress and starts being a way to spend
 // an evening. Past this the honest advice is load or a harder variation (issue #33).
 export const MAX_BW_SETS = 6
