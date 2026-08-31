@@ -1,3 +1,8 @@
+jest.mock('react-native-reanimated', () => {
+  const { View } = require('react-native');
+  const entering = { duration: () => entering, easing: () => entering };
+  return { __esModule: true, default: { View }, Easing: { bezier: () => undefined }, FadeIn: entering };
+});
 jest.mock('@react-native-async-storage/async-storage', () => require('@react-native-async-storage/async-storage/jest/async-storage-mock'));
 jest.mock('expo-status-bar', () => ({ StatusBar: () => null }));
 jest.mock('expo-keep-awake', () => ({ useKeepAwake: jest.fn() }));

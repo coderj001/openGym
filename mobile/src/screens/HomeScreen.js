@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Modal, Pressable, StyleSheet, View } from 'react-native';
+import Animated, { Easing, FadeIn } from 'react-native-reanimated';
 import Icon from '../components/Icon';
 import { useStore } from '../store';
 import { effectiveRoutine, lastBW, streakWeeks } from '../lib/history';
@@ -10,9 +11,10 @@ import Chart from '../components/Chart';
 import { AppText, Button, Card, Chip, Header, IconButton, Input, Screen, useColors } from '../components/ui';
 
 const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const heatmapEntrance = FadeIn.duration(150).easing(Easing.bezier(0.23, 1, 0.32, 1));
 
 // -- Week view (existing) --
-const WeekView = React.memo(function WeekView({ weekDays, today, done, S, colors, setOverrideDay }) {
+const WeekView = React.memo(function WeekView({ weekDays, today, done, S, colors, setOverrideDay, highlightDate }) {
   return (
     <View style={styles.week}>
       {weekDays.map(({ date, iso }) => {
@@ -23,7 +25,7 @@ const WeekView = React.memo(function WeekView({ weekDays, today, done, S, colors
             <View style={[styles.dayNumber, iso === today && { backgroundColor: colors.accent }]}>
               <AppText style={{ fontWeight: '800', color: iso === today && !colors.dark ? '#000' : colors.text }}>{date.getDate()}</AppText>
             </View>
-            <View style={[styles.dot, { backgroundColor: done.has(iso) ? colors.orange : planned ? colors.accent : colors.surface2 }]} />
+            <Animated.View key={iso === highlightDate ? `highlight-${iso}` : iso} entering={iso === highlightDate ? heatmapEntrance : undefined} style={[styles.dot, { backgroundColor: done.has(iso) ? colors.orange : planned ? colors.accent : colors.surface2 }]} />
           </Pressable>
         );
       })}
@@ -32,7 +34,7 @@ const WeekView = React.memo(function WeekView({ weekDays, today, done, S, colors
 });
 
 // -- Month view --
-const MonthView = React.memo(function MonthView({ today, done, colors }) {
+const MonthView = React.memo(function MonthView({ today, done, colors, highlightDate }) {
   const ref = new Date(`${today}T12:00:00`);
   const year = ref.getFullYear();
   const month = ref.getMonth();
@@ -64,7 +66,7 @@ const MonthView = React.memo(function MonthView({ today, done, colors }) {
           const worked = done.has(iso);
           return (
             <View key={iso} style={styles.monthCell}>
-              <View style={[
+              <Animated.View key={iso === highlightDate ? `highlight-${iso}` : iso} entering={iso === highlightDate ? heatmapEntrance : undefined} style={[
                 styles.monthDot,
                 worked && { backgroundColor: colors.orange },
                 isToday && !worked && { backgroundColor: colors.accent },
@@ -73,7 +75,7 @@ const MonthView = React.memo(function MonthView({ today, done, colors }) {
                   { fontSize: 11, fontWeight: '600' },
                   { color: (worked || isToday) ? (colors.dark ? '#fff' : '#000') : colors.muted },
                 ]}>{date.getDate()}</AppText>
-              </View>
+              </Animated.View>
             </View>
           );
         })}
@@ -86,7 +88,7 @@ const MonthView = React.memo(function MonthView({ today, done, colors }) {
 });
 
 // -- Year view --
-const YearView = React.memo(function YearView({ today, done, colors }) {
+const YearView = React.memo(function YearView({ today, done, colors, highlightDate }) {
   const year = new Date(`${today}T12:00:00`).getFullYear();
   const countPerDay = useMemo(() => {
     const map = {};
@@ -107,7 +109,7 @@ const YearView = React.memo(function YearView({ today, done, colors }) {
                 const worked = !!countPerDay[iso];
                 const isToday = iso === today;
                 return (
-                  <View key={d} style={[
+                  <Animated.View key={iso === highlightDate ? `highlight-${iso}` : iso} entering={iso === highlightDate ? heatmapEntrance : undefined} style={[
                     styles.yearDot,
                     worked && { backgroundColor: colors.orange },
                     isToday && !worked && { backgroundColor: colors.accent },
@@ -126,9 +128,12 @@ const YearView = React.memo(function YearView({ today, done, colors }) {
   );
 });
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
   const { S, update } = useStore(); const colors = useColors();
   const [weightOpen, setWeightOpen] = useState(false);
+  const [highlightDate, setHighlightDate] = useState(null);
+  useEffect(() => { if (route.params?.highlightDate) { setHighlightDate(route.params.highlightDate); navigation.setParams({ highlightDate: undefined }); } }, [navigation, route.params?.highlightDate]);
+  useEffect(() => { if (!highlightDate) return undefined; const timeout = setTimeout(() => setHighlightDate(null), 200); return () => clearTimeout(timeout); }, [highlightDate]);
   const [goalOpen, setGoalOpen] = useState(false);
   const [value, setValue] = useState('');
   const [overrideDay, setOverrideDay] = useState(null);
@@ -157,9 +162,9 @@ export default function HomeScreen({ navigation }) {
           ))}
         </View>
       </View>
-      {calView === 'week' && <WeekView weekDays={weekDays} today={today} done={done} S={S} colors={colors} setOverrideDay={setOverrideDay} />}
-      {calView === 'month' && <MonthView today={today} done={done} colors={colors} />}
-      {calView === 'year' && <YearView today={today} done={done} colors={colors} />}
+      {calView === 'week' && <WeekView weekDays={weekDays} today={today} done={done} S={S} colors={colors} setOverrideDay={setOverrideDay} highlightDate={highlightDate} />}
+      {calView === 'month' && <MonthView today={today} done={done} colors={colors} highlightDate={highlightDate} />}
+      {calView === 'year' && <YearView today={today} done={done} colors={colors} highlightDate={highlightDate} />}
       <Pressable onPress={S.active ? () => navigation.navigate('Workout') : start} style={[styles.today, { borderTopColor: colors.border }]}><View style={[styles.bigIcon, { backgroundColor: S.active ? colors.orange : routine ? colors.accent : colors.surface2 }]}><Icon name={S.active ? 'timer-outline' : routine ? 'dumbbell' : 'weather-night'} size={23} color={routine || S.active ? '#fff' : colors.muted} /></View><View style={{ flex: 1 }}><AppText muted style={{ fontSize: 12 }}>{t('Today')}</AppText><AppText style={{ fontWeight: '800' }}>{S.active ? `${S.active.name} — ${t('in progress')}` : routine?.name || t('Rest day')}</AppText></View><AppText style={{ color: colors.accent, fontWeight: '800' }}>{S.active ? t('Resume') : routine ? t('Start') : '+'}</AppText></Pressable>
     </Card>
     {!S.routines.length && !S.active ? <Card><AppText style={{ fontSize: 22, fontWeight: '800' }}>{t('Welcome!')}</AppText><AppText muted style={{ lineHeight: 21, marginVertical: 8 }}>{t('Set up your weekly routine to get going — or load a ready-made Push / Pull / Legs plan.')}</AppText><Button title={t('Load starter plan (PPL)')} icon="creation" primary onPress={() => update(addStarterPlan)} /><View style={{ height: 8 }} /><Button title={t('Build my own plan')} onPress={() => navigation.navigate('Plan')} /></Card> : null}
