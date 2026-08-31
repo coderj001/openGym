@@ -22,10 +22,12 @@ test('plays and pauses exercise media only when tapped', () => {
   let tree;
   renderer.act(() => { tree = renderer.create(<ExerciseMedia exercise={{ gif: 'first.gif' }} />); });
   expect(tree.root.findByType(Image).props.autoplay).toBe(false);
+  expect(tree.root.findByProps({ testID: 'exercise-media-play' })).toBeTruthy();
 
   renderer.act(() => tree.root.findByProps({ accessibilityLabel: 'Play exercise animation' }).props.onPress());
   expect(mockStartAnimating).toHaveBeenCalledTimes(1);
   expect(tree.root.findByType(Image).props.autoplay).toBe(true);
+  expect(tree.root.findAllByProps({ testID: 'exercise-media-play' })).toHaveLength(0);
 
   renderer.act(() => tree.root.findByProps({ accessibilityLabel: 'Pause exercise animation' }).props.onPress());
   expect(mockStopAnimating).toHaveBeenCalledTimes(1);

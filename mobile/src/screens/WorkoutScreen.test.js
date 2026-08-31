@@ -45,11 +45,11 @@ test('does not rescan previous performance when a set changes', async () => {
   renderer.act(() => component.unmount());
 });
 
-test('renders an active superset', async () => {
+test('renders an active superset without first-session guidance', async () => {
   AsyncStorage.getItem.mockResolvedValue(JSON.stringify({
     active: { name: 'Superset', start: Date.now(), cur: 0, entries: [
-      { id: '0001', sg: 'pair', target: { mode: 'reps' }, sets: [{ w: 50, r: 8, done: false }] },
-      { id: '0002', sg: 'pair', target: { mode: 'reps' }, sets: [{ w: 40, r: 10, done: false }] },
+      { id: '0001', sg: 'pair', target: { mode: 'reps' }, plan: { kind: 'first', why: ['Nothing logged yet — this session sets the baseline.'] }, sets: [{ w: 50, r: 8, done: false }] },
+      { id: '0002', sg: 'pair', target: { mode: 'reps' }, plan: { kind: 'first', why: ['Nothing logged yet — this session sets the baseline.'] }, sets: [{ w: 40, r: 10, done: false }] },
     ] },
   }));
   let component;
@@ -58,5 +58,6 @@ test('renders an active superset', async () => {
     await Promise.resolve();
   });
   expect(component.toJSON()).toBeTruthy();
+  expect(JSON.stringify(component.toJSON())).not.toContain('Nothing logged yet');
   renderer.act(() => component.unmount());
 });
