@@ -1,0 +1,17 @@
+{
+  "entry": ["mobile/index.js"],
+  "ignorePatterns": [
+    ".agents/**",
+    ".fallow/**",
+    ".github/**",
+    "api/**",
+    "assets/**",
+    "data/**",
+    "docs/**",
+    "frontend/**",
+    "media/**",
+    "scripts/**",
+    "web/**",
+    "website/**"
+  ]
+}
