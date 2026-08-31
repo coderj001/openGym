@@ -44,3 +44,19 @@ test('does not rescan previous performance when a set changes', async () => {
   expect(previousPerformance).toHaveBeenCalledTimes(calls);
   renderer.act(() => component.unmount());
 });
+
+test('renders an active superset', async () => {
+  AsyncStorage.getItem.mockResolvedValue(JSON.stringify({
+    active: { name: 'Superset', start: Date.now(), cur: 0, entries: [
+      { id: '0001', sg: 'pair', target: { mode: 'reps' }, sets: [{ w: 50, r: 8, done: false }] },
+      { id: '0002', sg: 'pair', target: { mode: 'reps' }, sets: [{ w: 40, r: 10, done: false }] },
+    ] },
+  }));
+  let component;
+  await renderer.act(async () => {
+    component = renderer.create(<StoreProvider><TimerProvider><WorkoutScreen navigation={{ navigate: jest.fn(), setParams: jest.fn() }} route={{ params: {} }} /></TimerProvider></StoreProvider>);
+    await Promise.resolve();
+  });
+  expect(component.toJSON()).toBeTruthy();
+  renderer.act(() => component.unmount());
+});

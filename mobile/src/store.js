@@ -10,7 +10,7 @@ export const STORAGE_KEY = 'opengym_state_v1';
 export const DEF = {
   unit: 'kg', restSec: 90, sound: true, keepAwake: true, lang: 'en',
   theme: 'dark', accent: 'lime', body: 'male', showPrevious: false, targetW: null,
-  bodyweight: [], routines: [], week: {}, dayPlan: {}, exWeights: {}, workouts: [],
+  bodyweight: [], routines: [], week: {}, dayPlan: {}, exWeights: {}, workouts: [], homeWidgets: null,
   active: null, customEx: [], gifSize: 'full', reminder: { on: false, time: '08:00', tz: null }, effort: null,
 };
 const clone = value => structuredClone(value);
