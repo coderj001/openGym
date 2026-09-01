@@ -102,8 +102,12 @@ export function StoreProvider({ children }) {
     replaceState
   }), [ready, update, replaceState]);
   
-  const colorsState = useSyncExternalStore(store.current.subscribe, store.current.getState);
-  const colors = useMemo(() => palette(colorsState), [colorsState.theme, colorsState.accent]);
+  const appearance = useSyncExternalStore(store.current.subscribe, () => {
+    const { theme, accent } = store.current.getState();
+    return `${theme}:${accent}`;
+  });
+  const [theme, accent] = appearance.split(':');
+  const colors = useMemo(() => palette({ theme, accent }), [theme, accent]);
   
   return <ColorsContext.Provider value={colors}><StoreContext.Provider value={value}>{children}</StoreContext.Provider></ColorsContext.Provider>;
 }
@@ -119,9 +123,9 @@ function shallowEqual(objA, objB) {
   return true;
 }
 
-function useSelector(selector) {
+export function useStoreSelector(selector) {
   const value = useContext(StoreContext);
-  if (!value) throw new Error('useSelector must be used inside StoreProvider');
+  if (!value) throw new Error('useStoreSelector must be used inside StoreProvider');
   
   const stateRef = useRef(null);
   const selectorRef = useRef(selector);
@@ -137,11 +141,14 @@ function useSelector(selector) {
   });
 }
 
-export function useStore() {
+export function useStoreActions() {
   const value = useContext(StoreContext);
-  if (!value) throw new Error('useStore must be used inside StoreProvider');
-  const S = useSyncExternalStore(value.store.subscribe, value.store.getState);
-  return { S, ready: value.ready, update: value.update, replaceState: value.replaceState };
+  if (!value) throw new Error('useStoreActions must be used inside StoreProvider');
+  return { ready: value.ready, update: value.update, replaceState: value.replaceState };
+}
+export function useStore() {
+  const S = useStoreSelector(state => state);
+  return { S, ...useStoreActions() };
 }
 export function useStoreColors() {
   const value = useContext(ColorsContext);

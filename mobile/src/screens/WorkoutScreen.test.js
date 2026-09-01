@@ -7,10 +7,20 @@ jest.mock('../lib/history', () => {
   return { ...actual, previousPerformance: jest.fn(actual.previousPerformance) };
 });
 
-import WorkoutScreen from './WorkoutScreen';
+import WorkoutScreen, { nextIncompleteSet } from './WorkoutScreen';
 import { StoreProvider, useStore } from '../store';
 import { TimerProvider } from '../timers';
 import { previousPerformance } from '../lib/history';
+
+test('finds the next incomplete set without flattening supersets', () => {
+  const entries = [
+    { sets: [{ done: true }] },
+    { sets: [{ done: true }, { done: false }] },
+    { sets: [{ done: false }] },
+  ];
+  expect(nextIncompleteSet(entries, [[0, 1], [2]], 0)).toEqual({ entryIndex: 1, setIndex: 1 });
+  expect(nextIncompleteSet(entries, [[0, 1], [2]], 1)).toEqual({ entryIndex: 2, setIndex: 0 });
+});
 
 function Probe({ onReady }) {
   const { ready, update } = useStore();

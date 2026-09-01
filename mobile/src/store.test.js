@@ -1,13 +1,37 @@
 import React, { useEffect } from 'react';
 import renderer from 'react-test-renderer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { STORAGE_KEY, StoreProvider, updateState, useStore } from './store';
+import { STORAGE_KEY, StoreProvider, updateState, useStore, useStoreActions, useStoreSelector } from './store';
 
 function Probe({ onReady }) {
   const { ready, update } = useStore();
   useEffect(() => { if (ready) onReady(update); }, [ready, update, onReady]);
   return null;
 }
+
+test('selectors skip unrelated state updates', async () => {
+  AsyncStorage.getItem.mockResolvedValue(null);
+  const renders = jest.fn();
+  let update;
+  function SelectorProbe() {
+    const restSec = useStoreSelector(state => state.restSec);
+    const actions = useStoreActions();
+    renders(restSec);
+    useEffect(() => { if (actions.ready) update = actions.update; }, [actions.ready, actions.update]);
+    return null;
+  }
+  let component;
+  await renderer.act(async () => {
+    component = renderer.create(<StoreProvider><SelectorProbe /></StoreProvider>);
+    await Promise.resolve();
+  });
+  const count = renders.mock.calls.length;
+  renderer.act(() => update(state => { state.unit = 'lb'; }));
+  expect(renders).toHaveBeenCalledTimes(count);
+  renderer.act(() => update(state => { state.restSec = 120; }));
+  expect(renders).toHaveBeenCalledTimes(count + 1);
+  renderer.act(() => component.unmount());
+});
 
 test('updates structurally share untouched branches', () => {
   const workouts = [{ id: 'history' }];

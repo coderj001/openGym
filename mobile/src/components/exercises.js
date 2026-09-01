@@ -23,6 +23,12 @@ export function ExerciseRow({ exercise, onPress, accessory, fullName = false }) 
     <View style={styles.exerciseText}><AppText numberOfLines={fullName ? undefined : 1} style={styles.exerciseName}>{exercise.n}</AppText><AppText muted numberOfLines={1} style={styles.exerciseMeta}>{exercise.tg || exercise.bp} · {exercise.eq}</AppText></View>{accessory}
   </Pressable>;
 }
+const PickerExerciseRow = React.memo(function PickerExerciseRow({ exercise, onPick }) {
+  return <ExerciseRow exercise={exercise} onPress={() => onPick(exercise)} />;
+});
+const exerciseKey = item => item.id;
+const exerciseLayout = (_data, index) => ({ length: 66, offset: 66 * index, index });
+
 export function useExerciseSearch(S, query, muscles) {
   const usage = useMemo(() => {
     const next = new Map();
@@ -131,11 +137,12 @@ export function ExercisePicker({ visible, onClose, onPick }) {
   const totalExercises = allExercises(S).length;
   const equipmentOptions = equipmentOf(base); const activeEquipment = equipmentOptions.includes(equipment) ? equipment : ''; const list = activeEquipment ? base.filter(exercise => exercise.eq === activeEquipment) : base; const resultCount = list.length === totalExercises ? t('{0} exercises', totalExercises) : t('{0} of {1} exercises', list.length, totalExercises);
   const toggleMuscle = value => { setMuscles(prev => { const next = new Set(prev); next.has(value) ? next.delete(value) : next.add(value); return next; }); setEquipment(''); };
+  const renderExercise = React.useCallback(({ item }) => <PickerExerciseRow exercise={item} onPick={onPick} />, [onPick]);
   return <Modal visible={visible} animationType="slide" onRequestClose={onClose}><Screen scroll={false} contentStyle={{ paddingBottom: 0 }}>
     <Header title={t('Exercises')} subtitle={resultCount} left={<IconButton name="close" onPress={onClose} />} />
     <View style={{ flexDirection: 'row', gap: 8, marginBottom: 8 }}><Input style={{ flex: 1 }} value={query} onChangeText={setQuery} placeholder={t('Search…')} autoCorrect={false} /><IconButton name={showMap ? 'filter-remove' : 'filter'} onPress={() => setShowMap(v => !v)} color={(muscles.size > 0 || activeEquipment) ? colors.accent : undefined} /></View>
     <AppText muted style={styles.pickerModes}>{t('Logging mode')}: {t('Reps')} · {t('Timed hold')} · {t('Cardio')}</AppText>
-    <FlatList data={list} keyExtractor={item => item.id} initialNumToRender={20} keyboardShouldPersistTaps="handled" getItemLayout={(_data, index) => ({ length: 66, offset: 66 * index, index })} ListHeaderComponent={<>{muscles.size > 0 ? <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.pickerFilterContent} style={{ flexGrow: 0, marginBottom: 8 }}>{[...muscles].map(m => <Chip key={m} title={`× ${t(MUSCLE_NAME[m])}`} active onPress={() => toggleMuscle(m)} />)}</ScrollView> : null}{showMap ? <Card style={styles.muscleCard}><AppText muted style={{ fontSize: 12 }}>{t('Tap muscles to filter — multiple selections show exercises matching any')}</AppText><BodyMap body={S.body} selected={muscles} onMuscle={toggleMuscle} />{equipmentOptions.length > 1 ? <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={[styles.pickerFilterContent, { marginTop: 8 }]}><Chip title={t('Any equipment')} active={!activeEquipment} onPress={() => setEquipment('')} />{equipmentOptions.map(value => <Chip key={value} title={t(value)} active={activeEquipment === value} onPress={() => setEquipment(value)} />)}</ScrollView> : null}</Card> : null}</>} renderItem={({ item }) => <ExerciseRow exercise={item} onPress={() => onPick(item)} />} />
+    <FlatList data={list} keyExtractor={exerciseKey} initialNumToRender={20} keyboardShouldPersistTaps="handled" getItemLayout={exerciseLayout} ListHeaderComponent={<>{muscles.size > 0 ? <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.pickerFilterContent} style={{ flexGrow: 0, marginBottom: 8 }}>{[...muscles].map(m => <Chip key={m} title={`× ${t(MUSCLE_NAME[m])}`} active onPress={() => toggleMuscle(m)} />)}</ScrollView> : null}{showMap ? <Card style={styles.muscleCard}><AppText muted style={{ fontSize: 12 }}>{t('Tap muscles to filter — multiple selections show exercises matching any')}</AppText><BodyMap body={S.body} selected={muscles} onMuscle={toggleMuscle} />{equipmentOptions.length > 1 ? <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={[styles.pickerFilterContent, { marginTop: 8 }]}><Chip title={t('Any equipment')} active={!activeEquipment} onPress={() => setEquipment('')} />{equipmentOptions.map(value => <Chip key={value} title={t(value)} active={activeEquipment === value} onPress={() => setEquipment(value)} />)}</ScrollView> : null}</Card> : null}</>} renderItem={renderExercise} />
   </Screen></Modal>;
 }
 export function ExerciseDetail({ exercise, visible, onClose, footer }) {

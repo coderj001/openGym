@@ -11,7 +11,12 @@ export function TimerProvider({ children }) {
   const player = useSoundPlayer(require('../assets/beep.wav'));
   useEffect(() => {
     if (!rest) return undefined;
-    const interval = setInterval(() => setNow(Date.now()), 250);
+    const interval = setInterval(() => setNow(previous => {
+      const next = Date.now();
+      const previousLeft = Math.max(0, Math.ceil((rest.endsAt - previous) / 1000));
+      const nextLeft = Math.max(0, Math.ceil((rest.endsAt - next) / 1000));
+      return previousLeft === nextLeft ? previous : next;
+    }), 250);
     return () => clearInterval(interval);
   }, [rest]);
   const left = rest ? Math.max(0, Math.ceil((rest.endsAt - now) / 1000)) : 0;
