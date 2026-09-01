@@ -1,13 +1,19 @@
 import React, { useEffect } from 'react';
 import renderer from 'react-test-renderer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { STORAGE_KEY, StoreProvider, updateState, useStore, useStoreActions, useStoreSelector } from './store';
+import { DEF, STORAGE_KEY, StoreProvider, normalizeState, updateState, useStore, useStoreActions, useStoreSelector } from './store';
 
 function Probe({ onReady }) {
   const { ready, update } = useStore();
   useEffect(() => { if (ready) onReady(update); }, [ready, update, onReady]);
   return null;
 }
+
+test('defaults effort to off while preserving legacy RIR settings', () => {
+  expect(DEF.effort).toBe('none');
+  expect(normalizeState({}).effort).toBe('none');
+  expect(normalizeState({ showRir: true }).effort).toBe('rir');
+});
 
 test('selectors skip unrelated state updates', async () => {
   AsyncStorage.getItem.mockResolvedValue(null);

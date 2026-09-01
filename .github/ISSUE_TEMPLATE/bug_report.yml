@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a reproducible problem in openGym
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include private workout data or security vulnerabilities.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include expected behavior and actual behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open ...
+        2. Tap ...
+        3. See ...
+    validations:
+      required: true
+  - type: input
+    id: app-version
+    attributes:
+      label: App version
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - Android
+        - iOS
+        - Web preview
+    validations:
+      required: true

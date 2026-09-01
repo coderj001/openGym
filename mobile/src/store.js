@@ -8,10 +8,10 @@ import { palette } from './theme';
 
 export const STORAGE_KEY = 'opengym_state_v1';
 export const DEF = {
-  unit: 'kg', restSec: 90, sound: true, keepAwake: true, lang: 'en',
+  unit: 'kg', restTimer: true, restSec: 90, sound: true, keepAwake: true, lang: 'en',
   theme: 'dark', accent: 'lime', body: 'male', showPrevious: false, targetW: null,
   bodyweight: [], routines: [], week: {}, dayPlan: {}, exWeights: {}, workouts: [], homeWidgets: null,
-  active: null, customEx: [], gifSize: 'full', reminder: { on: false, time: '08:00', tz: null }, effort: null,
+  active: null, customEx: [], gifSize: 'full', reminder: { on: false, time: '08:00', tz: null }, effort: 'none',
 };
 const clone = value => structuredClone(value);
 export const normalizeState = value => {
@@ -22,6 +22,7 @@ export const normalizeState = value => {
     routines: Array.isArray(source.routines) ? source.routines : [],
     workouts: Array.isArray(source.workouts) ? source.workouts : [],
     customEx: Array.isArray(source.customEx) ? source.customEx : [],
+    effort: ['none', 'rir', 'rpe'].includes(source.effort) ? source.effort : source.showRir ? 'rir' : 'none',
   });
 };
 export const isOpenGymBackup = value => !!value && Array.isArray(value.workouts) && Array.isArray(value.routines);

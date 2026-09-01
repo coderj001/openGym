@@ -14,8 +14,8 @@ not otherwise limit the license.
 
 ## Body diagram geometry
 
-The muscle outlines the body maps are drawn from (`frontend/src/lib/body-paths.js`) are derived
-from [**MuscleMap**](https://github.com/melihcolpan/MuscleMap) by Melih Colpan, used under the
+The muscle outlines in `mobile/src/components/BodyMap.js` are derived from
+[**MuscleMap**](https://github.com/melihcolpan/MuscleMap) by Melih Colpan, used under the
 **MIT License** and reproduced below. MuscleMap ships its path data as Swift source rather than
 `.svg` files; the paths were converted to a JSON module, its sub-group shapes were dropped, and
 nothing else about the artwork was changed.
@@ -46,11 +46,8 @@ SOFTWARE.
 
 ## Exercise data & media
 
-The exercise names, instructions (English in `frontend/src/lib/exercises-data.js`, other
-languages in `frontend/src/instr/`, regenerated via `scripts/build-instructions.mjs`), images
-and animations (fetched into `media/` at build time) come from
+The exercise names, instructions, images, and animations in
+`mobile/src/lib/exercises-data.js` and `mobile/assets/exercises/` come from
 [**hasaneyldrm/exercises-dataset**](https://github.com/hasaneyldrm/exercises-dataset)
 and are **not** covered by openGym's AGPL license — they remain under that dataset's own terms.
-The media files are not distributed in this repository; they are downloaded from the upstream
-source on first run. If you redistribute openGym with the media included, review the upstream
-license first.
+Review the upstream license before redistributing these assets.

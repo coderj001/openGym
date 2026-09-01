@@ -18,7 +18,7 @@ export function Header({ title, subtitle, left, right, titleStyle }) {
 }
 export function Card({ children, style }) { const c = useColors(); return <View style={[styles.card, { backgroundColor: c.surface, borderColor: c.border }, style]}>{children}</View>; }
 export function SectionTitle({ children, style }) { const c = useColors(); return <Text style={[styles.section, { color: c.muted }, style]}>{children}</Text>; }
-export function AppText({ children, muted, dim, style, numberOfLines }) { const c = useColors(); return <Text numberOfLines={numberOfLines} style={[styles.text, { color: dim ? c.dim : muted ? c.muted : c.text }, style]}>{children}</Text>; }
+export function AppText({ children, muted, dim, style, numberOfLines, ...props }) { const c = useColors(); return <Text {...props} numberOfLines={numberOfLines} style={[styles.text, { color: dim ? c.dim : muted ? c.muted : c.text }, style]}>{children}</Text>; }
 export function Button({ title, onPress, icon, variant = 'secondary', disabled, size = 'regular', style, primary, danger, compact }) {
   // ponytail: keep legacy props while screens migrate to variant and size.
   const c = useColors(); const resolvedVariant = danger ? 'destructive' : primary ? 'primary' : variant; const resolvedSize = compact ? 'compact' : size;

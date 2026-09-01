@@ -9,7 +9,7 @@ jest.mock('../lib/history', () => {
 
 import WorkoutScreen, { nextIncompleteSet } from './WorkoutScreen';
 import { StoreProvider, useStore } from '../store';
-import { TimerProvider } from '../timers';
+import { TimerProvider, useRestTimer } from '../timers';
 import { previousPerformance } from '../lib/history';
 
 test('finds the next incomplete set without flattening supersets', () => {
@@ -25,6 +25,12 @@ test('finds the next incomplete set without flattening supersets', () => {
 function Probe({ onReady }) {
   const { ready, update } = useStore();
   useEffect(() => { if (ready) onReady(update); }, [ready, update, onReady]);
+  return null;
+}
+
+function RestProbe({ onChange }) {
+  const rest = useRestTimer();
+  useEffect(() => onChange(rest), [rest, onChange]);
   return null;
 }
 
@@ -52,6 +58,25 @@ test('does not rescan previous performance when a set changes', async () => {
   expect(calls).toBe(2);
   renderer.act(() => update(state => { state.active.entries[0].sets[0].done = true; }));
   expect(previousPerformance).toHaveBeenCalledTimes(calls);
+  renderer.act(() => component.unmount());
+});
+
+test('does not start rest timer when disabled', async () => {
+  AsyncStorage.getItem.mockResolvedValue(JSON.stringify({
+    restTimer: false,
+    active: { name: 'No rest', start: Date.now(), cur: 0, entries: [
+      { id: '0001', target: { mode: 'reps' }, sets: [{ w: 50, r: 8, done: false }] },
+    ] },
+  }));
+  let timer;
+  let component;
+  await renderer.act(async () => {
+    component = renderer.create(<StoreProvider><TimerProvider><RestProbe onChange={value => { timer = value; }} /><WorkoutScreen navigation={{ navigate: jest.fn(), setParams: jest.fn() }} route={{ params: {} }} /></TimerProvider></StoreProvider>);
+    await Promise.resolve();
+  });
+  const completeSet = component.root.find(node => node.props.accessibilityLabel === 'checkbox blank circle outline');
+  renderer.act(() => completeSet.props.onPress());
+  expect(timer.rest).toBeNull();
   renderer.act(() => component.unmount());
 });
 
