@@ -48,11 +48,13 @@ test('does not rescan previous performance when a set changes', async () => {
   }));
   previousPerformance.mockClear();
   let update;
+  let resolveReady;
+  const ready = new Promise(resolve => { resolveReady = resolve; });
   let component;
-  await renderer.act(async () => {
-    component = renderer.create(<StoreProvider><TimerProvider><Probe onReady={value => { update = value; }} /><WorkoutScreen navigation={{ navigate: jest.fn(), setParams: jest.fn() }} route={{ params: {} }} /></TimerProvider></StoreProvider>);
-    await new Promise(resolve => setTimeout(resolve, 0));
+  renderer.act(() => {
+    component = renderer.create(<StoreProvider><TimerProvider><Probe onReady={value => { update = value; resolveReady(); }} /><WorkoutScreen navigation={{ navigate: jest.fn(), setParams: jest.fn() }} route={{ params: {} }} /></TimerProvider></StoreProvider>);
   });
+  await renderer.act(async () => { await ready; });
 
   const calls = previousPerformance.mock.calls.length;
   expect(calls).toBe(2);
