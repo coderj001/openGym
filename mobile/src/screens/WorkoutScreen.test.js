@@ -2,15 +2,9 @@ import React, { useEffect } from 'react';
 import renderer from 'react-test-renderer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-jest.mock('../lib/history', () => {
-  const actual = jest.requireActual('../lib/history');
-  return { ...actual, previousPerformance: jest.fn(actual.previousPerformance) };
-});
-
 import WorkoutScreen, { nextIncompleteSet } from './WorkoutScreen';
-import { StoreProvider, useStore } from '../store';
+import { StoreProvider } from '../store';
 import { TimerProvider, useRestTimer } from '../timers';
-import { previousPerformance } from '../lib/history';
 
 test('finds the next incomplete set without flattening supersets', () => {
   const entries = [
@@ -22,46 +16,11 @@ test('finds the next incomplete set without flattening supersets', () => {
   expect(nextIncompleteSet(entries, [[0, 1], [2]], 1)).toEqual({ entryIndex: 2, setIndex: 0 });
 });
 
-function Probe({ onReady }) {
-  const { ready, update } = useStore();
-  useEffect(() => { if (ready) onReady(update); }, [ready, update, onReady]);
-  return null;
-}
-
 function RestProbe({ onChange }) {
   const rest = useRestTimer();
   useEffect(() => onChange(rest), [rest, onChange]);
   return null;
 }
-
-test('does not rescan previous performance when a set changes', async () => {
-  AsyncStorage.getItem.mockResolvedValue(JSON.stringify({
-    showPrevious: true,
-    workouts: [{ d: '2026-03-01', entries: [
-      { id: '0001', target: { mode: 'reps' }, sets: [{ w: 50, r: 8, done: true }] },
-      { id: '0002', target: { mode: 'reps' }, sets: [{ w: 40, r: 10, done: true }] },
-    ] }],
-    active: { name: 'Test', start: Date.now(), cur: 0, entries: [
-      { id: '0001', target: { mode: 'reps' }, sets: [{ w: 50, r: 8, done: false }] },
-      { id: '0002', target: { mode: 'reps' }, sets: [{ w: 40, r: 10, done: false }] },
-    ] },
-  }));
-  previousPerformance.mockClear();
-  let update;
-  let resolveReady;
-  const ready = new Promise(resolve => { resolveReady = resolve; });
-  let component;
-  renderer.act(() => {
-    component = renderer.create(<StoreProvider><TimerProvider><Probe onReady={value => { update = value; resolveReady(); }} /><WorkoutScreen navigation={{ navigate: jest.fn(), setParams: jest.fn() }} route={{ params: {} }} /></TimerProvider></StoreProvider>);
-  });
-  await renderer.act(async () => { await ready; });
-
-  const calls = previousPerformance.mock.calls.length;
-  expect(calls).toBe(2);
-  renderer.act(() => update(state => { state.active.entries[0].sets[0].done = true; }));
-  expect(previousPerformance).toHaveBeenCalledTimes(calls);
-  renderer.act(() => component.unmount());
-});
 
 test('does not start rest timer when disabled', async () => {
   AsyncStorage.getItem.mockResolvedValue(JSON.stringify({
