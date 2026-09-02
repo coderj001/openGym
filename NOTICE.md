@@ -44,10 +44,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## Exercise data & media
+## Exercise data
 
-The exercise names, instructions, images, and animations in
-`mobile/src/lib/exercises-data.js` and `mobile/assets/exercises/` come from
-[**hasaneyldrm/exercises-dataset**](https://github.com/hasaneyldrm/exercises-dataset)
-and are **not** covered by openGym's AGPL license — they remain under that dataset's own terms.
-Review the upstream license before redistributing these assets.
+The exercise names, instructions, and translations in
+`mobile/src/lib/exercises-data.js` come from
+[**hasaneyldrm/exercises-dataset**](https://github.com/hasaneyldrm/exercises-dataset/tree/7455efae41b330c265e7cd4b78dfa848e7ce5ebd),
+which licenses those materials under MIT. They are not covered by openGym's AGPL license.
+
+## Exercise media
+
+The GIF files in `mobile/assets/exercises/` are credited by the upstream dataset to
+[Gym visual](https://gymvisual.com/). The upstream license states that its permission does
+not grant a license to that media and that downstream users must obtain their own permission
+from Gym visual. This repository has no recorded direct media license. Do not redistribute
+those files or publish a release containing them unless the copyright holder grants and records
+that permission.
