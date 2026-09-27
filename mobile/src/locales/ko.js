@@ -166,6 +166,8 @@ export default {
   'Rest over — next set!': '휴식 끝 — 다음 세트!',
   'Hi {0}': '안녕하세요 {0}',
   'This week': '이번 주',
+  'Visible widgets': '표시되는 위젯',
+  'Hidden widgets': '숨겨진 위젯',
   '{0} — in progress': '{0} — 진행 중',
   'Resume ▶': '이어하기 ▶',
   'Welcome!': '환영합니다!',

@@ -166,6 +166,8 @@ export default {
   'Rest over — next set!': 'Dinlenme bitti — sıradaki set!',
   'Hi {0}': 'Selam {0}',
   'This week': 'Bu hafta',
+  'Visible widgets': 'Görünen widget’lar',
+  'Hidden widgets': 'Gizli widget’lar',
   '{0} — in progress': '{0} — devam ediyor',
   'Resume ▶': 'Devam et ▶',
   'Welcome!': 'Hoş geldin!',

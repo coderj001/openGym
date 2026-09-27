@@ -166,6 +166,8 @@ export default {
   'Rest over — next set!': '休息结束——下一组！',
   'Hi {0}': '你好，{0}',
   'This week': '本周',
+  'Visible widgets': '可见的小组件',
+  'Hidden widgets': '隐藏的小组件',
   '{0} — in progress': '{0}——进行中',
   'Resume ▶': '继续 ▶',
   'Welcome!': '欢迎！',
