@@ -40,7 +40,16 @@
       "expo-asset",
       "expo-font",
       "expo-audio",
-      "expo-camera"
+      "expo-camera",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "targetSdkVersion": 35,
+            "compileSdkVersion": 35
+          }
+        }
+      ]
     ]
   }
 }
