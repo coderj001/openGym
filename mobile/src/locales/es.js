@@ -166,6 +166,8 @@ export default {
   'Rest over — next set!': '¡Descanso terminado — siguiente serie!',
   'Hi {0}': 'Hola {0}',
   'This week': 'Esta semana',
+  'Visible widgets': 'Widgets visibles',
+  'Hidden widgets': 'Widgets ocultos',
   '{0} — in progress': '{0} — en curso',
   'Resume ▶': 'Seguir ▶',
   'Welcome!': '¡Bienvenido!',

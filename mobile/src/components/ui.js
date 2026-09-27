@@ -18,7 +18,7 @@ export function Header({ title, subtitle, left, right, titleStyle }) {
 }
 export function Card({ children, style }) { const c = useColors(); return <View style={[styles.card, { backgroundColor: c.surface, borderColor: c.border }, style]}>{children}</View>; }
 export function SectionTitle({ children, style }) { const c = useColors(); return <Text style={[styles.section, { color: c.muted }, style]}>{children}</Text>; }
-export function AppText({ children, muted, dim, style, numberOfLines, ...props }) { const c = useColors(); return <Text {...props} numberOfLines={numberOfLines} style={[styles.text, { color: dim ? c.dim : muted ? c.muted : c.text }, style]}>{children}</Text>; }
+export function AppText({ children, muted, dim, variant, style, numberOfLines, ...props }) { const c = useColors(); return <Text {...props} numberOfLines={numberOfLines} style={[styles.text, variant && { fontSize: type[variant] }, { color: dim ? c.dim : muted ? c.muted : c.text }, style]}>{children}</Text>; }
 export function Button({ title, onPress, icon, variant = 'secondary', disabled, size = 'regular', style, primary, danger, compact }) {
   // ponytail: keep legacy props while screens migrate to variant and size.
   const c = useColors(); const resolvedVariant = danger ? 'destructive' : primary ? 'primary' : variant; const resolvedSize = compact ? 'compact' : size;
@@ -35,7 +35,7 @@ export function Row({ title, subtitle, icon, onPress, children, danger, style })
   const c = useColors(); const inner = <><View style={[styles.rowIcon, { backgroundColor: c.surface2 }]}>{icon ? <Icon name={icon} size={21} color={danger ? c.danger : c.accent} /> : null}</View><View style={{ flex: 1 }}><AppText style={{ fontWeight: '600' }}>{title}</AppText>{subtitle ? <AppText muted style={{ fontSize: type.caption, marginTop: 2 }}>{subtitle}</AppText> : null}</View>{children}{onPress ? <Icon name="chevron-right" size={22} color={c.dim} /> : null}</>;
   return onPress ? <Pressable accessibilityRole="button" accessibilityLabel={title} onPress={onPress} style={({ pressed }) => [styles.row, { borderBottomColor: c.border, opacity: pressed ? .65 : 1 }, style]}>{inner}</Pressable> : <View style={[styles.row, { borderBottomColor: c.border }, style]}>{inner}</View>;
 }
-export function Toggle({ value, onValueChange, disabled }) { const c = useColors(); return <NativeSwitch disabled={disabled} value={value} onValueChange={onValueChange} trackColor={{ true: c.accent }} />; }
+export function Toggle({ value, onValueChange, disabled, accessibilityLabel }) { const c = useColors(); return <NativeSwitch accessibilityRole="switch" accessibilityLabel={accessibilityLabel} disabled={disabled} value={value} onValueChange={onValueChange} trackColor={{ true: c.accent }} />; }
 export function Chip({ title, active, onPress }) {
   const c = useColors(); const content = <Text style={[styles.chipText, { color: active ? c.onAccent : c.text }]}>{title}</Text>; const style = [styles.chip, { backgroundColor: active ? c.accent : c.surface2 }];
   return onPress ? <Pressable accessibilityRole="button" accessibilityState={{ selected: !!active }} onPress={onPress} style={({ pressed }) => [style, { opacity: pressed ? .7 : 1 }]}>{content}</Pressable> : <View style={style}>{content}</View>;

@@ -166,6 +166,8 @@ export default {
   'Rest over — next set!': 'Отдых окончен — следующий подход!',
   'Hi {0}': 'Привет, {0}',
   'This week': 'Эта неделя',
+  'Visible widgets': 'Видимые виджеты',
+  'Hidden widgets': 'Скрытые виджеты',
   '{0} — in progress': '{0} — идёт',
   'Resume ▶': 'Продолжить ▶',
   'Welcome!': 'Добро пожаловать!',

@@ -174,6 +174,8 @@ export default {
   // --- home ---
   'Hi {0}': 'Hi {0}',
   'This week': 'Diese Woche',
+  'Visible widgets': 'Sichtbare Widgets',
+  'Hidden widgets': 'Ausgeblendete Widgets',
   '{0} — in progress': '{0} — läuft',
   'Resume ▶': 'Weiter ▶',
   'Welcome!': 'Willkommen!',

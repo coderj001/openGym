@@ -166,6 +166,8 @@ export default {
   'Rest over — next set!': 'आराम खत्म — अगला सेट!',
   'Hi {0}': 'नमस्ते {0}',
   'This week': 'इस हफ़्ते',
+  'Visible widgets': 'दिखने वाले विजेट',
+  'Hidden widgets': 'छिपे हुए विजेट',
   '{0} — in progress': '{0} — चल रहा है',
   'Resume ▶': 'जारी रखें ▶',
   'Welcome!': 'स्वागत है!',
