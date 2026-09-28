@@ -34,7 +34,7 @@
     "expo-status-bar": "~57.0.1",
     "fflate": "^0.8.3",
     "immer": "^11.0.1",
-    "react": "19.2.3",
+    "react": "19.3.0",
     "react-dom": "19.2.3",
     "react-native": "0.86.3",
     "react-native-qrcode-svg": "^6.3.21",
