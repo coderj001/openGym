@@ -33,7 +33,7 @@
     "expo-sharing": "~57.0.16",
     "expo-status-bar": "~57.0.1",
     "fflate": "^0.8.3",
-    "immer": "^11.0.1",
+    "immer": "^11.1.18",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-native": "0.86.3",
