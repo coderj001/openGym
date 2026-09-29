@@ -43,6 +43,8 @@ notifications, and release signing.
 ## Project layout 🗂️
 
 - [`mobile/`](mobile/) — Expo app, source, tests, and bundled offline assets
+- [`docs/routine-json-schema.md`](docs/routine-json-schema.md) — JSON schema for AI-generated
+  workout plans
 - [`.github/workflows/mobile-ci.yml`](.github/workflows/mobile-ci.yml) — pull-request and main
   branch tests
 - [`.github/workflows/mobile-release.yml`](.github/workflows/mobile-release.yml) — signed Android
