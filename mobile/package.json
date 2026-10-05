@@ -43,7 +43,7 @@
     "react-native-screens": "~4.26.0",
     "react-native-svg": "15.15.4",
     "react-native-web": "^0.21.2",
-    "react-native-worklets": "0.10.1"
+    "react-native-worklets": "0.13.0"
   },
   "devDependencies": {
     "@react-native/assets-registry": "^0.87.1",
