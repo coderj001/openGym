@@ -3,7 +3,10 @@ jest.mock('react-native-reanimated', () => {
   const entering = { duration: () => entering, easing: () => entering };
   return { __esModule: true, default: { View }, Easing: { bezier: () => undefined }, FadeIn: entering };
 });
-jest.mock('@react-native-async-storage/async-storage', () => require('@react-native-async-storage/async-storage/jest/async-storage-mock'));
+jest.mock('@react-native-async-storage/async-storage', () => {
+  const storage = require('@react-native-async-storage/async-storage/jest').default;
+  return { __esModule: true, default: Object.fromEntries(Object.entries(storage).map(([key, value]) => [key, jest.fn(value)])) };
+});
 jest.mock('expo-status-bar', () => ({ StatusBar: () => null }));
 jest.mock('expo-keep-awake', () => ({ useKeepAwake: jest.fn() }));
 jest.mock('expo-notifications', () => ({
